@@ -289,7 +289,7 @@ body {
 
 .transition-layer {
     flex: 1;
-    background: var(--accent);
+    background: var(--black-light);
     transform: scaleY(0);
     transform-origin: bottom;
 }
@@ -748,14 +748,15 @@ body {
     position: relative;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     min-height: 500px;
+    padding-left: var(--space-lg);
 }
 
 .hero-visual-inner {
     position: relative;
-    width: 400px;
-    height: 400px;
+    width: 380px;
+    height: 380px;
 }
 
 /* Floating Icons */
@@ -983,12 +984,12 @@ body {
 
 .stat-float-1 {
     top: 15%;
-    right: -20px;
+    right: 0;
 }
 
 .stat-float-2 {
     bottom: 20%;
-    left: -20px;
+    left: 0;
 }
 
 .stat-float-number {
