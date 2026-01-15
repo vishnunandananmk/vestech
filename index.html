@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VESTLABS - Enterprise-grade DevOps, Cloud Infrastructure, and AI Solutions">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>VESTLABS | DevOps, Cloud & AI Solutions</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor" aria-hidden="true"></div>
+    <div class="cursor-dot" aria-hidden="true"></div>
+
+    <!-- Loader -->
+    <div class="loader" id="loader" aria-label="Loading">
+        <div class="loader-content">
+            <div class="loader-text">
+                <span style="--i: 0">V</span>
+                <span style="--i: 1">E</span>
+                <span style="--i: 2">S</span>
+                <span style="--i: 3">T</span>
+                <span style="--i: 4">L</span>
+                <span style="--i: 5">A</span>
+                <span style="--i: 6">B</span>
+                <span style="--i: 7">S</span>
+            </div>
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Transition Overlay -->
+    <div class="page-transition" aria-hidden="true">
+        <div class="transition-layer"></div>
+        <div class="transition-layer"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <a href="#" class="nav-logo" data-page="home" aria-label="VESTLABS Home">
+            <span class="logo-text">VESTLABS</span>
+        </a>
+        <div class="nav-links">
+            <a href="#" class="nav-link" data-page="home">Home</a>
+            <a href="#" class="nav-link" data-page="services">Services</a>
+            <a href="#" class="nav-link" data-page="about">About</a>
+            <a href="#" class="nav-link" data-page="ai-labs">AI Labs</a>
+            <a href="#" class="nav-link" data-page="careers">Careers</a>
+            <a href="#" class="nav-link" data-page="blogs">Blog</a>
+            <a href="#" class="nav-link" data-page="contact">Contact</a>
+        </div>
+        <button class="nav-menu-btn" aria-label="Toggle menu" aria-expanded="false">
+            <span class="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <div class="mobile-menu-content">
+            <a href="#" class="mobile-link" data-page="home">Home</a>
+            <a href="#" class="mobile-link" data-page="services">Services</a>
+            <a href="#" class="mobile-link" data-page="about">About</a>
+            <a href="#" class="mobile-link" data-page="ai-labs">AI Labs</a>
+            <a href="#" class="mobile-link" data-page="careers">Careers</a>
+            <a href="#" class="mobile-link" data-page="blogs">Blog</a>
+            <a href="#" class="mobile-link" data-page="contact">Contact</a>
+        </div>
+        <div class="mobile-menu-footer">
+            <div class="social-links">
+                <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== HOME PAGE ==================== -->
+    <main class="page active" id="page-home">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-bg">
+                <div class="hero-gradient"></div>
+                <div class="hero-grid"></div>
+            </div>
+            
+            <div class="hero-content">
+                <h1 class="hero-title text-huge font-syne">
+                    <span class="line-wrapper">
+                        <span class="line" data-delay="0">WE BUILD</span>
+                    </span>
+                    <span class="line-wrapper">
+                        <span class="line" data-delay="1">DIGITAL</span>
+                    </span>
+                    <span class="line-wrapper">
+                        <span class="line accent" data-delay="2">FUTURES</span>
+                    </span>
+                </h1>
+                
+                <p class="hero-subtitle fade-up" data-delay="3">
+                    Enterprise-grade DevOps, Cloud Infrastructure, and AI Solutions that accelerate your business growth and digital transformation.
+                </p>
+                
+                <div class="hero-cta fade-up" data-delay="4">
+                    <a href="#" class="btn-primary magnetic" data-page="contact">
+                        <span class="btn-text">Start a Project</span>
+                        <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
+                    </a>
+                    <a href="#" class="btn-outline magnetic" data-page="services">
+                        <span class="btn-text">Our Services</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero-scroll">
+                <div class="scroll-indicator">
+                    <div class="scroll-line">
+                        <div class="scroll-dot"></div>
+                    </div>
+                </div>
+                <span class="scroll-text">Scroll to explore</span>
+            </div>
+            
+            <div class="hero-badge fade-up" data-delay="5">
+                <span class="badge-dot"></span>
+                <span>Available for projects</span>
+            </div>
+        </section>
+
+        <!-- Marquee Section -->
+        <section class="marquee-section">
+            <div class="marquee" aria-hidden="true">
+                <div class="marquee-content">
+                    <span class="marquee-item">DevOps</span>
+                    <span class="marquee-dot"></span>
+                    <span class="marquee-item">Cloud Solutions</span>
+                    <span class="marquee-dot"></span>
+                    <span class="marquee-item">Data Migration</span>
+                    <span class="marquee-dot"></span>
+                    <span class="marquee-item">AI Integration</span>
+                    <span class="marquee-dot"></span>
+                    <span class="marquee-item">Custom Development</span>
+                    <span class="marquee-dot"></span>
+                    <span class="marquee-item">Hosting & Support</span>
+                    <span class="marquee-dot"></span>
+                </div>
+                <div class="marquee-content">
+                    <span class="marquee-item">DevOps</span>
+                    <span class="marquee-dot"></span>
+                    <span class="marquee-item">Cloud Solutions</span>
+                    <span class="marquee-dot"></span>
+                    <span class="marquee-item">Data Migration</span>
+                    <span class="marquee-dot"></span>
+                    <span class="marquee-item">AI Integration</span>
+                    <span class="marquee-dot"></span>
+                    <span class="marquee-item">Custom Development</span>
+                    <span class="marquee-dot"></span>
+                    <span class="marquee-item">Hosting & Support</span>
+                    <span class="marquee-dot"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Preview Section -->
+        <section class="section services-section">
+            <div class="container">
+                <div class="section-header reveal-group">
+                    <div class="section-header-left">
+                        <span class="section-label reveal-item">What We Do</span>
+                        <h2 class="section-title reveal-item">Services that drive digital excellence</h2>
+                    </div>
+                    <p class="section-description reveal-item">
+                        From cloud infrastructure to AI implementation, we provide end-to-end solutions that scale with your business.
+                    </p>
+                </div>
+                
+                <div class="services-grid">
+                    <article class="service-card reveal-scale" data-delay="0">
+                        <span class="service-number">01</span>
+                        <div class="service-icon">
+                            <i class="fas fa-cloud"></i>
+                        </div>
+                        <h3 class="service-title">Cloud Solutions</h3>
+                        <p class="service-desc">Multi-cloud architecture design, migration, and optimization for AWS, Azure, and GCP.</p>
+                        <a href="#" class="service-link" data-page="services">
+                            <span>Learn more</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <div class="service-card-glow"></div>
+                    </article>
+                    
+                    <article class="service-card reveal-scale" data-delay="1">
+                        <span class="service-number">02</span>
+                        <div class="service-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3 class="service-title">DevOps Engineering</h3>
+                        <p class="service-desc">CI/CD pipelines, infrastructure as code, and automated deployment solutions.</p>
+                        <a href="#" class="service-link" data-page="services">
+                            <span>Learn more</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <div class="service-card-glow"></div>
+                    </article>
+                    
+                    <article class="service-card reveal-scale" data-delay="2">
+                        <span class="service-number">03</span>
+                        <div class="service-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h3 class="service-title">Data Migration</h3>
+                        <p class="service-desc">Seamless data migration with zero downtime and complete data integrity.</p>
+                        <a href="#" class="service-link" data-page="services">
+                            <span>Learn more</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <div class="service-card-glow"></div>
+                    </article>
+                    
+                    <article class="service-card reveal-scale" data-delay="3">
+                        <span class="service-number">04</span>
+                        <div class="service-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="service-title">Custom Development</h3>
+                        <p class="service-desc">Full-stack application development with modern frameworks and best practices.</p>
+                        <a href="#" class="service-link" data-page="services">
+                            <span>Learn more</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <div class="service-card-glow"></div>
+                    </article>
+                    
+                    <article class="service-card reveal-scale" data-delay="4">
+                        <span class="service-number">05</span>
+                        <div class="service-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3 class="service-title">Hosting & Support</h3>
+                        <p class="service-desc">24/7 managed hosting, monitoring, and technical support services.</p>
+                        <a href="#" class="service-link" data-page="services">
+                            <span>Learn more</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <div class="service-card-glow"></div>
+                    </article>
+                    
+                    <article class="service-card reveal-scale" data-delay="5">
+                        <span class="service-number">06</span>
+                        <div class="service-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3 class="service-title">AI Integration</h3>
+                        <p class="service-desc">Cutting-edge AI/ML solutions to automate and enhance your business.</p>
+                        <a href="#" class="service-link" data-page="ai-labs">
+                            <span>Learn more</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <div class="service-card-glow"></div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Preview Section -->
+        <section class="section about-preview-section">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-image reveal-slide-right">
+                        <div class="about-image-inner">
+                            <span class="about-image-letter">V</span>
+                        </div>
+                        <div class="about-image-decoration"></div>
+                    </div>
+                    
+                    <div class="about-content">
+                        <span class="section-label reveal-item">Who We Are</span>
+                        <h2 class="section-title reveal-item">Building digital infrastructure for tomorrow's leaders</h2>
+                        
+                        <div class="about-text reveal-item">
+                            <p>VESTLABS was founded with a vision to democratize enterprise-grade technology. We believe every company deserves access to cutting-edge infrastructure and AI capabilities.</p>
+                            <p>Our team of 150+ engineers works across time zones to deliver exceptional results for Fortune 500 companies and ambitious startups alike.</p>
+                        </div>
+                        
+                        <div class="about-stats">
+                            <div class="stat-item reveal-item" data-delay="0">
+                                <span class="stat-number" data-count="500">0</span>
+                                <span class="stat-plus">+</span>
+                                <span class="stat-label">Clients Worldwide</span>
+                            </div>
+                            <div class="stat-item reveal-item" data-delay="1">
+                                <span class="stat-number" data-count="1200">0</span>
+                                <span class="stat-plus">+</span>
+                                <span class="stat-label">Projects Delivered</span>
+                            </div>
+                            <div class="stat-item reveal-item" data-delay="2">
+                                <span class="stat-number">99.9</span>
+                                <span class="stat-percent">%</span>
+                                <span class="stat-label">Uptime Guarantee</span>
+                            </div>
+                            <div class="stat-item reveal-item" data-delay="3">
+                                <span class="stat-number" data-count="150">0</span>
+                                <span class="stat-plus">+</span>
+                                <span class="stat-label">Expert Engineers</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section class="section process-section">
+            <div class="container">
+                <div class="section-header section-header-center reveal-group">
+                    <span class="section-label reveal-item">Our Process</span>
+                    <h2 class="section-title reveal-item">How we deliver excellence</h2>
+                </div>
+                
+                <div class="process-grid">
+                    <div class="process-item reveal-item" data-delay="0">
+                        <div class="process-number">01</div>
+                        <h3 class="process-title">Discovery</h3>
+                        <p class="process-desc">Deep dive into your requirements, goals, and current infrastructure.</p>
+                        <div class="process-connector"></div>
+                    </div>
+                    
+                    <div class="process-item reveal-item" data-delay="1">
+                        <div class="process-number">02</div>
+                        <h3 class="process-title">Strategy</h3>
+                        <p class="process-desc">Craft a tailored roadmap with clear milestones and deliverables.</p>
+                        <div class="process-connector"></div>
+                    </div>
+                    
+                    <div class="process-item reveal-item" data-delay="2">
+                        <div class="process-number">03</div>
+                        <h3 class="process-title">Execute</h3>
+                        <p class="process-desc">Agile implementation with continuous testing and optimization.</p>
+                        <div class="process-connector"></div>
+                    </div>
+                    
+                    <div class="process-item reveal-item" data-delay="3">
+                        <div class="process-number">04</div>
+                        <h3 class="process-title">Support</h3>
+                        <p class="process-desc">Ongoing maintenance, monitoring, and 24/7 technical support.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="section testimonials-section">
+            <div class="container">
+                <div class="section-header reveal-group">
+                    <div class="section-header-left">
+                        <span class="section-label reveal-item">Testimonials</span>
+                        <h2 class="section-title reveal-item">Trusted by industry leaders</h2>
+                    </div>
+                </div>
+                
+                <div class="testimonials-grid">
+                    <article class="testimonial-card reveal-item" data-delay="0">
+                        <div class="testimonial-quote">"</div>
+                        <p class="testimonial-text">VESTLABS transformed our entire cloud infrastructure. Their expertise in AWS and DevOps reduced our deployment time by 80%.</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">
+                                <span>JD</span>
+                            </div>
+                            <div class="author-info">
+                                <span class="author-name">James Davidson</span>
+                                <span class="author-role">CTO, TechFlow Inc.</span>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <article class="testimonial-card reveal-item" data-delay="1">
+                        <div class="testimonial-quote">"</div>
+                        <p class="testimonial-text">The AI solutions team at VESTLABS helped us implement ML models that increased our conversion rates by 45%.</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar accent">
+                                <span>SM</span>
+                            </div>
+                            <div class="author-info">
+                                <span class="author-name">Sarah Mitchell</span>
+                                <span class="author-role">CEO, DataDriven Co.</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="section cta-section">
+            <div class="container">
+                <h2 class="cta-title font-syne">
+                    <span class="cta-line reveal-chars">
+                        <span class="char-wrapper"><span class="char">L</span></span>
+                        <span class="char-wrapper"><span class="char">E</span></span>
+                        <span class="char-wrapper"><span class="char">T</span></span>
+                        <span class="char-wrapper"><span class="char">'</span></span>
+                        <span class="char-wrapper"><span class="char">S</span></span>
+                        <span class="char-wrapper"><span class="char">&nbsp;</span></span>
+                        <span class="char-wrapper"><span class="char">B</span></span>
+                        <span class="char-wrapper"><span class="char">U</span></span>
+                        <span class="char-wrapper"><span class="char">I</span></span>
+                        <span class="char-wrapper"><span class="char">L</span></span>
+                        <span class="char-wrapper"><span class="char">D</span></span>
+                    </span>
+                    <span class="cta-line cta-line-accent reveal-chars">
+                        <span class="char-wrapper"><span class="char">T</span></span>
+                        <span class="char-wrapper"><span class="char">O</span></span>
+                        <span class="char-wrapper"><span class="char">G</span></span>
+                        <span class="char-wrapper"><span class="char">E</span></span>
+                        <span class="char-wrapper"><span class="char">T</span></span>
+                        <span class="char-wrapper"><span class="char">H</span></span>
+                        <span class="char-wrapper"><span class="char">E</span></span>
+                        <span class="char-wrapper"><span class="char">R</span></span>
+                    </span>
+                </h2>
+                <a href="#" class="btn-primary btn-large magnetic reveal-item" data-page="contact">
+                    <span class="btn-text">Start Your Project</span>
+                    <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==================== SERVICES PAGE ==================== -->
+    <main class="page" id="page-services">
+        <section class="page-hero">
+            <div class="container">
+                <span class="section-label reveal-item">Our Services</span>
+                <h1 class="page-title text-large font-syne reveal-item">
+                    Comprehensive technology<br>solutions for modern<br><span class="accent">enterprises</span>
+                </h1>
+                <p class="page-subtitle reveal-item">
+                    From cloud infrastructure to AI implementation, we provide end-to-end solutions that scale with your business.
+                </p>
+            </div>
+        </section>
+
+        <!-- DevOps Service -->
+        <section class="section service-detail-section">
+            <div class="container">
+                <div class="service-detail-grid reveal-group">
+                    <div class="service-detail-content">
+                        <span class="section-label reveal-item">01 — DevOps Engineering</span>
+                        <h2 class="text-medium font-syne reveal-item">Accelerate Your Development Pipeline</h2>
+                        <p class="service-detail-text reveal-item">
+                            Our DevOps services streamline your software delivery with automated CI/CD pipelines, infrastructure as code, and continuous monitoring. We help you ship faster with confidence.
+                        </p>
+                        <ul class="service-features reveal-item">
+                            <li><i class="fas fa-check"></i>CI/CD Pipeline Design & Implementation</li>
+                            <li><i class="fas fa-check"></i>Kubernetes & Container Orchestration</li>
+                            <li><i class="fas fa-check"></i>Infrastructure as Code (Terraform, Pulumi)</li>
+                            <li><i class="fas fa-check"></i>Monitoring & Observability</li>
+                        </ul>
+                    </div>
+                    <div class="service-detail-visual reveal-item">
+                        <div class="tech-grid">
+                            <div class="tech-item">
+                                <i class="fab fa-docker"></i>
+                                <span>Docker</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-dharmachakra"></i>
+                                <span>Kubernetes</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fab fa-jenkins"></i>
+                                <span>Jenkins</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fab fa-gitlab"></i>
+                                <span>GitLab CI</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cloud Service -->
+        <section class="section service-detail-section alt-bg">
+            <div class="container">
+                <div class="service-detail-grid reverse reveal-group">
+                    <div class="service-detail-visual reveal-item">
+                        <div class="cloud-visual">
+                            <div class="cloud-icons">
+                                <i class="fab fa-aws"></i>
+                                <i class="fab fa-microsoft"></i>
+                                <i class="fab fa-google"></i>
+                            </div>
+                            <h3 class="font-syne">Multi-Cloud</h3>
+                            <span>Architecture</span>
+                        </div>
+                    </div>
+                    <div class="service-detail-content">
+                        <span class="section-label reveal-item">02 — Cloud Solutions</span>
+                        <h2 class="text-medium font-syne reveal-item">Scale Without Limits</h2>
+                        <p class="service-detail-text reveal-item">
+                            Whether you're on AWS, Azure, GCP, or need a multi-cloud strategy, we design and implement cloud architectures that are secure, scalable, and cost-optimized.
+                        </p>
+                        <ul class="service-features reveal-item">
+                            <li><i class="fas fa-check"></i>Cloud Architecture Design</li>
+                            <li><i class="fas fa-check"></i>Cost Optimization & FinOps</li>
+                            <li><i class="fas fa-check"></i>Security & Compliance</li>
+                            <li><i class="fas fa-check"></i>Serverless Architecture</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Migration Service -->
+        <section class="section service-detail-section">
+            <div class="container">
+                <div class="service-detail-grid reveal-group">
+                    <div class="service-detail-content">
+                        <span class="section-label reveal-item">03 — Migration Services</span>
+                        <h2 class="text-medium font-syne reveal-item">Seamless Digital Migration</h2>
+                        <p class="service-detail-text reveal-item">
+                            Migrate your legacy systems, data, and applications to modern platforms with zero downtime. Our proven methodology ensures a smooth transition.
+                        </p>
+                        <ul class="service-features reveal-item">
+                            <li><i class="fas fa-check"></i>Legacy System Modernization</li>
+                            <li><i class="fas fa-check"></i>Database Migration</li>
+                            <li><i class="fas fa-check"></i>Application Re-platforming</li>
+                            <li><i class="fas fa-check"></i>Zero Downtime Migration</li>
+                        </ul>
+                    </div>
+                    <div class="service-detail-visual reveal-item">
+                        <div class="migration-visual">
+                            <div class="migration-from">
+                                <i class="fas fa-server"></i>
+                                <span>Legacy</span>
+                            </div>
+                            <div class="migration-arrow">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                            <div class="migration-to">
+                                <i class="fas fa-cloud"></i>
+                                <span>Modern</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section class="section pricing-section alt-bg">
+            <div class="container">
+                <div class="section-header section-header-center reveal-group">
+                    <span class="section-label reveal-item">Pricing</span>
+                    <h2 class="section-title reveal-item">Flexible plans for every scale</h2>
+                </div>
+                
+                <div class="pricing-grid">
+                    <div class="pricing-card reveal-item" data-delay="0">
+                        <h3 class="pricing-name font-syne">Starter</h3>
+                        <p class="pricing-tagline">Perfect for small teams</p>
+                        <div class="pricing-amount">
+                            <span class="price">$2,500</span>
+                            <span class="period">/mo</span>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i>Up to 5 developers</li>
+                            <li><i class="fas fa-check"></i>Basic CI/CD setup</li>
+                            <li><i class="fas fa-check"></i>Email support</li>
+                            <li><i class="fas fa-check"></i>99% uptime SLA</li>
+                        </ul>
+                        <a href="#" class="btn-outline" data-page="contact">Get Started</a>
+                    </div>
+                    
+                    <div class="pricing-card featured reveal-item" data-delay="1">
+                        <span class="pricing-badge">Most Popular</span>
+                        <h3 class="pricing-name font-syne">Professional</h3>
+                        <p class="pricing-tagline">For growing businesses</p>
+                        <div class="pricing-amount">
+                            <span class="price">$7,500</span>
+                            <span class="period">/mo</span>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i>Up to 25 developers</li>
+                            <li><i class="fas fa-check"></i>Advanced DevOps</li>
+                            <li><i class="fas fa-check"></i>24/7 support</li>
+                            <li><i class="fas fa-check"></i>99.9% uptime SLA</li>
+                            <li><i class="fas fa-check"></i>Dedicated engineer</li>
+                        </ul>
+                        <a href="#" class="btn-accent" data-page="contact">Get Started</a>
+                    </div>
+                    
+                    <div class="pricing-card reveal-item" data-delay="2">
+                        <h3 class="pricing-name font-syne">Enterprise</h3>
+                        <p class="pricing-tagline">Custom solutions</p>
+                        <div class="pricing-amount">
+                            <span class="price">Custom</span>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i>Unlimited scale</li>
+                            <li><i class="fas fa-check"></i>Custom architecture</li>
+                            <li><i class="fas fa-check"></i>Dedicated team</li>
+                            <li><i class="fas fa-check"></i>99.99% uptime SLA</li>
+                        </ul>
+                        <a href="#" class="btn-outline" data-page="contact">Contact Sales</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==================== ABOUT PAGE ==================== -->
+    <main class="page" id="page-about">
+        <section class="page-hero">
+            <div class="container">
+                <span class="section-label reveal-item">About Us</span>
+                <h1 class="page-title text-large font-syne reveal-item">
+                    Pioneering the future of<br><span class="accent">digital innovation</span>
+                </h1>
+                <p class="page-subtitle reveal-item">
+                    Founded in 2018, VESTLABS has grown from a small team of passionate engineers to a global technology powerhouse serving Fortune 500 companies.
+                </p>
+            </div>
+        </section>
+
+        <!-- Mission & Vision -->
+        <section class="section">
+            <div class="container">
+                <div class="mission-grid">
+                    <div class="mission-card reveal-item" data-delay="0">
+                        <div class="mission-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3 class="font-syne">Our Mission</h3>
+                        <p>To empower businesses with cutting-edge technology solutions that drive growth, efficiency, and innovation. We believe every company deserves access to enterprise-grade infrastructure.</p>
+                    </div>
+                    <div class="mission-card reveal-item" data-delay="1">
+                        <div class="mission-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h3 class="font-syne">Our Vision</h3>
+                        <p>To be the global leader in digital transformation, helping organizations navigate the complexities of modern technology with confidence and clarity.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Values -->
+        <section class="section values-section alt-bg">
+            <div class="container">
+                <div class="section-header section-header-center reveal-group">
+                    <span class="section-label reveal-item">Our Values</span>
+                    <h2 class="section-title reveal-item">What drives us forward</h2>
+                </div>
+                
+                <div class="values-grid">
+                    <div class="value-item reveal-item" data-delay="0">
+                        <div class="value-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h4 class="font-syne">Innovation</h4>
+                        <p>Constantly pushing boundaries</p>
+                    </div>
+                    <div class="value-item reveal-item" data-delay="1">
+                        <div class="value-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4 class="font-syne">Integrity</h4>
+                        <p>Trust through transparency</p>
+                    </div>
+                    <div class="value-item reveal-item" data-delay="2">
+                        <div class="value-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4 class="font-syne">Collaboration</h4>
+                        <p>Better together</p>
+                    </div>
+                    <div class="value-item reveal-item" data-delay="3">
+                        <div class="value-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h4 class="font-syne">Excellence</h4>
+                        <p>Quality in everything</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section class="section timeline-section">
+            <div class="container">
+                <div class="section-header section-header-center reveal-group">
+                    <span class="section-label reveal-item">Our Journey</span>
+                    <h2 class="section-title reveal-item">Building for the future</h2>
+                </div>
+                
+                <div class="timeline">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-item reveal-item" data-delay="0">
+                        <div class="timeline-dot"></div>
+                        <span class="timeline-year">2018</span>
+                        <h4 class="font-syne">Founded</h4>
+                        <p>Started with 3 engineers and a vision to transform cloud computing.</p>
+                    </div>
+                    <div class="timeline-item reveal-item" data-delay="1">
+                        <div class="timeline-dot"></div>
+                        <span class="timeline-year">2019</span>
+                        <h4 class="font-syne">First Enterprise Client</h4>
+                        <p>Landed our first Fortune 500 client and expanded to 25 employees.</p>
+                    </div>
+                    <div class="timeline-item reveal-item" data-delay="2">
+                        <div class="timeline-dot"></div>
+                        <span class="timeline-year">2021</span>
+                        <h4 class="font-syne">AI Labs Launch</h4>
+                        <p>Established our AI research division and opened offices in 5 countries.</p>
+                    </div>
+                    <div class="timeline-item reveal-item" data-delay="3">
+                        <div class="timeline-dot"></div>
+                        <span class="timeline-year">2024</span>
+                        <h4 class="font-syne">Global Expansion</h4>
+                        <p>150+ engineers, 500+ clients, and recognized as an industry leader.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team -->
+        <section class="section team-section alt-bg">
+            <div class="container">
+                <div class="section-header section-header-center reveal-group">
+                    <span class="section-label reveal-item">Leadership</span>
+                    <h2 class="section-title reveal-item">Meet our team</h2>
+                </div>
+                
+                <div class="team-grid">
+                    <div class="team-member reveal-item" data-delay="0">
+                        <div class="team-avatar" style="--gradient: linear-gradient(135deg, var(--accent), #a3d600)">
+                            <span>AK</span>
+                        </div>
+                        <h4 class="font-syne">Alex Kumar</h4>
+                        <p>CEO & Founder</p>
+                    </div>
+                    <div class="team-member reveal-item" data-delay="1">
+                        <div class="team-avatar" style="--gradient: linear-gradient(135deg, #2496ed, #00a4ef)">
+                            <span>SL</span>
+                        </div>
+                        <h4 class="font-syne">Sarah Lee</h4>
+                        <p>CTO</p>
+                    </div>
+                    <div class="team-member reveal-item" data-delay="2">
+                        <div class="team-avatar" style="--gradient: linear-gradient(135deg, #8b5cf6, #a855f7)">
+                            <span>MR</span>
+                        </div>
+                        <h4 class="font-syne">Marcus Rodriguez</h4>
+                        <p>VP Engineering</p>
+                    </div>
+                    <div class="team-member reveal-item" data-delay="3">
+                        <div class="team-avatar" style="--gradient: linear-gradient(135deg, #f97316, #ef4444)">
+                            <span>EC</span>
+                        </div>
+                        <h4 class="font-syne">Emily Chen</h4>
+                        <p>Head of AI Labs</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==================== AI LABS PAGE ==================== -->
+    <main class="page" id="page-ai-labs">
+        <div class="ai-background">
+            <div class="ai-grid-bg"></div>
+            <div class="ai-orb ai-orb-1"></div>
+            <div class="ai-orb ai-orb-2"></div>
+            <div class="ai-particles" id="aiParticles"></div>
+        </div>
+        
+        <section class="page-hero">
+            <div class="container">
+                <span class="section-label accent reveal-item">AI Labs</span>
+                <h1 class="page-title text-large font-syne reveal-item">
+                    Pushing the boundaries of<br><span class="accent">artificial intelligence</span>
+                </h1>
+                <p class="page-subtitle reveal-item">
+                    Groundbreaking research and practical implementations that transform industries through machine learning and AI innovation.
+                </p>
+                <div class="page-cta reveal-item">
+                    <a href="#" class="btn-primary magnetic" data-page="contact">
+                        <span class="btn-text">Partner With Us</span>
+                        <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Services -->
+        <section class="section">
+            <div class="container">
+                <div class="services-grid ai-services-grid">
+                    <article class="service-card ai-card reveal-scale" data-delay="0">
+                        <div class="service-icon accent-border">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3 class="service-title">Machine Learning</h3>
+                        <p class="service-desc">Custom ML models for prediction, classification, and pattern recognition. Supervised & unsupervised learning solutions.</p>
+                    </article>
+                    
+                    <article class="service-card ai-card reveal-scale" data-delay="1">
+                        <div class="service-icon accent-border">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3 class="service-title">Natural Language Processing</h3>
+                        <p class="service-desc">Advanced NLP solutions including sentiment analysis, chatbots, and document intelligence systems.</p>
+                    </article>
+                    
+                    <article class="service-card ai-card reveal-scale" data-delay="2">
+                        <div class="service-icon accent-border">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h3 class="service-title">Computer Vision</h3>
+                        <p class="service-desc">Image and video analysis powered by state-of-the-art models. Object detection, facial recognition, and medical imaging.</p>
+                    </article>
+                    
+                    <article class="service-card ai-card reveal-scale" data-delay="3">
+                        <div class="service-icon accent-border">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3 class="service-title">Generative AI</h3>
+                        <p class="service-desc">Create content, code, and creative assets with AI. LLM fine-tuning and text-to-image generation.</p>
+                    </article>
+                    
+                    <article class="service-card ai-card reveal-scale" data-delay="4">
+                        <div class="service-icon accent-border">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="service-title">Predictive Analytics</h3>
+                        <p class="service-desc">Forecast trends and make data-driven decisions. Demand forecasting, risk assessment, and churn prediction.</p>
+                    </article>
+                    
+                    <article class="service-card ai-card reveal-scale" data-delay="5">
+                        <div class="service-icon accent-border">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <h3 class="service-title">MLOps</h3>
+                        <p class="service-desc">Deploy and scale ML models in production. Model deployment, continuous training, and monitoring.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Section -->
+        <section class="section research-section">
+            <div class="container">
+                <div class="section-header reveal-group">
+                    <div class="section-header-left">
+                        <span class="section-label reveal-item">Research</span>
+                        <h2 class="section-title reveal-item">Published papers & breakthroughs</h2>
+                    </div>
+                </div>
+                
+                <div class="research-grid">
+                    <article class="research-card reveal-item" data-delay="0">
+                        <span class="research-venue">NeurIPS 2023</span>
+                        <h4 class="font-syne">Efficient Transformer Architectures for Edge Deployment</h4>
+                        <p>A novel approach to compressing large language models for resource-constrained environments.</p>
+                    </article>
+                    <article class="research-card reveal-item" data-delay="1">
+                        <span class="research-venue">ICML 2023</span>
+                        <h4 class="font-syne">Self-Supervised Learning for Industrial Anomaly Detection</h4>
+                        <p>Breakthrough methods for detecting manufacturing defects with minimal labeled data.</p>
+                    </article>
+                    <article class="research-card reveal-item" data-delay="2">
+                        <span class="research-venue">ACL 2023</span>
+                        <h4 class="font-syne">Multilingual Intent Recognition in Low-Resource Languages</h4>
+                        <p>Advancing NLP capabilities for underrepresented languages worldwide.</p>
+                    </article>
+                    <article class="research-card reveal-item" data-delay="3">
+                        <span class="research-venue">CVPR 2023</span>
+                        <h4 class="font-syne">Real-Time 3D Scene Reconstruction from Monocular Video</h4>
+                        <p>Enabling AR/VR applications with single-camera 3D understanding.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==================== CAREERS PAGE ==================== -->
+    <main class="page" id="page-careers">
+        <section class="page-hero">
+            <div class="container">
+                <span class="section-label reveal-item">Careers</span>
+                <h1 class="page-title text-large font-syne reveal-item">
+                    Build the future<br><span class="accent">with us</span>
+                </h1>
+                <p class="page-subtitle reveal-item">
+                    We're always looking for talented individuals who are passionate about technology and innovation.
+                </p>
+            </div>
+        </section>
+
+        <!-- Benefits -->
+        <section class="section benefits-section">
+            <div class="container">
+                <div class="benefits-grid">
+                    <div class="benefit-item reveal-item" data-delay="0">
+                        <i class="fas fa-laptop-house"></i>
+                        <h4 class="font-syne">Remote First</h4>
+                        <p>Work from anywhere in the world</p>
+                    </div>
+                    <div class="benefit-item reveal-item" data-delay="1">
+                        <i class="fas fa-chart-line"></i>
+                        <h4 class="font-syne">Equity Options</h4>
+                        <p>Own a piece of the company</p>
+                    </div>
+                    <div class="benefit-item reveal-item" data-delay="2">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h4 class="font-syne">Learning Budget</h4>
+                        <p>$5,000 annual education fund</p>
+                    </div>
+                    <div class="benefit-item reveal-item" data-delay="3">
+                        <i class="fas fa-umbrella-beach"></i>
+                        <h4 class="font-syne">Unlimited PTO</h4>
+                        <p>Take the time you need</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Open Positions -->
+        <section class="section jobs-section alt-bg">
+            <div class="container">
+                <div class="section-header reveal-group">
+                    <div class="section-header-left">
+                        <span class="section-label reveal-item">Open Positions</span>
+                        <h2 class="section-title reveal-item">Join our growing team</h2>
+                    </div>
+                </div>
+                
+                <div class="jobs-list">
+                    <article class="job-card reveal-item" data-delay="0">
+                        <div class="job-info">
+                            <h4 class="font-syne">Senior DevOps Engineer</h4>
+                            <div class="job-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> Remote</span>
+                                <span><i class="fas fa-clock"></i> Full-time</span>
+                                <span><i class="fas fa-dollar-sign"></i> $150k - $200k</span>
+                            </div>
+                        </div>
+                        <a href="#" class="btn-primary" data-page="contact">Apply Now</a>
+                    </article>
+                    
+                    <article class="job-card reveal-item" data-delay="1">
+                        <div class="job-info">
+                            <h4 class="font-syne">Cloud Solutions Architect</h4>
+                            <div class="job-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> Remote / SF</span>
+                                <span><i class="fas fa-clock"></i> Full-time</span>
+                                <span><i class="fas fa-dollar-sign"></i> $180k - $250k</span>
+                            </div>
+                        </div>
+                        <a href="#" class="btn-primary" data-page="contact">Apply Now</a>
+                    </article>
+                    
+                    <article class="job-card reveal-item" data-delay="2">
+                        <div class="job-info">
+                            <h4 class="font-syne">Machine Learning Engineer</h4>
+                            <div class="job-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> Remote</span>
+                                <span><i class="fas fa-clock"></i> Full-time</span>
+                                <span><i class="fas fa-dollar-sign"></i> $160k - $220k</span>
+                            </div>
+                        </div>
+                        <a href="#" class="btn-primary" data-page="contact">Apply Now</a>
+                    </article>
+                    
+                    <article class="job-card reveal-item" data-delay="3">
+                        <div class="job-info">
+                            <h4 class="font-syne">Full-Stack Developer</h4>
+                            <div class="job-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> Remote</span>
+                                <span><i class="fas fa-clock"></i> Full-time</span>
+                                <span><i class="fas fa-dollar-sign"></i> $130k - $180k</span>
+                            </div>
+                        </div>
+                        <a href="#" class="btn-primary" data-page="contact">Apply Now</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==================== BLOG PAGE ==================== -->
+    <main class="page" id="page-blogs">
+        <section class="page-hero">
+            <div class="container">
+                <span class="section-label reveal-item">Blog</span>
+                <h1 class="page-title text-large font-syne reveal-item">
+                    Insights &<br><span class="accent">perspectives</span>
+                </h1>
+                <p class="page-subtitle reveal-item">
+                    Stay updated with the latest trends, tutorials, and insights in cloud computing, DevOps, and AI.
+                </p>
+            </div>
+        </section>
+
+        <!-- Blog Grid -->
+        <section class="section">
+            <div class="container">
+                <div class="blog-grid">
+                    <article class="blog-card reveal-item" data-delay="0">
+                        <div class="blog-image">
+                            <i class="fas fa-dharmachakra"></i>
+                        </div>
+                        <div class="blog-content">
+                            <span class="blog-category">DevOps</span>
+                            <h3 class="blog-title font-syne">The Complete Guide to Kubernetes in 2024</h3>
+                            <p class="blog-meta">Dec 15, 2024 · 12 min read</p>
+                        </div>
+                    </article>
+                    
+                    <article class="blog-card reveal-item" data-delay="1">
+                        <div class="blog-image">
+                            <i class="fas fa-cloud"></i>
+                        </div>
+                        <div class="blog-content">
+                            <span class="blog-category">Cloud</span>
+                            <h3 class="blog-title font-syne">AWS vs Azure vs GCP: 2024 Comparison</h3>
+                            <p class="blog-meta">Dec 10, 2024 · 8 min read</p>
+                        </div>
+                    </article>
+                    
+                    <article class="blog-card reveal-item" data-delay="2">
+                        <div class="blog-image">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="blog-content">
+                            <span class="blog-category">AI</span>
+                            <h3 class="blog-title font-syne">Implementing RAG with OpenAI and Pinecone</h3>
+                            <p class="blog-meta">Dec 5, 2024 · 15 min read</p>
+                        </div>
+                    </article>
+                    
+                    <article class="blog-card reveal-item" data-delay="3">
+                        <div class="blog-image">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="blog-content">
+                            <span class="blog-category">Security</span>
+                            <h3 class="blog-title font-syne">Zero Trust Architecture Explained</h3>
+                            <p class="blog-meta">Nov 28, 2024 · 10 min read</p>
+                        </div>
+                    </article>
+                    
+                    <article class="blog-card reveal-item" data-delay="4">
+                        <div class="blog-image">
+                            <i class="fas fa-code-branch"></i>
+                        </div>
+                        <div class="blog-content">
+                            <span class="blog-category">DevOps</span>
+                            <h3 class="blog-title font-syne">GitOps Best Practices for Teams</h3>
+                            <p class="blog-meta">Nov 20, 2024 · 9 min read</p>
+                        </div>
+                    </article>
+                    
+                    <article class="blog-card reveal-item" data-delay="5">
+                        <div class="blog-image">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div class="blog-content">
+                            <span class="blog-category">Database</span>
+                            <h3 class="blog-title font-syne">PostgreSQL Performance Tuning Guide</h3>
+                            <p class="blog-meta">Nov 15, 2024 · 14 min read</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="section newsletter-section alt-bg">
+            <div class="container">
+                <div class="newsletter-content reveal-item">
+                    <h2 class="font-syne">Subscribe to our newsletter</h2>
+                    <p>Get weekly insights delivered straight to your inbox.</p>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" placeholder="Enter your email" required>
+                        <button type="submit" class="btn-primary">
+                            <span class="btn-text">Subscribe</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==================== CONTACT PAGE ==================== -->
+    <main class="page" id="page-contact">
+        <section class="page-hero">
+            <div class="container">
+                <span class="section-label reveal-item">Contact</span>
+                <h1 class="page-title text-large font-syne reveal-item">
+                    Let's build something<br><span class="accent">great together</span>
+                </h1>
+                <p class="page-subtitle reveal-item">
+                    Have a project in mind? We'd love to hear from you. Reach out and let's discuss how we can help.
+                </p>
+            </div>
+        </section>
+
+        <!-- Contact Form & Info -->
+        <section class="section">
+            <div class="container">
+                <div class="contact-grid">
+                    <form class="contact-form reveal-item" id="contactForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="firstName">First Name</label>
+                                <input type="text" id="firstName" class="form-input" placeholder="John" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="lastName">Last Name</label>
+                                <input type="text" id="lastName" class="form-input" placeholder="Doe" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email</label>
+                            <input type="email" id="email" class="form-input" placeholder="john@company.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="company">Company</label>
+                            <input type="text" id="company" class="form-input" placeholder="Your Company">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="message">Message</label>
+                            <textarea id="message" class="form-input" placeholder="Tell us about your project..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">
+                            <span class="btn-text">Send Message</span>
+                            <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
+                        </button>
+                    </form>
+
+                    <div class="contact-info reveal-item">
+                        <div class="contact-item">
+                            <h4 class="font-syne">Email</h4>
+                            <p><a href="mailto:hello@vestlabs.io">hello@vestlabs.io</a></p>
+                        </div>
+                        <div class="contact-item">
+                            <h4 class="font-syne">Phone</h4>
+                            <p><a href="tel:+15551234567">+1 (555) 123-4567</a></p>
+                        </div>
+                        <div class="contact-item">
+                            <h4 class="font-syne">Office</h4>
+                            <p>123 Tech Street, Suite 500<br>San Francisco, CA 94107</p>
+                        </div>
+                        <div class="social-links">
+                            <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="social-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" class="social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo font-syne">VESTLABS</div>
+                    <p class="footer-desc">Transforming businesses through innovative DevOps, Cloud, and AI solutions. Your partner in digital excellence.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Services</h4>
+                        <ul>
+                            <li><a href="#" data-page="services">DevOps</a></li>
+                            <li><a href="#" data-page="services">Cloud Solutions</a></li>
+                            <li><a href="#" data-page="services">Migration</a></li>
+                            <li><a href="#" data-page="ai-labs">AI Labs</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="#" data-page="about">About</a></li>
+                            <li><a href="#" data-page="careers">Careers</a></li>
+                            <li><a href="#" data-page="blogs">Blog</a></li>
+                            <li><a href="#" data-page="contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Legal</h4>
+                        <ul>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Cookie Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 VESTLABS. All rights reserved.</p>
+                <div class="footer-status">
+                    <span class="status-dot"></span>
+                    <span>All systems operational</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/cursor.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
