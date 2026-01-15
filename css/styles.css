@@ -97,29 +97,38 @@ body {
 }
 
 /* ==================== TYPOGRAPHY ==================== */
+/* Global heading styles to prevent descender cropping */
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1.2;
+    padding-bottom: 0.05em;
+}
+
 .font-syne {
     font-family: var(--font-display);
 }
 
 .text-huge {
     font-size: clamp(2rem, 5vw, 4rem);
-    line-height: 1;
+    line-height: 1.15;
     font-weight: 800;
     letter-spacing: -0.02em;
+    padding-bottom: 0.1em;
 }
 
 .text-large {
     font-size: clamp(2rem, 5vw, 5rem);
-    line-height: 1.05;
+    line-height: 1.15;
     font-weight: 700;
     letter-spacing: -0.02em;
+    padding-bottom: 0.1em;
 }
 
 .text-medium {
     font-size: clamp(1.5rem, 3vw, 2.5rem);
-    line-height: 1.2;
+    line-height: 1.25;
     font-weight: 600;
     letter-spacing: -0.01em;
+    padding-bottom: 0.05em;
 }
 
 .accent {
@@ -331,6 +340,8 @@ body {
     font-weight: 500;
     position: relative;
     padding: var(--space-xs) 0;
+    padding-bottom: calc(var(--space-xs) + 0.15em);
+    line-height: 1.5;
     transition: opacity 0.3s ease;
 }
 
@@ -727,6 +738,8 @@ body {
     text-decoration: none;
     opacity: 0;
     transform: translateY(50px);
+    line-height: 1.2;
+    padding-bottom: 0.1em;
     transition: opacity 0.5s var(--ease-out-expo), 
                 transform 0.5s var(--ease-out-expo),
                 color 0.3s ease;
@@ -1380,6 +1393,8 @@ body {
 /* ==================== MARQUEE SECTION ==================== */
 .marquee-section {
     padding: var(--space-xl) 0;
+    padding-top: calc(var(--space-xl) + 0.1em);
+    padding-bottom: calc(var(--space-xl) + 0.15em);
     border-top: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color);
     overflow: hidden;
@@ -1467,8 +1482,9 @@ body {
     font-family: var(--font-display);
     font-size: clamp(2rem, 4vw, 3.5rem);
     font-weight: 700;
-    line-height: 1.15;
+    line-height: 1.2;
     max-width: 600px;
+    padding-bottom: 0.05em;
 }
 
 .section-description {
@@ -1773,8 +1789,9 @@ body {
     font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 800;
     color: var(--white);
-    line-height: 1;
+    line-height: 1.15;
     margin-bottom: var(--space-sm);
+    padding-bottom: 0.05em;
 }
 
 .bento-card:hover .bento-value {
@@ -2044,7 +2061,7 @@ body {
     font-size: clamp(2.5rem, 4vw, 3.5rem);
     font-weight: 800;
     color: var(--accent);
-    line-height: 1;
+    line-height: 1.15;
     display: inline;
 }
 
@@ -2100,7 +2117,7 @@ body {
     color: transparent;
     -webkit-text-stroke: 1px var(--accent);
     margin-bottom: var(--space-md);
-    line-height: 1;
+    line-height: 1.15;
     transition: all 0.4s var(--ease-out-expo);
 }
 
@@ -2145,7 +2162,7 @@ body {
     font-family: var(--font-display);
     font-size: 4rem;
     color: var(--accent);
-    line-height: 1;
+    line-height: 1.2;
     margin-bottom: var(--space-sm);
 }
 
@@ -2211,8 +2228,9 @@ body {
 .cta-title {
     font-size: clamp(2.5rem, 8vw, 8rem);
     font-weight: 800;
-    line-height: 1.1;
+    line-height: 1.15;
     margin-bottom: var(--space-xl);
+    padding-bottom: 0.05em;
 }
 
 .cta-line {
@@ -2226,6 +2244,7 @@ body {
 .char-wrapper {
     display: inline-block;
     overflow: hidden;
+    padding-bottom: 0.15em;
 }
 
 .char {
@@ -2456,12 +2475,14 @@ body {
 .pricing-name {
     font-size: 1.5rem;
     margin-bottom: var(--space-xs);
+    line-height: 1.3;
 }
 
 .pricing-tagline {
     color: var(--gray);
     margin-bottom: var(--space-lg);
     font-size: 0.9375rem;
+    line-height: 1.5;
 }
 
 .pricing-card.featured .pricing-tagline {
@@ -2830,11 +2851,13 @@ body {
 
 .benefit-item h4 {
     margin-bottom: var(--space-xs);
+    line-height: 1.3;
 }
 
 .benefit-item p {
     color: var(--gray);
     font-size: 0.875rem;
+    line-height: 1.6;
 }
 
 /* Jobs */
@@ -3032,6 +3055,7 @@ body {
 .form-label {
     font-size: 0.875rem;
     color: var(--gray);
+    line-height: 1.5;
 }
 
 .form-input {
@@ -3314,6 +3338,7 @@ textarea.form-input {
     color: var(--gray);
     text-decoration: none;
     font-size: 0.9375rem;
+    line-height: 1.6;
     transition: color 0.3s ease;
 }
 
