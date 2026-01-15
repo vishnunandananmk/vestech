@@ -83,13 +83,6 @@
             <a href="#" class="mobile-link" data-page="blogs">Blog</a>
             <a href="#" class="mobile-link" data-page="contact">Contact</a>
         </div>
-        <div class="mobile-menu-footer">
-            <div class="social-links">
-                <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                <a href="#" class="social-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
-            </div>
-        </div>
     </div>
 
     <!-- ==================== HOME PAGE ==================== -->
@@ -99,33 +92,115 @@
             <div class="hero-bg">
                 <div class="hero-gradient"></div>
                 <div class="hero-grid"></div>
+                <div class="hero-orbs">
+                    <div class="hero-orb hero-orb-1"></div>
+                    <div class="hero-orb hero-orb-2"></div>
+                    <div class="hero-orb hero-orb-3"></div>
+                </div>
             </div>
             
-            <div class="hero-content">
-                <h1 class="hero-title text-huge font-syne">
-                    <span class="line-wrapper">
-                        <span class="line" data-delay="0">WE BUILD</span>
-                    </span>
-                    <span class="line-wrapper">
-                        <span class="line" data-delay="1">DIGITAL</span>
-                    </span>
-                    <span class="line-wrapper">
-                        <span class="line accent" data-delay="2">FUTURES</span>
-                    </span>
-                </h1>
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-title text-huge font-syne">
+                        <span class="line-wrapper">
+                            <span class="line" data-delay="0">WE BUILD</span>
+                        </span>
+                        <span class="line-wrapper">
+                            <span class="line" data-delay="1">DIGITAL</span>
+                        </span>
+                        <span class="line-wrapper">
+                            <span class="line accent" data-delay="2">FUTURES</span>
+                        </span>
+                    </h1>
+                    
+                    <p class="hero-subtitle fade-up" data-delay="3">
+                        Enterprise-grade DevOps, Cloud Infrastructure, and AI Solutions that accelerate your business growth and digital transformation.
+                    </p>
+                    
+                    <div class="hero-cta fade-up" data-delay="4">
+                        <a href="#" class="btn-primary magnetic" data-page="contact">
+                            <span class="btn-text">Start a Project</span>
+                            <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
+                        </a>
+                        <a href="#" class="btn-outline magnetic" data-page="services">
+                            <span class="btn-text">Our Services</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Tech Stack Badges -->
+                    <div class="hero-tech-stack fade-up" data-delay="5">
+                        <span class="tech-badge"><i class="fab fa-aws"></i></span>
+                        <span class="tech-badge"><i class="fab fa-docker"></i></span>
+                        <span class="tech-badge"><i class="fas fa-dharmachakra"></i></span>
+                        <span class="tech-badge"><i class="fab fa-google"></i></span>
+                        <span class="tech-badge"><i class="fab fa-microsoft"></i></span>
+                        <span class="tech-badge"><i class="fab fa-python"></i></span>
+                    </div>
+                </div>
                 
-                <p class="hero-subtitle fade-up" data-delay="3">
-                    Enterprise-grade DevOps, Cloud Infrastructure, and AI Solutions that accelerate your business growth and digital transformation.
-                </p>
-                
-                <div class="hero-cta fade-up" data-delay="4">
-                    <a href="#" class="btn-primary magnetic" data-page="contact">
-                        <span class="btn-text">Start a Project</span>
-                        <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
-                    </a>
-                    <a href="#" class="btn-outline magnetic" data-page="services">
-                        <span class="btn-text">Our Services</span>
-                    </a>
+                <!-- Hero Visual -->
+                <div class="hero-visual fade-up" data-delay="4">
+                    <div class="hero-visual-inner">
+                        <!-- Floating Icons -->
+                        <div class="floating-icons">
+                            <div class="floating-icon icon-1">
+                                <i class="fas fa-cloud"></i>
+                            </div>
+                            <div class="floating-icon icon-2">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="floating-icon icon-3">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div class="floating-icon icon-4">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <div class="floating-icon icon-5">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div class="floating-icon icon-6">
+                                <i class="fas fa-server"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- Central Element -->
+                        <div class="hero-central">
+                            <div class="hero-ring hero-ring-1"></div>
+                            <div class="hero-ring hero-ring-2"></div>
+                            <div class="hero-ring hero-ring-3"></div>
+                            <div class="hero-core">
+                                <span class="font-syne">V</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Connection Lines -->
+                        <svg class="hero-connections" viewBox="0 0 400 400">
+                            <defs>
+                                <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#c9ff00;stop-opacity:0.5" />
+                                    <stop offset="100%" style="stop-color:#c9ff00;stop-opacity:0" />
+                                </linearGradient>
+                            </defs>
+                            <line class="connection-line" x1="200" y1="200" x2="80" y2="80" stroke="url(#lineGradient)" stroke-width="1"/>
+                            <line class="connection-line" x1="200" y1="200" x2="320" y2="80" stroke="url(#lineGradient)" stroke-width="1"/>
+                            <line class="connection-line" x1="200" y1="200" x2="50" y2="200" stroke="url(#lineGradient)" stroke-width="1"/>
+                            <line class="connection-line" x1="200" y1="200" x2="350" y2="200" stroke="url(#lineGradient)" stroke-width="1"/>
+                            <line class="connection-line" x1="200" y1="200" x2="80" y2="320" stroke="url(#lineGradient)" stroke-width="1"/>
+                            <line class="connection-line" x1="200" y1="200" x2="320" y2="320" stroke="url(#lineGradient)" stroke-width="1"/>
+                        </svg>
+                    </div>
+                    
+                    <!-- Stats Floating -->
+                    <div class="hero-stats-float">
+                        <div class="stat-float stat-float-1 fade-up" data-delay="6">
+                            <span class="stat-float-number">500+</span>
+                            <span class="stat-float-label">Clients</span>
+                        </div>
+                        <div class="stat-float stat-float-2 fade-up" data-delay="7">
+                            <span class="stat-float-number">99.9%</span>
+                            <span class="stat-float-label">Uptime</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             
