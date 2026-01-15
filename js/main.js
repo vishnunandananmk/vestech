@@ -422,6 +422,230 @@ class VestlabsApp {
             });
         });
     }
+    
+    // ==================== PAGE SEARCH (CTRL+F FUNCTIONALITY) ====================
+    
+    setupPageSearch() {
+        const searchInput = document.getElementById('pageSearchInput');
+        const searchNav = document.getElementById('searchNav');
+        const prevBtn = document.getElementById('prevMatch');
+        const nextBtn = document.getElementById('nextMatch');
+        const closeBtn = document.getElementById('closeSearch');
+        const currentMatchEl = document.getElementById('currentMatch');
+        const totalMatchesEl = document.getElementById('totalMatches');
+        
+        if (!searchInput) return;
+        
+        this.searchMatches = [];
+        this.currentMatchIndex = -1;
+        
+        let debounceTimer;
+        
+        // Search on input
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                this.performSearch(e.target.value);
+            }, 300);
+        });
+        
+        // Keyboard shortcuts
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                if (e.shiftKey) {
+                    this.navigateMatch(-1);
+                } else {
+                    this.navigateMatch(1);
+                }
+            } else if (e.key === 'Escape') {
+                this.clearSearch();
+                searchInput.blur();
+            }
+        });
+        
+        // Navigation buttons
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => this.navigateMatch(-1));
+        }
+        
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => this.navigateMatch(1));
+        }
+        
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                this.clearSearch();
+                searchInput.value = '';
+                searchInput.blur();
+            });
+        }
+        
+        // Global Ctrl+F override
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+                e.preventDefault();
+                searchInput.focus();
+                searchInput.select();
+            }
+        });
+    }
+    
+    performSearch(query) {
+        this.clearHighlights();
+        
+        const searchNav = document.getElementById('searchNav');
+        const currentMatchEl = document.getElementById('currentMatch');
+        const totalMatchesEl = document.getElementById('totalMatches');
+        
+        if (!query || query.length < 2) {
+            if (searchNav) searchNav.classList.remove('active');
+            this.searchMatches = [];
+            this.currentMatchIndex = -1;
+            return;
+        }
+        
+        const activePage = document.querySelector('.page.active');
+        if (!activePage) return;
+        
+        const walker = document.createTreeWalker(
+            activePage,
+            NodeFilter.SHOW_TEXT,
+            {
+                acceptNode: (node) => {
+                    const parent = node.parentElement;
+                    if (!parent) return NodeFilter.FILTER_REJECT;
+                    
+                    const tagName = parent.tagName.toLowerCase();
+                    if (['script', 'style', 'noscript', 'iframe'].includes(tagName)) {
+                        return NodeFilter.FILTER_REJECT;
+                    }
+                    
+                    if (parent.classList.contains('search-highlight')) {
+                        return NodeFilter.FILTER_REJECT;
+                    }
+                    
+                    if (node.textContent.toLowerCase().includes(query.toLowerCase())) {
+                        return NodeFilter.FILTER_ACCEPT;
+                    }
+                    
+                    return NodeFilter.FILTER_REJECT;
+                }
+            }
+        );
+        
+        const textNodes = [];
+        let node;
+        while (node = walker.nextNode()) {
+            textNodes.push(node);
+        }
+        
+        this.searchMatches = [];
+        const regex = new RegExp(`(${this.escapeRegex(query)})`, 'gi');
+        
+        textNodes.forEach(textNode => {
+            const text = textNode.textContent;
+            const matches = [...text.matchAll(regex)];
+            
+            if (matches.length > 0) {
+                const parent = textNode.parentNode;
+                const fragment = document.createDocumentFragment();
+                let lastIndex = 0;
+                
+                matches.forEach(match => {
+                    if (match.index > lastIndex) {
+                        fragment.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
+                    }
+                    
+                    const mark = document.createElement('mark');
+                    mark.className = 'search-highlight';
+                    mark.textContent = match[0];
+                    fragment.appendChild(mark);
+                    this.searchMatches.push(mark);
+                    
+                    lastIndex = match.index + match[0].length;
+                });
+                
+                if (lastIndex < text.length) {
+                    fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
+                }
+                
+                parent.replaceChild(fragment, textNode);
+            }
+        });
+        
+        if (this.searchMatches.length > 0) {
+            if (searchNav) searchNav.classList.add('active');
+            this.currentMatchIndex = 0;
+            this.highlightCurrentMatch();
+            if (totalMatchesEl) totalMatchesEl.textContent = this.searchMatches.length;
+            if (currentMatchEl) currentMatchEl.textContent = 1;
+        } else {
+            if (searchNav) searchNav.classList.add('active');
+            if (totalMatchesEl) totalMatchesEl.textContent = '0';
+            if (currentMatchEl) currentMatchEl.textContent = '0';
+        }
+    }
+    
+    navigateMatch(direction) {
+        if (this.searchMatches.length === 0) return;
+        
+        if (this.searchMatches[this.currentMatchIndex]) {
+            this.searchMatches[this.currentMatchIndex].classList.remove('current');
+        }
+        
+        this.currentMatchIndex += direction;
+        
+        if (this.currentMatchIndex >= this.searchMatches.length) {
+            this.currentMatchIndex = 0;
+        } else if (this.currentMatchIndex < 0) {
+            this.currentMatchIndex = this.searchMatches.length - 1;
+        }
+        
+        this.highlightCurrentMatch();
+        
+        const currentMatchEl = document.getElementById('currentMatch');
+        if (currentMatchEl) {
+            currentMatchEl.textContent = this.currentMatchIndex + 1;
+        }
+    }
+    
+    highlightCurrentMatch() {
+        const match = this.searchMatches[this.currentMatchIndex];
+        if (!match) return;
+        
+        match.classList.add('current');
+        match.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+    }
+    
+    clearHighlights() {
+        const highlights = document.querySelectorAll('.search-highlight');
+        highlights.forEach(mark => {
+            const parent = mark.parentNode;
+            const text = document.createTextNode(mark.textContent);
+            parent.replaceChild(text, mark);
+            parent.normalize();
+        });
+        
+        this.searchMatches = [];
+        this.currentMatchIndex = -1;
+    }
+    
+    clearSearch() {
+        this.clearHighlights();
+        
+        const searchNav = document.getElementById('searchNav');
+        const currentMatchEl = document.getElementById('currentMatch');
+        const totalMatchesEl = document.getElementById('totalMatches');
+        
+        if (searchNav) searchNav.classList.remove('active');
+        if (currentMatchEl) currentMatchEl.textContent = '0';
+        if (totalMatchesEl) totalMatchesEl.textContent = '0';
+    }
+    
+    escapeRegex(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
 }
 
 // ==================== UTILITY FUNCTIONS ====================
@@ -491,255 +715,6 @@ document.addEventListener('keydown', (e) => {
         });
         
         document.body.prepend(skipLink);
-    }
-    
-    // ==================== PAGE SEARCH (CTRL+F FUNCTIONALITY) ====================
-    
-    setupPageSearch() {
-        const searchInput = document.getElementById('pageSearchInput');
-        const searchNav = document.getElementById('searchNav');
-        const prevBtn = document.getElementById('prevMatch');
-        const nextBtn = document.getElementById('nextMatch');
-        const closeBtn = document.getElementById('closeSearch');
-        const currentMatchEl = document.getElementById('currentMatch');
-        const totalMatchesEl = document.getElementById('totalMatches');
-        
-        if (!searchInput) return;
-        
-        this.searchMatches = [];
-        this.currentMatchIndex = -1;
-        this.originalContent = new Map();
-        
-        let debounceTimer;
-        
-        // Search on input
-        searchInput.addEventListener('input', (e) => {
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(() => {
-                this.performSearch(e.target.value);
-            }, 300);
-        });
-        
-        // Keyboard shortcuts
-        searchInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                if (e.shiftKey) {
-                    this.navigateMatch(-1);
-                } else {
-                    this.navigateMatch(1);
-                }
-            } else if (e.key === 'Escape') {
-                this.clearSearch();
-                searchInput.blur();
-            }
-        });
-        
-        // Navigation buttons
-        if (prevBtn) {
-            prevBtn.addEventListener('click', () => this.navigateMatch(-1));
-        }
-        
-        if (nextBtn) {
-            nextBtn.addEventListener('click', () => this.navigateMatch(1));
-        }
-        
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
-                this.clearSearch();
-                searchInput.value = '';
-                searchInput.blur();
-            });
-        }
-        
-        // Global Ctrl+F override
-        document.addEventListener('keydown', (e) => {
-            if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
-                e.preventDefault();
-                searchInput.focus();
-                searchInput.select();
-            }
-        });
-    }
-    
-    performSearch(query) {
-        // Clear previous highlights
-        this.clearHighlights();
-        
-        const searchNav = document.getElementById('searchNav');
-        const currentMatchEl = document.getElementById('currentMatch');
-        const totalMatchesEl = document.getElementById('totalMatches');
-        
-        if (!query || query.length < 2) {
-            searchNav.classList.remove('active');
-            this.searchMatches = [];
-            this.currentMatchIndex = -1;
-            return;
-        }
-        
-        // Get current active page
-        const activePage = document.querySelector('.page.active');
-        if (!activePage) return;
-        
-        // Find all text nodes
-        const walker = document.createTreeWalker(
-            activePage,
-            NodeFilter.SHOW_TEXT,
-            {
-                acceptNode: (node) => {
-                    // Skip script, style, and already highlighted elements
-                    const parent = node.parentElement;
-                    if (!parent) return NodeFilter.FILTER_REJECT;
-                    
-                    const tagName = parent.tagName.toLowerCase();
-                    if (['script', 'style', 'noscript', 'iframe'].includes(tagName)) {
-                        return NodeFilter.FILTER_REJECT;
-                    }
-                    
-                    if (parent.classList.contains('search-highlight')) {
-                        return NodeFilter.FILTER_REJECT;
-                    }
-                    
-                    // Check if text contains query
-                    if (node.textContent.toLowerCase().includes(query.toLowerCase())) {
-                        return NodeFilter.FILTER_ACCEPT;
-                    }
-                    
-                    return NodeFilter.FILTER_REJECT;
-                }
-            }
-        );
-        
-        const textNodes = [];
-        let node;
-        while (node = walker.nextNode()) {
-            textNodes.push(node);
-        }
-        
-        // Highlight matches
-        this.searchMatches = [];
-        const regex = new RegExp(`(${this.escapeRegex(query)})`, 'gi');
-        
-        textNodes.forEach(textNode => {
-            const text = textNode.textContent;
-            const matches = [...text.matchAll(regex)];
-            
-            if (matches.length > 0) {
-                const parent = textNode.parentNode;
-                const fragment = document.createDocumentFragment();
-                let lastIndex = 0;
-                
-                matches.forEach(match => {
-                    // Add text before match
-                    if (match.index > lastIndex) {
-                        fragment.appendChild(
-                            document.createTextNode(text.slice(lastIndex, match.index))
-                        );
-                    }
-                    
-                    // Add highlighted match
-                    const mark = document.createElement('mark');
-                    mark.className = 'search-highlight';
-                    mark.textContent = match[0];
-                    fragment.appendChild(mark);
-                    this.searchMatches.push(mark);
-                    
-                    lastIndex = match.index + match[0].length;
-                });
-                
-                // Add remaining text
-                if (lastIndex < text.length) {
-                    fragment.appendChild(
-                        document.createTextNode(text.slice(lastIndex))
-                    );
-                }
-                
-                parent.replaceChild(fragment, textNode);
-            }
-        });
-        
-        // Update UI
-        if (this.searchMatches.length > 0) {
-            searchNav.classList.add('active');
-            this.currentMatchIndex = 0;
-            this.highlightCurrentMatch();
-            totalMatchesEl.textContent = this.searchMatches.length;
-            currentMatchEl.textContent = 1;
-        } else {
-            searchNav.classList.add('active');
-            totalMatchesEl.textContent = '0';
-            currentMatchEl.textContent = '0';
-        }
-    }
-    
-    navigateMatch(direction) {
-        if (this.searchMatches.length === 0) return;
-        
-        // Remove current highlight
-        if (this.searchMatches[this.currentMatchIndex]) {
-            this.searchMatches[this.currentMatchIndex].classList.remove('current');
-        }
-        
-        // Calculate new index
-        this.currentMatchIndex += direction;
-        
-        if (this.currentMatchIndex >= this.searchMatches.length) {
-            this.currentMatchIndex = 0;
-        } else if (this.currentMatchIndex < 0) {
-            this.currentMatchIndex = this.searchMatches.length - 1;
-        }
-        
-        this.highlightCurrentMatch();
-        
-        // Update counter
-        const currentMatchEl = document.getElementById('currentMatch');
-        if (currentMatchEl) {
-            currentMatchEl.textContent = this.currentMatchIndex + 1;
-        }
-    }
-    
-    highlightCurrentMatch() {
-        const match = this.searchMatches[this.currentMatchIndex];
-        if (!match) return;
-        
-        match.classList.add('current');
-        
-        // Scroll into view
-        match.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-            inline: 'nearest'
-        });
-    }
-    
-    clearHighlights() {
-        // Replace all highlights with original text
-        const highlights = document.querySelectorAll('.search-highlight');
-        highlights.forEach(mark => {
-            const parent = mark.parentNode;
-            const text = document.createTextNode(mark.textContent);
-            parent.replaceChild(text, mark);
-            parent.normalize(); // Merge adjacent text nodes
-        });
-        
-        this.searchMatches = [];
-        this.currentMatchIndex = -1;
-    }
-    
-    clearSearch() {
-        this.clearHighlights();
-        
-        const searchNav = document.getElementById('searchNav');
-        const currentMatchEl = document.getElementById('currentMatch');
-        const totalMatchesEl = document.getElementById('totalMatches');
-        
-        if (searchNav) searchNav.classList.remove('active');
-        if (currentMatchEl) currentMatchEl.textContent = '0';
-        if (totalMatchesEl) totalMatchesEl.textContent = '0';
-    }
-    
-    escapeRegex(string) {
-        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
 });
 
