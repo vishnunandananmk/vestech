@@ -102,10 +102,10 @@ body {
 }
 
 .text-huge {
-    font-size: clamp(2.5rem, 8vw, 6rem);
-    line-height: 0.95;
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 1;
     font-weight: 800;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
 }
 
 .text-large {
@@ -596,8 +596,8 @@ body {
 /* Hero Container - Two Column Layout */
 .hero-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-lg);
+    grid-template-columns: 1fr 400px;
+    gap: var(--space-xl);
     align-items: center;
     max-width: var(--container-max);
     margin: 0 auto;
@@ -701,14 +701,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 400px;
-    overflow: hidden;
+    width: 100%;
+    height: 400px;
 }
 
 .hero-visual-inner {
     position: relative;
-    width: 320px;
-    height: 320px;
+    width: 360px;
+    height: 360px;
     flex-shrink: 0;
 }
 
@@ -720,15 +720,15 @@ body {
 
 .floating-icon {
     position: absolute;
-    width: 46px;
-    height: 46px;
+    width: 50px;
+    height: 50px;
     background: var(--black-light);
     border: 1px solid var(--border-color);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: var(--accent);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
@@ -824,22 +824,22 @@ body {
 }
 
 .hero-ring-1 {
-    width: 120px;
-    height: 120px;
+    width: 140px;
+    height: 140px;
     animation: ringRotate1 20s linear infinite;
     border-style: dashed;
 }
 
 .hero-ring-2 {
-    width: 180px;
-    height: 180px;
+    width: 220px;
+    height: 220px;
     animation: ringRotate2 30s linear infinite reverse;
     border-color: rgba(201, 255, 0, 0.2);
 }
 
 .hero-ring-3 {
-    width: 240px;
-    height: 240px;
+    width: 300px;
+    height: 300px;
     animation: ringRotate3 40s linear infinite;
     border-style: dotted;
     border-color: rgba(255, 255, 255, 0.05);
@@ -861,8 +861,8 @@ body {
 }
 
 .hero-core {
-    width: 70px;
-    height: 70px;
+    width: 90px;
+    height: 90px;
     background: linear-gradient(135deg, var(--accent), var(--accent-dark));
     border-radius: 50%;
     display: flex;
@@ -875,7 +875,7 @@ body {
 }
 
 .hero-core span {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 800;
     color: var(--black);
 }
@@ -2541,26 +2541,11 @@ textarea.form-input {
     
     /* Hero responsive */
     .hero-container {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
-    
-    .hero-content {
-        max-width: 700px;
-        margin: 0 auto;
-    }
-    
-    .hero-cta {
-        justify-content: center;
-    }
-    
-    .hero-tech-stack {
-        justify-content: center;
+        grid-template-columns: 1fr 350px;
     }
     
     .hero-visual {
-        min-height: 350px;
-        margin-top: var(--space-lg);
+        height: 350px;
     }
     
     .hero-visual-inner {
@@ -2569,14 +2554,14 @@ textarea.form-input {
     }
     
     .floating-icon {
-        width: 44px;
-        height: 44px;
-        font-size: 0.95rem;
+        width: 42px;
+        height: 42px;
+        font-size: 0.9rem;
     }
     
-    .hero-ring-1 { width: 120px; height: 120px; }
+    .hero-ring-1 { width: 110px; height: 110px; }
     .hero-ring-2 { width: 170px; height: 170px; }
-    .hero-ring-3 { width: 220px; height: 220px; }
+    .hero-ring-3 { width: 230px; height: 230px; }
     
     .hero-core {
         width: 70px;
