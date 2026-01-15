@@ -491,55 +491,108 @@
             <div class="container">
                 <div class="about-grid">
                     <div class="about-image reveal-slide-right">
-                        <div class="macbook-wrapper">
-                            <div class="macbook">
-                                <div class="macbook-screen">
-                                    <div class="terminal">
-                                        <div class="terminal-header">
-                                            <div class="terminal-buttons">
-                                                <span class="terminal-btn red"></span>
-                                                <span class="terminal-btn yellow"></span>
-                                                <span class="terminal-btn green"></span>
-                                            </div>
-                                            <span class="terminal-title">vestlabs@dev — zsh</span>
-                                        </div>
-                                        <div class="terminal-body">
-                                            <div class="terminal-line">
-                                                <span class="terminal-prompt">~</span>
-                                                <span class="terminal-command">npm create vite@latest vestlabs-app</span>
-                                            </div>
-                                            <div class="terminal-line output">
-                                                <span class="terminal-success">✓</span> Project created successfully
-                                            </div>
-                                            <div class="terminal-line">
-                                                <span class="terminal-prompt">~/vestlabs-app</span>
-                                                <span class="terminal-command">npm install</span>
-                                            </div>
-                                            <div class="terminal-line output">
-                                                <span class="terminal-info">added 247 packages in 12s</span>
-                                            </div>
-                                            <div class="terminal-line">
-                                                <span class="terminal-prompt">~/vestlabs-app</span>
-                                                <span class="terminal-command">npm run dev</span>
-                                            </div>
-                                            <div class="terminal-line output">
-                                                <span class="terminal-accent">VITE v5.0.0</span> ready in 234ms
-                                            </div>
-                                            <div class="terminal-line output">
-                                                <span class="terminal-arrow">➜</span> Local: <span class="terminal-link">http://localhost:5173/</span>
-                                            </div>
-                                            <div class="terminal-line output">
-                                                <span class="terminal-arrow">➜</span> Network: <span class="terminal-link">http://192.168.1.42:5173/</span>
-                                            </div>
-                                            <div class="terminal-line typing">
-                                                <span class="terminal-prompt">~/vestlabs-app</span>
-                                                <span class="terminal-cursor">_</span>
-                                            </div>
-                                        </div>
+                        <div class="pipeline-visual">
+                            <!-- Pipeline Header -->
+                            <div class="pipeline-header">
+                                <span class="pipeline-status-dot"></span>
+                                <span class="pipeline-title">Production Pipeline</span>
+                                <span class="pipeline-badge">Running</span>
+                            </div>
+                            
+                            <!-- Pipeline Stages -->
+                            <div class="pipeline-stages">
+                                <!-- Stage 1: Source -->
+                                <div class="pipeline-stage completed">
+                                    <div class="stage-icon">
+                                        <i class="fab fa-github"></i>
+                                    </div>
+                                    <div class="stage-info">
+                                        <span class="stage-name">Source</span>
+                                        <span class="stage-status">Completed</span>
+                                    </div>
+                                    <div class="stage-check"><i class="fas fa-check"></i></div>
+                                </div>
+                                
+                                <div class="pipeline-connector active">
+                                    <div class="connector-line"></div>
+                                    <div class="connector-particle"></div>
+                                </div>
+                                
+                                <!-- Stage 2: Build -->
+                                <div class="pipeline-stage completed">
+                                    <div class="stage-icon">
+                                        <i class="fas fa-hammer"></i>
+                                    </div>
+                                    <div class="stage-info">
+                                        <span class="stage-name">Build</span>
+                                        <span class="stage-status">Completed</span>
+                                    </div>
+                                    <div class="stage-check"><i class="fas fa-check"></i></div>
+                                </div>
+                                
+                                <div class="pipeline-connector active">
+                                    <div class="connector-line"></div>
+                                    <div class="connector-particle"></div>
+                                </div>
+                                
+                                <!-- Stage 3: Test -->
+                                <div class="pipeline-stage completed">
+                                    <div class="stage-icon">
+                                        <i class="fas fa-vial"></i>
+                                    </div>
+                                    <div class="stage-info">
+                                        <span class="stage-name">Test</span>
+                                        <span class="stage-status">142 passed</span>
+                                    </div>
+                                    <div class="stage-check"><i class="fas fa-check"></i></div>
+                                </div>
+                                
+                                <div class="pipeline-connector running">
+                                    <div class="connector-line"></div>
+                                    <div class="connector-particle"></div>
+                                </div>
+                                
+                                <!-- Stage 4: Deploy -->
+                                <div class="pipeline-stage running">
+                                    <div class="stage-icon">
+                                        <i class="fas fa-rocket"></i>
+                                    </div>
+                                    <div class="stage-info">
+                                        <span class="stage-name">Deploy</span>
+                                        <span class="stage-status">In Progress...</span>
+                                    </div>
+                                    <div class="stage-spinner"></div>
+                                </div>
+                                
+                                <div class="pipeline-connector pending">
+                                    <div class="connector-line"></div>
+                                </div>
+                                
+                                <!-- Stage 5: Monitor -->
+                                <div class="pipeline-stage pending">
+                                    <div class="stage-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="stage-info">
+                                        <span class="stage-name">Monitor</span>
+                                        <span class="stage-status">Pending</span>
                                     </div>
                                 </div>
-                                <div class="macbook-base">
-                                    <div class="macbook-notch"></div>
+                            </div>
+                            
+                            <!-- Pipeline Stats -->
+                            <div class="pipeline-stats">
+                                <div class="pipeline-stat">
+                                    <span class="stat-value">2m 34s</span>
+                                    <span class="stat-label">Duration</span>
+                                </div>
+                                <div class="pipeline-stat">
+                                    <span class="stat-value">v2.4.1</span>
+                                    <span class="stat-label">Version</span>
+                                </div>
+                                <div class="pipeline-stat">
+                                    <span class="stat-value">main</span>
+                                    <span class="stat-label">Branch</span>
                                 </div>
                             </div>
                         </div>
