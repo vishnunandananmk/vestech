@@ -476,28 +476,32 @@ h1, h2, h3, h4, h5, h6 {
 .nav-search-input {
     width: 200px;
     height: 40px;
-    background: #010201;
-    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.22);
     border-radius: 8px;
     color: var(--white);
     padding: 0 40px 0 42px;
     font-size: 0.875rem;
-    font-family: var(--font-body);
-    transition: width 0.3s ease, border-color 0.3s ease;
+    font-family: var(--font-primary);
+    transition: width 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(8px);
 }
 
 .nav-search-input::placeholder {
-    color: #6b7280;
+    color: rgba(255, 255, 255, 0.65);
 }
 
 .nav-search-input:hover {
-    border-color: var(--border-color-hover);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.35);
 }
 
 .nav-search-input:focus {
     outline: none;
     width: 280px;
     border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(201, 255, 0, 0.22), 0 12px 34px rgba(0, 0, 0, 0.45);
 }
 
 .nav-search-wrapper:has(.search-nav.active) .nav-search-input {
@@ -523,7 +527,7 @@ h1, h2, h3, h4, h5, h6 {
     top: 50%;
     left: 50px;
     transform: translateY(-50%);
-    background: linear-gradient(to right, transparent, #010201);
+    background: transparent;
     pointer-events: none;
     transition: opacity 0.3s ease;
 }
@@ -1000,7 +1004,8 @@ h1, h2, h3, h4, h5, h6 {
 .hero-scroll {
     position: absolute;
     bottom: var(--space-xl);
-    left: var(--container-padding);
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     align-items: center;
     gap: var(--space-sm);
@@ -3781,7 +3786,8 @@ textarea.form-input {
     
     .hero-scroll {
         bottom: var(--space-md);
-        left: var(--container-padding);
+        left: 50%;
+        transform: translateX(-50%);
     }
     
     .hero-badge {
