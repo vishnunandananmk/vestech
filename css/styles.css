@@ -487,11 +487,10 @@ body {
 .hero-content {
     position: relative;
     z-index: 1;
-    max-width: 1000px;
 }
 
 .hero-title {
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-lg);
 }
 
 .hero-title .line-wrapper {
@@ -502,12 +501,24 @@ body {
 
 .hero-title .line {
     display: block;
-    transform: translateY(105%);
-    transition: transform 1s var(--ease-out-expo);
+    transform: translateY(0);
+    opacity: 1;
+    animation: heroLineReveal 1s var(--ease-out-expo) forwards;
 }
 
-.hero-title .line.visible {
-    transform: translateY(0);
+.hero-title .line[data-delay="0"] { animation-delay: 0.3s; }
+.hero-title .line[data-delay="1"] { animation-delay: 0.4s; }
+.hero-title .line[data-delay="2"] { animation-delay: 0.5s; }
+
+@keyframes heroLineReveal {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .hero-title .line.accent {
@@ -520,12 +531,27 @@ body {
     font-size: clamp(1rem, 2vw, 1.125rem);
     line-height: 1.8;
     margin-bottom: var(--space-xl);
+    opacity: 0;
+    animation: heroFadeIn 1s var(--ease-out-expo) 0.6s forwards;
+}
+
+@keyframes heroFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .hero-cta {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-md);
+    opacity: 0;
+    animation: heroFadeIn 1s var(--ease-out-expo) 0.8s forwards;
 }
 
 /* Hero Scroll Indicator */
@@ -603,8 +629,8 @@ body {
 /* Hero Container - Two Column Layout */
 .hero-container {
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: var(--space-lg);
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
     align-items: center;
     max-width: var(--container-max);
     margin: 0 auto;
@@ -612,7 +638,6 @@ body {
     position: relative;
     z-index: 1;
     padding: 0 var(--container-padding);
-    overflow: hidden;
 }
 
 /* Hero Orbs */
@@ -680,6 +705,8 @@ body {
     gap: var(--space-sm);
     margin-top: var(--space-xl);
     flex-wrap: wrap;
+    opacity: 0;
+    animation: heroFadeIn 1s var(--ease-out-expo) 1s forwards;
 }
 
 .tech-badge {
@@ -710,13 +737,15 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 450px;
-    overflow: visible;
+    overflow: hidden;
+    opacity: 0;
+    animation: heroFadeIn 1.2s var(--ease-out-expo) 0.5s forwards;
 }
 
 .hero-visual-inner {
     position: relative;
-    width: 340px;
-    height: 340px;
+    width: 320px;
+    height: 320px;
     flex-shrink: 0;
 }
 
@@ -728,15 +757,15 @@ body {
 
 .floating-icon {
     position: absolute;
-    width: 50px;
-    height: 50px;
+    width: 46px;
+    height: 46px;
     background: var(--black-light);
     border: 1px solid var(--border-color);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: var(--accent);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
@@ -749,38 +778,38 @@ body {
 }
 
 .floating-icon.icon-1 {
-    top: 5%;
-    left: 15%;
+    top: 8%;
+    left: 20%;
     animation: floatIcon1 6s ease-in-out infinite;
 }
 
 .floating-icon.icon-2 {
-    top: 5%;
-    right: 15%;
+    top: 8%;
+    right: 20%;
     animation: floatIcon2 7s ease-in-out infinite;
 }
 
 .floating-icon.icon-3 {
-    top: 40%;
-    left: 0;
+    top: 42%;
+    left: 5%;
     animation: floatIcon3 5s ease-in-out infinite;
 }
 
 .floating-icon.icon-4 {
-    top: 40%;
-    right: 0;
+    top: 42%;
+    right: 5%;
     animation: floatIcon4 6.5s ease-in-out infinite;
 }
 
 .floating-icon.icon-5 {
-    bottom: 10%;
-    left: 15%;
+    bottom: 12%;
+    left: 20%;
     animation: floatIcon5 5.5s ease-in-out infinite;
 }
 
 .floating-icon.icon-6 {
-    bottom: 10%;
-    right: 15%;
+    bottom: 12%;
+    right: 20%;
     animation: floatIcon6 7s ease-in-out infinite;
 }
 
@@ -832,22 +861,22 @@ body {
 }
 
 .hero-ring-1 {
-    width: 140px;
-    height: 140px;
+    width: 120px;
+    height: 120px;
     animation: ringRotate1 20s linear infinite;
     border-style: dashed;
 }
 
 .hero-ring-2 {
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 180px;
     animation: ringRotate2 30s linear infinite reverse;
     border-color: rgba(201, 255, 0, 0.2);
 }
 
 .hero-ring-3 {
-    width: 260px;
-    height: 260px;
+    width: 240px;
+    height: 240px;
     animation: ringRotate3 40s linear infinite;
     border-style: dotted;
     border-color: rgba(255, 255, 255, 0.05);
@@ -869,8 +898,8 @@ body {
 }
 
 .hero-core {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     background: linear-gradient(135deg, var(--accent), var(--accent-dark));
     border-radius: 50%;
     display: flex;
@@ -883,7 +912,7 @@ body {
 }
 
 .hero-core span {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 800;
     color: var(--black);
 }
@@ -941,16 +970,18 @@ body {
     flex-direction: column;
     align-items: center;
     pointer-events: auto;
+    opacity: 0;
+    animation: heroFadeIn 1s var(--ease-out-expo) 1.2s forwards;
 }
 
 .stat-float-1 {
-    top: 10%;
-    right: 10%;
+    top: 5%;
+    right: 5%;
 }
 
 .stat-float-2 {
-    bottom: 15%;
-    left: 10%;
+    bottom: 10%;
+    left: 5%;
 }
 
 .stat-float-number {
