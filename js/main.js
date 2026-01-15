@@ -19,6 +19,7 @@ class VestlabsApp {
         this.setupScrollProgress();
         this.setupAIParticles();
         this.setupContactMap();
+        this.setupBentoGradients();
     }
     
     // ==================== LOADER ====================
@@ -199,6 +200,67 @@ class VestlabsApp {
             particle.style.animationDuration = `${15 + Math.random() * 10}s`;
             container.appendChild(particle);
         }
+    }
+    
+    // ==================== BENTO GRADIENTS ====================
+    
+    setupBentoGradients() {
+        const gradientContainers = document.querySelectorAll('.bento-gradient');
+        
+        gradientContainers.forEach(container => {
+            const colorsAttr = container.getAttribute('data-colors');
+            if (!colorsAttr) return;
+            
+            try {
+                const colors = JSON.parse(colorsAttr);
+                this.createGradientSVGs(container, colors);
+            } catch (e) {
+                console.warn('Invalid colors JSON:', e);
+            }
+        });
+    }
+    
+    createGradientSVGs(container, colors) {
+        const rect = container.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height, 200);
+        
+        colors.forEach((color, index) => {
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            
+            // Random size between 50% and 150% of container
+            const circleSize = size * (0.5 + Math.random());
+            
+            svg.setAttribute('width', circleSize);
+            svg.setAttribute('height', circleSize);
+            svg.setAttribute('viewBox', '0 0 100 100');
+            svg.style.position = 'absolute';
+            svg.style.top = `${Math.random() * 50}%`;
+            svg.style.left = `${Math.random() * 50}%`;
+            svg.style.filter = 'blur(40px)';
+            
+            // Set animation CSS variables
+            svg.style.setProperty('--gradient-speed', `${15 + index * 5}s`);
+            svg.style.setProperty('--tx-1', (Math.random() - 0.5).toString());
+            svg.style.setProperty('--ty-1', (Math.random() - 0.5).toString());
+            svg.style.setProperty('--tx-2', (Math.random() - 0.5).toString());
+            svg.style.setProperty('--ty-2', (Math.random() - 0.5).toString());
+            svg.style.setProperty('--tx-3', (Math.random() - 0.5).toString());
+            svg.style.setProperty('--ty-3', (Math.random() - 0.5).toString());
+            svg.style.setProperty('--tx-4', (Math.random() - 0.5).toString());
+            svg.style.setProperty('--ty-4', (Math.random() - 0.5).toString());
+            
+            // Add animation delay for staggered effect
+            svg.style.animationDelay = `${index * -5}s`;
+            
+            circle.setAttribute('cx', '50');
+            circle.setAttribute('cy', '50');
+            circle.setAttribute('r', '50');
+            circle.setAttribute('fill', color);
+            
+            svg.appendChild(circle);
+            container.appendChild(svg);
+        });
     }
     
     // ==================== CONTACT MAP ====================
