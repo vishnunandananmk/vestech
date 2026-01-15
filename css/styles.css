@@ -501,24 +501,6 @@ body {
 
 .hero-title .line {
     display: block;
-    transform: translateY(0);
-    opacity: 1;
-    animation: heroLineReveal 1s var(--ease-out-expo) forwards;
-}
-
-.hero-title .line[data-delay="0"] { animation-delay: 0.3s; }
-.hero-title .line[data-delay="1"] { animation-delay: 0.4s; }
-.hero-title .line[data-delay="2"] { animation-delay: 0.5s; }
-
-@keyframes heroLineReveal {
-    from {
-        transform: translateY(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
 }
 
 .hero-title .line.accent {
@@ -530,28 +512,13 @@ body {
     color: var(--gray);
     font-size: clamp(1rem, 2vw, 1.125rem);
     line-height: 1.8;
-    margin-bottom: var(--space-xl);
-    opacity: 0;
-    animation: heroFadeIn 1s var(--ease-out-expo) 0.6s forwards;
-}
-
-@keyframes heroFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    margin-bottom: var(--space-lg);
 }
 
 .hero-cta {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-md);
-    opacity: 0;
-    animation: heroFadeIn 1s var(--ease-out-expo) 0.8s forwards;
 }
 
 /* Hero Scroll Indicator */
@@ -703,10 +670,8 @@ body {
 .hero-tech-stack {
     display: flex;
     gap: var(--space-sm);
-    margin-top: var(--space-xl);
+    margin-top: var(--space-lg);
     flex-wrap: wrap;
-    opacity: 0;
-    animation: heroFadeIn 1s var(--ease-out-expo) 1s forwards;
 }
 
 .tech-badge {
@@ -736,10 +701,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 450px;
+    min-height: 400px;
     overflow: hidden;
-    opacity: 0;
-    animation: heroFadeIn 1.2s var(--ease-out-expo) 0.5s forwards;
 }
 
 .hero-visual-inner {
@@ -970,8 +933,6 @@ body {
     flex-direction: column;
     align-items: center;
     pointer-events: auto;
-    opacity: 0;
-    animation: heroFadeIn 1s var(--ease-out-expo) 1.2s forwards;
 }
 
 .stat-float-1 {
