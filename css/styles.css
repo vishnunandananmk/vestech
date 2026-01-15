@@ -102,7 +102,7 @@ body {
 }
 
 .text-huge {
-    font-size: clamp(2.5rem, 10vw, 10rem);
+    font-size: clamp(2.5rem, 8vw, 6rem);
     line-height: 0.95;
     font-weight: 800;
     letter-spacing: -0.03em;
@@ -453,7 +453,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: var(--space-4xl) var(--container-padding) var(--space-3xl);
+    padding: var(--space-3xl) 0 var(--space-xl);
     position: relative;
     overflow: hidden;
 }
@@ -490,7 +490,7 @@ body {
 }
 
 .hero-title {
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-md);
 }
 
 .hero-title .line-wrapper {
@@ -508,11 +508,11 @@ body {
 }
 
 .hero-subtitle {
-    max-width: 550px;
+    max-width: 480px;
     color: var(--gray);
-    font-size: clamp(1rem, 2vw, 1.125rem);
-    line-height: 1.8;
-    margin-bottom: var(--space-lg);
+    font-size: clamp(0.95rem, 1.5vw, 1rem);
+    line-height: 1.7;
+    margin-bottom: var(--space-md);
 }
 
 .hero-cta {
@@ -597,7 +597,7 @@ body {
 .hero-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--space-xl);
+    gap: var(--space-lg);
     align-items: center;
     max-width: var(--container-max);
     margin: 0 auto;
@@ -669,21 +669,21 @@ body {
 /* Tech Stack Badges */
 .hero-tech-stack {
     display: flex;
-    gap: var(--space-sm);
-    margin-top: var(--space-lg);
+    gap: var(--space-xs);
+    margin-top: var(--space-md);
     flex-wrap: wrap;
 }
 
 .tech-badge {
-    width: 44px;
-    height: 44px;
+    width: 38px;
+    height: 38px;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.25rem;
+    font-size: 1rem;
     color: var(--gray);
     transition: all 0.3s ease;
 }
