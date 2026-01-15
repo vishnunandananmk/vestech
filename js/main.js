@@ -18,6 +18,7 @@ class VestlabsApp {
         this.setupSmoothScroll();
         this.setupScrollProgress();
         this.setupAIParticles();
+        this.setupContactMap();
     }
     
     // ==================== LOADER ====================
@@ -198,6 +199,86 @@ class VestlabsApp {
             particle.style.animationDuration = `${15 + Math.random() * 10}s`;
             container.appendChild(particle);
         }
+    }
+    
+    // ==================== CONTACT MAP ====================
+    
+    setupContactMap() {
+        // Kochi, Kerala, India coordinates
+        const kochiCoords = [76.2673, 9.9312]; // [longitude, latitude]
+        
+        // Store map instance
+        this.contactMap = null;
+        this.mapInitialized = false;
+        
+        // Initialize map when contact page becomes visible
+        const initMap = () => {
+            const mapContainer = document.getElementById('contact-map');
+            if (!mapContainer || this.mapInitialized) return;
+            
+            // Check if MapLibre GL is loaded
+            if (typeof maplibregl === 'undefined') {
+                console.warn('MapLibre GL JS not loaded');
+                return;
+            }
+            
+            // Create map
+            this.contactMap = new maplibregl.Map({
+                container: 'contact-map',
+                style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
+                center: kochiCoords,
+                zoom: 13,
+                attributionControl: false
+            });
+            
+            // Add attribution control
+            this.contactMap.addControl(
+                new maplibregl.AttributionControl({ compact: true }),
+                'bottom-right'
+            );
+            
+            // Add navigation controls
+            this.contactMap.addControl(
+                new maplibregl.NavigationControl({ showCompass: false }),
+                'bottom-right'
+            );
+            
+            // Create custom marker element
+            const markerEl = document.createElement('div');
+            markerEl.className = 'map-marker';
+            markerEl.innerHTML = '<i class="fas fa-building"></i>';
+            
+            // Add marker
+            new maplibregl.Marker({ element: markerEl })
+                .setLngLat(kochiCoords)
+                .addTo(this.contactMap);
+            
+            this.mapInitialized = true;
+            
+            // Resize map after initialization
+            setTimeout(() => {
+                this.contactMap.resize();
+            }, 100);
+        };
+        
+        // Initialize on page load if contact page is active
+        const contactPage = document.getElementById('page-contact');
+        if (contactPage && contactPage.classList.contains('active')) {
+            setTimeout(initMap, 500);
+        }
+        
+        // Re-initialize when navigating to contact page
+        document.querySelectorAll('[data-page="contact"]').forEach(link => {
+            link.addEventListener('click', () => {
+                setTimeout(() => {
+                    if (!this.mapInitialized) {
+                        initMap();
+                    } else if (this.contactMap) {
+                        this.contactMap.resize();
+                    }
+                }, 100);
+            });
+        });
     }
 }
 

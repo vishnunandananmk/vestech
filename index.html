@@ -15,6 +15,10 @@
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- MapLibre GL JS -->
+    <link href="https://unpkg.com/maplibre-gl@4.1.0/dist/maplibre-gl.css" rel="stylesheet" />
+    <script src="https://unpkg.com/maplibre-gl@4.1.0/dist/maplibre-gl.js"></script>
+    
     <!-- Styles -->
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/animations.css">
@@ -1235,17 +1239,39 @@
                         </div>
                         <div class="contact-item">
                             <h4 class="font-syne">Phone</h4>
-                            <p><a href="tel:+15551234567">+1 (555) 123-4567</a></p>
+                            <p><a href="tel:+914842654321">+91 484 265 4321</a></p>
                         </div>
                         <div class="contact-item">
                             <h4 class="font-syne">Office</h4>
-                            <p>123 Tech Street, Suite 500<br>San Francisco, CA 94107</p>
+                            <p>Infopark SEZ, Kakkanad<br>Kochi, Kerala 682030, India</p>
                         </div>
                         <div class="social-links">
                             <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                             <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
                             <a href="#" class="social-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
                             <a href="#" class="social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Section -->
+        <section class="section map-section">
+            <div class="container">
+                <div class="section-header section-header-center reveal-group">
+                    <span class="section-label reveal-item">Find Us</span>
+                    <h2 class="section-title reveal-item">Our Location</h2>
+                </div>
+                <div class="map-container reveal-item">
+                    <div id="contact-map" class="contact-map"></div>
+                    <div class="map-overlay">
+                        <div class="map-card">
+                            <h4 class="font-syne">VESTLABS</h4>
+                            <p>Infopark SEZ, Kakkanad<br>Kochi, Kerala 682030<br>India</p>
+                            <a href="https://maps.google.com/?q=9.9312,76.2673" target="_blank" rel="noopener" class="map-directions">
+                                <i class="fas fa-directions"></i> Get Directions
+                            </a>
                         </div>
                     </div>
                 </div>

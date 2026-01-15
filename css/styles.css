@@ -2436,6 +2436,144 @@ textarea.form-input {
     color: var(--black);
 }
 
+/* ==================== MAP SECTION ==================== */
+.map-section {
+    padding-top: 0;
+}
+
+.map-container {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    height: 450px;
+    border: 1px solid var(--border-color);
+}
+
+.contact-map {
+    width: 100%;
+    height: 100%;
+}
+
+/* MapLibre GL overrides for dark theme */
+.maplibregl-map {
+    font-family: var(--font-primary);
+}
+
+.maplibregl-ctrl-attrib {
+    background: rgba(10, 10, 10, 0.8) !important;
+    color: var(--gray) !important;
+    font-size: 10px !important;
+}
+
+.maplibregl-ctrl-attrib a {
+    color: var(--gray) !important;
+}
+
+.map-overlay {
+    position: absolute;
+    top: var(--space-md);
+    left: var(--space-md);
+    z-index: 10;
+    pointer-events: none;
+}
+
+.map-card {
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    pointer-events: auto;
+    max-width: 250px;
+}
+
+.map-card h4 {
+    font-size: 1.125rem;
+    margin-bottom: var(--space-xs);
+    color: var(--accent);
+}
+
+.map-card p {
+    color: var(--gray);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-bottom: var(--space-sm);
+}
+
+.map-directions {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    color: var(--white);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.map-directions:hover {
+    color: var(--accent);
+}
+
+.map-directions i {
+    font-size: 1rem;
+}
+
+/* Custom map marker */
+.map-marker {
+    width: 40px;
+    height: 40px;
+    background: var(--accent);
+    border: 3px solid var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(201, 255, 0, 0.4);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.map-marker:hover {
+    transform: scale(1.1);
+}
+
+.map-marker i {
+    color: var(--black);
+    font-size: 1rem;
+}
+
+/* Map controls styling */
+.map-controls {
+    position: absolute;
+    bottom: var(--space-md);
+    right: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    z-index: 10;
+}
+
+.map-control-btn {
+    width: 36px;
+    height: 36px;
+    background: rgba(10, 10, 10, 0.9);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.map-control-btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--black);
+}
+
 /* ==================== FOOTER ==================== */
 .footer {
     border-top: 1px solid var(--border-color);
@@ -2704,6 +2842,23 @@ textarea.form-input {
     
     .form-row {
         grid-template-columns: 1fr;
+    }
+    
+    .map-container {
+        height: 350px;
+    }
+    
+    .map-card {
+        max-width: 200px;
+        padding: var(--space-sm);
+    }
+    
+    .map-card h4 {
+        font-size: 1rem;
+    }
+    
+    .map-card p {
+        font-size: 0.8125rem;
     }
     
     .footer {
