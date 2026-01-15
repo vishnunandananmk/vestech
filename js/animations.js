@@ -6,6 +6,7 @@
 class AnimationController {
     constructor() {
         this.revealElements = [];
+        // Store parallax items as objects: { el: Element, speed: number }
         this.parallaxElements = [];
         this.counterElements = [];
         this.heroLines = [];
@@ -13,6 +14,7 @@ class AnimationController {
         
         this.scrollY = 0;
         this.windowHeight = window.innerHeight;
+        this._rafPending = false;
         
         this.init();
     }
@@ -35,8 +37,8 @@ class AnimationController {
             '.reveal-item, .reveal-scale, .reveal-slide-right, .reveal-chars'
         );
         
-        // Parallax elements
-        this.parallaxElements = document.querySelectorAll('.parallax-element');
+        // Reset parallax items list (we populate it in setupParallax)
+        this.parallaxElements = [];
         
         // Counter elements
         this.counterElements = document.querySelectorAll('[data-count]');
@@ -204,7 +206,14 @@ class AnimationController {
     
     onScroll() {
         this.scrollY = window.scrollY;
-        this.updateParallax();
+        
+        // Throttle heavy work to animation frames (smooth + reliable)
+        if (this._rafPending) return;
+        this._rafPending = true;
+        requestAnimationFrame(() => {
+            this._rafPending = false;
+            this.updateParallax();
+        });
     }
     
     onResize() {

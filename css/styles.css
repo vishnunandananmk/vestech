@@ -998,6 +998,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-md);
+    margin-top: clamp(1rem, 4vh, 3rem);
 }
 
 /* Hero Scroll Indicator */
@@ -1007,9 +1008,13 @@ h1, h2, h3, h4, h5, h6 {
     left: 50%;
     transform: translateX(-50%);
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: var(--space-sm);
 }
+
+.hero-scroll .scroll-text { order: 1; }
+.hero-scroll .scroll-indicator { order: 2; }
 
 .scroll-indicator {
     width: 24px;
@@ -1150,7 +1155,7 @@ h1, h2, h3, h4, h5, h6 {
 .hero-tech-stack {
     display: flex;
     gap: var(--space-xs);
-    margin-top: var(--space-md);
+    margin-top: calc(var(--space-md) + 1.75rem);
     flex-wrap: wrap;
 }
 
@@ -2454,13 +2459,14 @@ h1, h2, h3, h4, h5, h6 {
 .cta-title {
     font-size: clamp(2.5rem, 8vw, 8rem);
     font-weight: 800;
-    line-height: 1.15;
+    line-height: 1.22;
     margin-bottom: var(--space-xl);
-    padding-bottom: 0.05em;
+    padding-bottom: 0.18em;
 }
 
 .cta-line {
     display: block;
+    padding-bottom: 0.12em;
 }
 
 .cta-line-accent {
