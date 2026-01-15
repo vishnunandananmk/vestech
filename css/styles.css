@@ -278,51 +278,9 @@ body {
 }
 
 /* ==================== PAGE TRANSITION ==================== */
+/* Disabled - clean instant page switch */
 .page-transition {
-    position: fixed;
-    inset: 0;
-    z-index: 9998;
-    pointer-events: none;
-    display: flex;
-    flex-direction: column;
-}
-
-.transition-layer {
-    flex: 1;
-    background: var(--black-light);
-    transform: scaleY(0);
-    transform-origin: bottom;
-}
-
-.transition-layer:nth-child(2) {
-    background: var(--black);
-    transform-origin: top;
-}
-
-.page-transition.entering .transition-layer:nth-child(1) {
-    animation: transitionIn 0.6s var(--ease-in-out) forwards;
-}
-
-.page-transition.entering .transition-layer:nth-child(2) {
-    animation: transitionIn 0.6s var(--ease-in-out) 0.1s forwards;
-}
-
-.page-transition.leaving .transition-layer:nth-child(1) {
-    animation: transitionOut 0.6s var(--ease-in-out) forwards;
-}
-
-.page-transition.leaving .transition-layer:nth-child(2) {
-    animation: transitionOut 0.6s var(--ease-in-out) 0.1s forwards;
-}
-
-@keyframes transitionIn {
-    from { transform: scaleY(0); }
-    to { transform: scaleY(1); }
-}
-
-@keyframes transitionOut {
-    from { transform: scaleY(1); }
-    to { transform: scaleY(0); }
+    display: none;
 }
 
 /* ==================== NAVIGATION ==================== */
@@ -645,14 +603,16 @@ body {
 /* Hero Container - Two Column Layout */
 .hero-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-xl);
+    grid-template-columns: 1.2fr 1fr;
+    gap: var(--space-lg);
     align-items: center;
     max-width: var(--container-max);
     margin: 0 auto;
     width: 100%;
     position: relative;
     z-index: 1;
+    padding: 0 var(--container-padding);
+    overflow: hidden;
 }
 
 /* Hero Orbs */
@@ -748,15 +708,16 @@ body {
     position: relative;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    min-height: 500px;
-    padding-left: var(--space-lg);
+    justify-content: center;
+    min-height: 450px;
+    overflow: visible;
 }
 
 .hero-visual-inner {
     position: relative;
-    width: 380px;
-    height: 380px;
+    width: 340px;
+    height: 340px;
+    flex-shrink: 0;
 }
 
 /* Floating Icons */
@@ -767,15 +728,15 @@ body {
 
 .floating-icon {
     position: absolute;
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     background: var(--black-light);
     border: 1px solid var(--border-color);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     color: var(--accent);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
@@ -871,22 +832,22 @@ body {
 }
 
 .hero-ring-1 {
-    width: 180px;
-    height: 180px;
+    width: 140px;
+    height: 140px;
     animation: ringRotate1 20s linear infinite;
     border-style: dashed;
 }
 
 .hero-ring-2 {
-    width: 240px;
-    height: 240px;
+    width: 200px;
+    height: 200px;
     animation: ringRotate2 30s linear infinite reverse;
     border-color: rgba(201, 255, 0, 0.2);
 }
 
 .hero-ring-3 {
-    width: 300px;
-    height: 300px;
+    width: 260px;
+    height: 260px;
     animation: ringRotate3 40s linear infinite;
     border-style: dotted;
     border-color: rgba(255, 255, 255, 0.05);
@@ -908,8 +869,8 @@ body {
 }
 
 .hero-core {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     background: linear-gradient(135deg, var(--accent), var(--accent-dark));
     border-radius: 50%;
     display: flex;
@@ -922,7 +883,7 @@ body {
 }
 
 .hero-core span {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 800;
     color: var(--black);
 }
@@ -975,7 +936,7 @@ body {
     backdrop-filter: blur(10px);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    padding: var(--space-sm) var(--space-md);
+    padding: var(--space-xs) var(--space-sm);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -983,24 +944,24 @@ body {
 }
 
 .stat-float-1 {
-    top: 15%;
-    right: 0;
+    top: 10%;
+    right: 10%;
 }
 
 .stat-float-2 {
-    bottom: 20%;
-    left: 0;
+    bottom: 15%;
+    left: 10%;
 }
 
 .stat-float-number {
     font-family: var(--font-display);
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 800;
     color: var(--accent);
 }
 
 .stat-float-label {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--gray);
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -2606,40 +2567,40 @@ textarea.form-input {
     }
     
     .hero-visual {
-        min-height: 400px;
-        margin-top: var(--space-xl);
+        min-height: 350px;
+        margin-top: var(--space-lg);
     }
     
     .hero-visual-inner {
-        width: 350px;
-        height: 350px;
+        width: 300px;
+        height: 300px;
     }
     
     .floating-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 1rem;
+        width: 44px;
+        height: 44px;
+        font-size: 0.95rem;
     }
     
-    .hero-ring-1 { width: 150px; height: 150px; }
-    .hero-ring-2 { width: 200px; height: 200px; }
-    .hero-ring-3 { width: 250px; height: 250px; }
+    .hero-ring-1 { width: 120px; height: 120px; }
+    .hero-ring-2 { width: 170px; height: 170px; }
+    .hero-ring-3 { width: 220px; height: 220px; }
     
     .hero-core {
-        width: 80px;
-        height: 80px;
+        width: 70px;
+        height: 70px;
     }
     
     .hero-core span {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
     
-    .stat-float-1 {
-        right: 10px;
+    .stat-float {
+        display: none;
     }
     
-    .stat-float-2 {
-        left: 10px;
+    .hero-connections {
+        display: none;
     }
 }
 

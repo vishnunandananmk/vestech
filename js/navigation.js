@@ -59,51 +59,36 @@ class NavigationController {
         if (this.isTransitioning) return;
         this.isTransitioning = true;
         
-        // Start transition
-        this.pageTransition.classList.add('entering');
+        // Hide current page
+        this.pages.forEach(page => page.classList.remove('active'));
         
-        // After transition covers screen
+        // Show new page
+        const newPage = document.getElementById(`page-${pageId}`);
+        if (newPage) {
+            newPage.classList.add('active');
+        }
+        
+        // Update current page
+        this.currentPage = pageId;
+        
+        // Scroll to top instantly
+        window.scrollTo(0, 0);
+        
+        // Update active nav link
+        this.setActiveNavLink();
+        
+        // Re-initialize animations for new page
         setTimeout(() => {
-            // Hide current page
-            this.pages.forEach(page => page.classList.remove('active'));
-            
-            // Show new page
-            const newPage = document.getElementById(`page-${pageId}`);
-            if (newPage) {
-                newPage.classList.add('active');
+            if (window.animationController) {
+                window.animationController.reinit();
             }
             
-            // Update current page
-            this.currentPage = pageId;
+            if (window.customCursor) {
+                window.customCursor.updateHoverElements();
+            }
             
-            // Scroll to top
-            window.scrollTo(0, 0);
-            
-            // Update active nav link
-            this.setActiveNavLink();
-            
-            // Start leave transition
-            this.pageTransition.classList.remove('entering');
-            this.pageTransition.classList.add('leaving');
-            
-            // Re-initialize animations for new page
-            setTimeout(() => {
-                if (window.animationController) {
-                    window.animationController.reinit();
-                }
-                
-                if (window.customCursor) {
-                    window.customCursor.updateHoverElements();
-                }
-            }, 100);
-            
-            // End transition
-            setTimeout(() => {
-                this.pageTransition.classList.remove('leaving');
-                this.isTransitioning = false;
-            }, 700);
-            
-        }, 600);
+            this.isTransitioning = false;
+        }, 50);
     }
     
     setActiveNavLink() {
