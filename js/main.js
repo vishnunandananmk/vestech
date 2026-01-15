@@ -20,6 +20,7 @@ class VestlabsApp {
         this.setupAIParticles();
         this.setupContactMap();
         this.setupBentoGradients();
+        this.setupGlowingEffects();
     }
     
     // ==================== LOADER ====================
@@ -200,6 +201,84 @@ class VestlabsApp {
             particle.style.animationDuration = `${15 + Math.random() * 10}s`;
             container.appendChild(particle);
         }
+    }
+    
+    // ==================== GLOWING EFFECTS ====================
+    
+    setupGlowingEffects() {
+        const glowingCards = document.querySelectorAll('.service-card');
+        
+        glowingCards.forEach(card => {
+            const glowEffect = card.querySelector('.glowing-effect');
+            if (!glowEffect) return;
+            
+            let animationFrame = null;
+            let currentAngle = 0;
+            let targetAngle = 0;
+            
+            const updateGlow = (e) => {
+                if (animationFrame) {
+                    cancelAnimationFrame(animationFrame);
+                }
+                
+                animationFrame = requestAnimationFrame(() => {
+                    const rect = card.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+                    
+                    const mouseX = e.clientX;
+                    const mouseY = e.clientY;
+                    
+                    // Check if mouse is near the card (within proximity)
+                    const proximity = 100;
+                    const isNear = 
+                        mouseX > rect.left - proximity &&
+                        mouseX < rect.right + proximity &&
+                        mouseY > rect.top - proximity &&
+                        mouseY < rect.bottom + proximity;
+                    
+                    // Check if mouse is in the inactive center zone
+                    const distanceFromCenter = Math.hypot(mouseX - centerX, mouseY - centerY);
+                    const inactiveRadius = Math.min(rect.width, rect.height) * 0.1;
+                    
+                    if (!isNear || distanceFromCenter < inactiveRadius) {
+                        glowEffect.style.setProperty('--glow-active', '0');
+                        return;
+                    }
+                    
+                    glowEffect.style.setProperty('--glow-active', '1');
+                    
+                    // Calculate angle from center to mouse
+                    targetAngle = Math.atan2(mouseY - centerY, mouseX - centerX) * (180 / Math.PI) + 90;
+                    
+                    // Smooth angle transition
+                    const angleDiff = ((targetAngle - currentAngle + 180) % 360) - 180;
+                    currentAngle += angleDiff * 0.15; // Easing factor
+                    
+                    glowEffect.style.setProperty('--glow-start', currentAngle.toString());
+                });
+            };
+            
+            // Track mouse movement on the document
+            document.addEventListener('pointermove', updateGlow, { passive: true });
+            
+            // Also update on scroll
+            window.addEventListener('scroll', () => {
+                if (animationFrame) {
+                    cancelAnimationFrame(animationFrame);
+                }
+                animationFrame = requestAnimationFrame(() => {
+                    // Re-trigger with last known position
+                    updateGlow({ clientX: this.lastMouseX || 0, clientY: this.lastMouseY || 0 });
+                });
+            }, { passive: true });
+        });
+        
+        // Track last mouse position
+        document.addEventListener('pointermove', (e) => {
+            this.lastMouseX = e.clientX;
+            this.lastMouseY = e.clientY;
+        }, { passive: true });
     }
     
     // ==================== BENTO GRADIENTS ====================

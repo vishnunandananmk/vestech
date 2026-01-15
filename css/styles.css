@@ -1175,39 +1175,105 @@ body {
 .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--border-color);
-    border: 1px solid var(--border-color);
+    gap: var(--space-md);
+    background: transparent;
 }
 
 .service-card {
-    background: var(--black);
-    padding: var(--space-xl);
     position: relative;
-    overflow: hidden;
-    transition: background 0.5s var(--ease-out-expo);
+    border-radius: var(--radius-lg);
+    padding: 3px;
+    background: var(--black);
+    transition: transform 0.4s var(--ease-out-expo);
 }
 
 .service-card:hover {
-    background: var(--black-light);
+    transform: translateY(-5px);
 }
 
-.service-card-glow {
+/* Glowing Effect Wrapper */
+.glowing-effect-wrapper {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-                rgba(201, 255, 0, 0.1) 0%, 
-                transparent 50%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    inset: 0;
+    border-radius: inherit;
     pointer-events: none;
+    overflow: hidden;
 }
 
-.service-card:hover .service-card-glow {
+.glowing-effect {
+    --glow-spread: 40;
+    --glow-start: 0;
+    --glow-active: 0;
+    --glow-border-width: 2px;
+    
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
     opacity: 1;
+}
+
+.glowing-effect::before {
+    content: '';
+    position: absolute;
+    inset: calc(-1 * var(--glow-border-width));
+    border-radius: inherit;
+    border: var(--glow-border-width) solid transparent;
+    background: 
+        radial-gradient(circle, #c9ff00 10%, transparent 20%),
+        radial-gradient(circle at 40% 40%, #60A5FA 5%, transparent 15%),
+        radial-gradient(circle at 60% 60%, #34D399 10%, transparent 20%), 
+        radial-gradient(circle at 40% 60%, #A78BFA 10%, transparent 20%),
+        repeating-conic-gradient(
+            from calc((var(--glow-start) - var(--glow-spread)) * 1deg) at 50% 50%,
+            #c9ff00 0%,
+            #60A5FA calc(25% / 5),
+            #34D399 calc(50% / 5), 
+            #A78BFA calc(75% / 5),
+            #c9ff00 calc(100% / 5)
+        );
+    background-attachment: fixed;
+    opacity: var(--glow-active);
+    transition: opacity 0.3s ease;
+    -webkit-mask-clip: padding-box, border-box;
+    mask-clip: padding-box, border-box;
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    -webkit-mask-image: 
+        linear-gradient(#000 0 0), 
+        conic-gradient(
+            from calc((var(--glow-start) - var(--glow-spread)) * 1deg),
+            transparent 0deg,
+            #fff var(--glow-spread, 40deg),
+            transparent calc(var(--glow-spread) * 2deg)
+        );
+    mask-image: 
+        linear-gradient(#000 0 0), 
+        conic-gradient(
+            from calc((var(--glow-start) - var(--glow-spread)) * 1deg),
+            transparent 0deg,
+            #fff var(--glow-spread, 40deg),
+            transparent calc(var(--glow-spread) * 2deg)
+        );
+}
+
+/* Fallback glow on hover for non-JS */
+.service-card:hover .glowing-effect::before {
+    opacity: 1;
+}
+
+/* Service Card Inner Content */
+.service-card-inner {
+    position: relative;
+    z-index: 1;
+    background: var(--black);
+    border-radius: calc(var(--radius-lg) - 3px);
+    padding: var(--space-xl);
+    height: 100%;
+    transition: background 0.3s ease;
+}
+
+.service-card:hover .service-card-inner {
+    background: var(--black-light);
 }
 
 .service-number {
@@ -1215,6 +1281,7 @@ body {
     font-size: 0.875rem;
     color: var(--gray-dark);
     margin-bottom: var(--space-lg);
+    display: block;
 }
 
 .service-icon {
