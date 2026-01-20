@@ -2626,16 +2626,8 @@ a.service-card {
 }
 
 .cloud-icons .fa-aws { color: #ff9900; }
-
-.cloud-icons .cloud-svg-icon {
-    width: 3.5rem;
-    height: 3.5rem;
-    transition: transform 0.3s var(--ease-out-expo);
-}
-
-.cloud-icons .cloud-svg-icon:hover {
-    transform: scale(1.2);
-}
+.cloud-icons .fa-microsoft { color: #0078D4; }
+.cloud-icons .fa-google { color: #4285F4; }
 
 .cloud-visual h3 {
     font-size: 2rem;
@@ -3865,10 +3857,6 @@ html, body {
         font-size: 2.5rem;
     }
     
-    .cloud-icons .cloud-svg-icon {
-        width: 2.5rem;
-        height: 2.5rem;
-    }
     
     /* Migration visual */
     .migration-visual {
@@ -4307,11 +4295,6 @@ html, body {
     
     .cloud-icons i {
         font-size: 2rem;
-    }
-    
-    .cloud-icons .cloud-svg-icon {
-        width: 2rem;
-        height: 2rem;
     }
     
     .cloud-visual h3 {
