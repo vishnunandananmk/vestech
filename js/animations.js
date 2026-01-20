@@ -1,5 +1,5 @@
 /**
- * VESTLABS - Premium Animations
+ * VESTLABZ - Premium Animations
  * Scroll reveals, parallax, counters, and more
  */
 

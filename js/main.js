@@ -1,9 +1,9 @@
 /**
- * VESTLABS - Main Application
+ * VESTLABZ - Main Application
  * Loader, forms, and general functionality
  */
 
-class VestlabsApp {
+class VestlabzApp {
     constructor() {
         this.loader = document.getElementById('loader');
         this.contactForm = document.getElementById('contactForm');
@@ -748,7 +748,7 @@ function formatNumber(num) {
 
 // Initialize app
 document.addEventListener('DOMContentLoaded', () => {
-    window.vestlabsApp = new VestlabsApp();
+    window.vestlabzApp = new VestlabzApp();
 });
 
 // ==================== KEYBOARD NAVIGATION ====================

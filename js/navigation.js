@@ -1,5 +1,5 @@
 /**
- * VESTLABS - Navigation Controller
+ * VESTLABZ - Navigation Controller
  * Handles page navigation, mobile menu, and transitions
  */
 

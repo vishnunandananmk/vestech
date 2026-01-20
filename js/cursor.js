@@ -1,5 +1,5 @@
 /**
- * VESTLABS - Custom Cursor
+ * VESTLABZ - Custom Cursor
  * Premium cursor with smooth following and hover effects
  */
 
