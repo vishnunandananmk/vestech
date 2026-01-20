@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The Complete Guide to Kubernetes in 2024 - Learn container orchestration, deployment strategies, and best practices">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>The Complete Guide to Kubernetes in 2024 | VESTLABS Blog</title>
+    <link rel="icon" type="image/png" href="/assets/images/favicon_v1.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    
+    <style>
+        /* Blog Post Specific Styles */
+        .blog-post-hero {
+            padding: calc(var(--space-4xl) + 4rem) 0 var(--space-2xl);
+            position: relative;
+            background: linear-gradient(135deg, var(--black) 0%, var(--black-light) 100%);
+        }
+        
+        .blog-post-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(201, 255, 0, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        
+        .blog-post-meta {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-md);
+            flex-wrap: wrap;
+        }
+        
+        .blog-post-category {
+            background: var(--accent);
+            color: var(--black);
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .blog-post-date {
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+        
+        .blog-post-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: var(--space-lg);
+            max-width: 900px;
+        }
+        
+        .blog-post-excerpt {
+            font-size: 1.25rem;
+            color: var(--gray-light);
+            max-width: 700px;
+            line-height: 1.7;
+        }
+        
+        .blog-post-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(201, 255, 0, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .blog-post-content {
+            padding: var(--space-3xl) 0;
+        }
+        
+        .blog-post-content .container {
+            max-width: 800px;
+        }
+        
+        .blog-post-body {
+            font-size: 1.0625rem;
+            line-height: 1.85;
+            color: var(--gray-light);
+        }
+        
+        .blog-post-body h2 {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--white);
+            margin: var(--space-2xl) 0 var(--space-md);
+        }
+        
+        .blog-post-body h3 {
+            font-family: var(--font-display);
+            font-size: 1.375rem;
+            font-weight: 600;
+            color: var(--white);
+            margin: var(--space-xl) 0 var(--space-sm);
+        }
+        
+        .blog-post-body p {
+            margin-bottom: var(--space-md);
+        }
+        
+        .blog-post-body ul, .blog-post-body ol {
+            margin: var(--space-md) 0;
+            padding-left: var(--space-lg);
+        }
+        
+        .blog-post-body li {
+            margin-bottom: var(--space-sm);
+        }
+        
+        .blog-post-body code {
+            background: var(--black-lighter);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            color: var(--accent);
+        }
+        
+        .blog-post-body pre {
+            background: var(--black-lighter);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            overflow-x: auto;
+            margin: var(--space-lg) 0;
+        }
+        
+        .blog-post-body pre code {
+            background: none;
+            padding: 0;
+            color: var(--gray-light);
+        }
+        
+        .blog-post-body blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: var(--space-lg);
+            margin: var(--space-lg) 0;
+            font-style: italic;
+            color: var(--gray);
+        }
+        
+        .blog-post-body a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .blog-post-body a:hover {
+            opacity: 0.8;
+        }
+        
+        .blog-post-body img {
+            max-width: 100%;
+            border-radius: var(--radius-md);
+            margin: var(--space-lg) 0;
+        }
+        
+        .blog-post-body .highlight-box {
+            background: rgba(201, 255, 0, 0.05);
+            border: 1px solid rgba(201, 255, 0, 0.2);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            margin: var(--space-lg) 0;
+        }
+        
+        .blog-post-body .highlight-box h4 {
+            color: var(--accent);
+            margin-bottom: var(--space-sm);
+            font-family: var(--font-display);
+        }
+        
+        .blog-author {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-xl) 0;
+            border-top: 1px solid var(--border-color);
+            margin-top: var(--space-2xl);
+        }
+        
+        .blog-author-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--black);
+            font-size: 1.25rem;
+        }
+        
+        .blog-author-info h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        
+        .blog-author-info p {
+            color: var(--gray);
+            font-size: 0.875rem;
+            margin: 0;
+        }
+        
+        .blog-share {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-lg) 0;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .blog-share span {
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+        
+        .blog-share a {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .blog-share a:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--black);
+        }
+        
+        .blog-nav {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--space-xl) 0;
+            border-top: 1px solid var(--border-color);
+            margin-top: var(--space-lg);
+        }
+        
+        .blog-nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            transition: color 0.3s ease;
+        }
+        
+        .blog-nav a:hover {
+            color: var(--accent);
+        }
+        
+        .back-to-blog {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: var(--space-lg);
+            transition: gap 0.3s ease;
+        }
+        
+        .back-to-blog:hover {
+            gap: var(--space-md);
+        }
+        
+        /* Nav adjustments for blog pages */
+        .nav-logo, .nav-link, .mobile-link {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor" aria-hidden="true"></div>
+    <div class="cursor-dot" aria-hidden="true"></div>
+
+    <!-- Navigation -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <a href="../index.html" class="nav-logo" aria-label="VESTLABS Home">
+            <span class="logo-text">VESTLABS</span>
+        </a>
+        <div class="nav-links">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../index.html#services" class="nav-link">Services</a>
+            <a href="../index.html#about" class="nav-link">About</a>
+            <a href="../index.html#ai-labs" class="nav-link">AI Labs</a>
+            <a href="../index.html#careers" class="nav-link">Careers</a>
+            <a href="../index.html#blogs" class="nav-link active">Blog</a>
+            <a href="../index.html#contact" class="nav-link">Contact</a>
+        </div>
+        
+        <button class="nav-menu-btn" aria-label="Toggle menu" aria-expanded="false">
+            <span class="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <div class="mobile-menu-content">
+            <a href="../index.html" class="mobile-link">Home</a>
+            <a href="../index.html#services" class="mobile-link">Services</a>
+            <a href="../index.html#about" class="mobile-link">About</a>
+            <a href="../index.html#ai-labs" class="mobile-link">AI Labs</a>
+            <a href="../index.html#careers" class="mobile-link">Careers</a>
+            <a href="../index.html#blogs" class="mobile-link">Blog</a>
+            <a href="../index.html#contact" class="mobile-link">Contact</a>
+        </div>
+    </div>
+
+    <!-- Blog Post Hero -->
+    <section class="blog-post-hero">
+        <div class="container">
+            <a href="../index.html#blogs" class="back-to-blog">
+                <i class="fas fa-arrow-left"></i>
+                Back to Blog
+            </a>
+            
+            <div class="blog-post-icon reveal-item">
+                <i class="fas fa-dharmachakra"></i>
+            </div>
+            
+            <div class="blog-post-meta reveal-item">
+                <span class="blog-post-category">DevOps</span>
+                <span class="blog-post-date">Dec 15, 2024 · 12 min read</span>
+            </div>
+            
+            <h1 class="blog-post-title reveal-item">The Complete Guide to Kubernetes in 2024</h1>
+            
+            <p class="blog-post-excerpt reveal-item">
+                Master container orchestration with this comprehensive guide covering architecture, deployments, scaling, security, and production best practices for modern cloud-native applications.
+            </p>
+        </div>
+    </section>
+
+    <!-- Blog Post Content -->
+    <article class="blog-post-content">
+        <div class="container">
+            <div class="blog-post-body">
+                <h2>Introduction to Kubernetes</h2>
+                <p>
+                    Kubernetes, often abbreviated as K8s, has become the de facto standard for container orchestration in modern cloud-native development. Originally developed by Google and now maintained by the Cloud Native Computing Foundation (CNCF), Kubernetes automates the deployment, scaling, and management of containerized applications.
+                </p>
+                <p>
+                    In 2024, Kubernetes continues to evolve with improved security features, better resource management, and enhanced developer experience. Whether you're just starting your Kubernetes journey or looking to deepen your expertise, this guide covers everything you need to know.
+                </p>
+
+                <h2>Understanding Kubernetes Architecture</h2>
+                <p>
+                    Kubernetes follows a master-worker architecture pattern, consisting of a control plane and multiple worker nodes. Understanding this architecture is crucial for effectively managing your clusters.
+                </p>
+
+                <h3>Control Plane Components</h3>
+                <ul>
+                    <li><strong>kube-apiserver:</strong> The front-end for the Kubernetes control plane, handling all REST operations and serving as the gateway for all administrative tasks.</li>
+                    <li><strong>etcd:</strong> A consistent and highly-available key-value store used as Kubernetes' backing store for all cluster data.</li>
+                    <li><strong>kube-scheduler:</strong> Watches for newly created Pods with no assigned node and selects a node for them to run on.</li>
+                    <li><strong>kube-controller-manager:</strong> Runs controller processes that regulate the state of the cluster.</li>
+                </ul>
+
+                <h3>Worker Node Components</h3>
+                <ul>
+                    <li><strong>kubelet:</strong> An agent that runs on each node in the cluster, ensuring containers are running in a Pod.</li>
+                    <li><strong>kube-proxy:</strong> Maintains network rules on nodes, enabling network communication to your Pods.</li>
+                    <li><strong>Container Runtime:</strong> The software responsible for running containers (containerd, CRI-O, etc.).</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <h4>💡 Pro Tip</h4>
+                    <p>In production environments, always run at least 3 control plane nodes for high availability. Use managed Kubernetes services like EKS, GKE, or AKS to reduce operational overhead.</p>
+                </div>
+
+                <h2>Core Kubernetes Objects</h2>
+                
+                <h3>Pods</h3>
+                <p>
+                    Pods are the smallest deployable units in Kubernetes. A Pod represents a single instance of a running process in your cluster and can contain one or more containers that share storage and network resources.
+                </p>
+
+                <pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  labels:
+    app: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.25
+    ports:
+    - containerPort: 80
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"</code></pre>
+
+                <h3>Deployments</h3>
+                <p>
+                    Deployments provide declarative updates for Pods and ReplicaSets. They're the recommended way to manage stateless applications in production.
+                </p>
+
+                <pre><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.25
+        ports:
+        - containerPort: 80
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0</code></pre>
+
+                <h3>Services</h3>
+                <p>
+                    Services provide a stable endpoint for accessing your Pods. Kubernetes supports several service types:
+                </p>
+                <ul>
+                    <li><strong>ClusterIP:</strong> Exposes the service on an internal IP in the cluster (default)</li>
+                    <li><strong>NodePort:</strong> Exposes the service on each Node's IP at a static port</li>
+                    <li><strong>LoadBalancer:</strong> Exposes the service externally using a cloud provider's load balancer</li>
+                    <li><strong>ExternalName:</strong> Maps the service to a DNS name</li>
+                </ul>
+
+                <h2>Deployment Strategies</h2>
+                
+                <h3>Rolling Updates</h3>
+                <p>
+                    Rolling updates gradually replace old Pods with new ones, ensuring zero downtime. This is the default strategy and works well for most applications.
+                </p>
+
+                <h3>Blue-Green Deployments</h3>
+                <p>
+                    Run two identical production environments (blue and green). Deploy to the inactive environment, test, then switch traffic. This provides instant rollback capability.
+                </p>
+
+                <h3>Canary Deployments</h3>
+                <p>
+                    Release changes to a small subset of users before rolling out to the entire infrastructure. This helps catch issues early with minimal impact.
+                </p>
+
+                <div class="highlight-box">
+                    <h4>🚀 Best Practice</h4>
+                    <p>Use tools like Argo Rollouts or Flagger for advanced deployment strategies. They provide automated canary analysis and progressive delivery capabilities.</p>
+                </div>
+
+                <h2>Scaling Applications</h2>
+                
+                <h3>Horizontal Pod Autoscaler (HPA)</h3>
+                <p>
+                    HPA automatically scales the number of Pods based on observed CPU utilization or custom metrics.
+                </p>
+
+                <pre><code>apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: nginx-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: nginx-deployment
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70</code></pre>
+
+                <h3>Vertical Pod Autoscaler (VPA)</h3>
+                <p>
+                    VPA automatically adjusts the CPU and memory reservations for your Pods, helping to right-size your applications.
+                </p>
+
+                <h3>Cluster Autoscaler</h3>
+                <p>
+                    Automatically adjusts the size of your Kubernetes cluster by adding or removing nodes based on resource demands.
+                </p>
+
+                <h2>Security Best Practices</h2>
+                
+                <h3>Pod Security Standards</h3>
+                <p>
+                    Kubernetes 1.25+ enforces Pod Security Standards (PSS) at the namespace level. Use these profiles to restrict Pod capabilities:
+                </p>
+                <ul>
+                    <li><strong>Privileged:</strong> Unrestricted policy (not recommended for production)</li>
+                    <li><strong>Baseline:</strong> Minimally restrictive policy preventing known privilege escalations</li>
+                    <li><strong>Restricted:</strong> Heavily restricted policy following security best practices</li>
+                </ul>
+
+                <h3>Network Policies</h3>
+                <p>
+                    Network Policies allow you to control traffic flow between Pods. By default, all Pods can communicate with each other—use Network Policies to implement zero-trust networking.
+                </p>
+
+                <pre><code>apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-all-ingress
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress</code></pre>
+
+                <h3>Secrets Management</h3>
+                <p>
+                    Never store secrets in plain text. Use Kubernetes Secrets with encryption at rest, or integrate with external secret management solutions like HashiCorp Vault, AWS Secrets Manager, or Azure Key Vault.
+                </p>
+
+                <h2>Observability</h2>
+                
+                <h3>Monitoring with Prometheus</h3>
+                <p>
+                    Prometheus is the standard for Kubernetes monitoring. Use the kube-prometheus-stack Helm chart for a complete monitoring solution including Prometheus, Grafana, and alerting.
+                </p>
+
+                <h3>Logging with Fluentd/Fluent Bit</h3>
+                <p>
+                    Implement centralized logging using Fluentd or Fluent Bit as DaemonSets to collect logs from all Pods and forward them to your logging backend (Elasticsearch, Loki, etc.).
+                </p>
+
+                <h3>Distributed Tracing</h3>
+                <p>
+                    Use OpenTelemetry for distributed tracing across your microservices. Tools like Jaeger or Zipkin help visualize request flows and identify bottlenecks.
+                </p>
+
+                <h2>Production Checklist</h2>
+                <p>
+                    Before deploying to production, ensure you've addressed these critical areas:
+                </p>
+                <ul>
+                    <li>✅ Resource requests and limits set for all containers</li>
+                    <li>✅ Liveness and readiness probes configured</li>
+                    <li>✅ Pod Disruption Budgets (PDBs) defined</li>
+                    <li>✅ Network Policies implemented</li>
+                    <li>✅ Secrets encrypted at rest</li>
+                    <li>✅ RBAC configured with least privilege</li>
+                    <li>✅ Monitoring and alerting in place</li>
+                    <li>✅ Backup and disaster recovery tested</li>
+                    <li>✅ Horizontal Pod Autoscaler configured</li>
+                    <li>✅ Container images scanned for vulnerabilities</li>
+                </ul>
+
+                <h2>Conclusion</h2>
+                <p>
+                    Kubernetes is a powerful platform that enables organizations to build, deploy, and scale applications efficiently. While the learning curve can be steep, mastering Kubernetes fundamentals will significantly enhance your ability to manage modern cloud-native infrastructure.
+                </p>
+                <p>
+                    At VESTLABS, we help organizations implement and optimize their Kubernetes infrastructure. Whether you're migrating to containers or scaling existing deployments, our team of certified Kubernetes experts is here to help.
+                </p>
+
+                <div class="blog-author">
+                    <div class="blog-author-avatar">SK</div>
+                    <div class="blog-author-info">
+                        <h4>Sarah Kim</h4>
+                        <p>Senior DevOps Engineer at VESTLABS</p>
+                    </div>
+                </div>
+
+                <div class="blog-share">
+                    <span>Share this article:</span>
+                    <a href="#" aria-label="Share on Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Share on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="Share on Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Copy link"><i class="fas fa-link"></i></a>
+                </div>
+
+                <div class="blog-nav">
+                    <a href="gitops-best-practices.html">
+                        <i class="fas fa-arrow-left"></i>
+                        GitOps Best Practices
+                    </a>
+                    <a href="aws-vs-azure-vs-gcp.html">
+                        AWS vs Azure vs GCP
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo font-syne">VESTLABS</div>
+                    <p class="footer-desc">Transforming businesses through innovative DevOps, Cloud, and AI solutions. Your partner in digital excellence.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Services</h4>
+                        <ul>
+                            <li><a href="../index.html">DevOps</a></li>
+                            <li><a href="../index.html">Cloud Solutions</a></li>
+                            <li><a href="../index.html">Migration</a></li>
+                            <li><a href="../index.html">AI Labs</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="../index.html">About</a></li>
+                            <li><a href="../index.html">Careers</a></li>
+                            <li><a href="../index.html#blogs">Blog</a></li>
+                            <li><a href="../index.html">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Legal</h4>
+                        <ul>
+                            <li><a href="../privacy.html">Privacy Policy</a></li>
+                            <li><a href="../terms.html">Terms of Service</a></li>
+                            <li><a href="../cookies.html">Cookie Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 VESTLABS. All rights reserved.</p>
+                <div class="footer-status">
+                    <span class="status-dot"></span>
+                    <span>All systems operational</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../js/cursor.js"></script>
+    <script src="../js/animations.js"></script>
+    <script>
+        // Mobile menu functionality
+        const menuBtn = document.querySelector('.nav-menu-btn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                menuBtn.classList.toggle('open');
+                mobileMenu.classList.toggle('open');
+                document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+            });
+        }
+    </script>
+</body>
+</html>

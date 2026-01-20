@@ -681,3 +681,76 @@
 ::-webkit-scrollbar-thumb:hover {
     background: var(--accent);
 }
+
+/* ==================== MOBILE ANIMATION ADJUSTMENTS ==================== */
+
+@media (max-width: 768px) {
+    /* Reduce animation distances on mobile to prevent overflow */
+    .reveal-item {
+        transform: translateY(30px);
+    }
+    
+    .reveal-slide-right {
+        transform: translateX(-30px);
+    }
+    
+    .reveal-scale {
+        transform: scale(0.95);
+    }
+    
+    /* Reduce parallax effect on mobile */
+    .parallax-element {
+        transform: none !important;
+    }
+    
+    /* Simplify particle animations */
+    @keyframes particleFloat {
+        0% {
+            transform: translateY(100vh) translateX(0);
+            opacity: 0;
+        }
+        10% {
+            opacity: 0.2;
+        }
+        90% {
+            opacity: 0.2;
+        }
+        100% {
+            transform: translateY(-10vh) translateX(20px);
+            opacity: 0;
+        }
+    }
+    
+    /* Disable heavy animations */
+    .glitch::before,
+    .glitch::after {
+        display: none;
+    }
+    
+    /* Simplify hover effects */
+    .perspective-tilt:hover {
+        transform: translateY(-5px);
+    }
+}
+
+@media (max-width: 480px) {
+    /* Further reduce for small screens */
+    .reveal-item {
+        transform: translateY(20px);
+    }
+    
+    .reveal-slide-right {
+        transform: translateX(-20px);
+    }
+    
+    /* Disable some animations completely */
+    .morph-blob {
+        animation: none;
+        border-radius: 50%;
+    }
+    
+    .neon-glow {
+        animation: none;
+        text-shadow: 0 0 10px var(--accent);
+    }
+}

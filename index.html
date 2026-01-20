@@ -6,6 +6,7 @@
     <meta name="description" content="VESTLABS - Enterprise-grade DevOps, Cloud Infrastructure, and AI Solutions">
     <meta name="theme-color" content="#0a0a0a">
     <title>VESTLABS | DevOps, Cloud & AI Solutions</title>
+    <link rel="icon" type="image/png" href="/assets/images/favicon_v1.png">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -796,8 +797,18 @@
                         <div class="cloud-visual">
                             <div class="cloud-icons">
                                 <i class="fab fa-aws"></i>
-                                <i class="fab fa-microsoft"></i>
-                                <i class="fab fa-google"></i>
+                                <svg class="cloud-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" aria-label="Microsoft Azure">
+                                    <path d="M95.4 80.6l-29-27.6 29-35.2c.8-1 .6-2.5-.5-3.2-.4-.3-.9-.4-1.4-.4H63.2c-.7 0-1.4.3-1.9.8L33.2 47.3c-.9 1-.8 2.5.2 3.4l.1.1 29.1 27.6-29.1 35.2c-.8 1-.6 2.5.5 3.2.4.3.9.4 1.4.4h30.3c.7 0 1.4-.3 1.9-.8l28.1-32.3c.9-1 .8-2.5-.3-3.5z" fill="#0078D4" transform="scale(0.5) translate(48, 48)"/>
+                                    <path d="M50.3 48L18.7 15.3c-.9-1-2.4-1-3.4-.1-.5.4-.7 1-.7 1.6v62.5c0 1.3 1.1 2.4 2.4 2.4.6 0 1.2-.2 1.6-.7L50.3 48z" fill="#50E6FF" transform="scale(0.5) translate(48, 48)"/>
+                                    <path d="M50.3 48l31.6 32.7c.9 1 .9 2.5-.1 3.4-.4.4-1 .7-1.6.7H17.6c-1.3 0-2.4-1.1-2.4-2.4 0-.6.2-1.2.7-1.6L50.3 48z" fill="#0078D4" transform="scale(0.5) translate(48, 48)"/>
+                                </svg>
+                                <svg class="cloud-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-label="Google Cloud Platform">
+                                    <path d="M12.19 2.38a9.344 9.344 0 0 0-9.234 6.893c.053-.02-.055.013 0 0-3.875 2.551-3.922 8.113-.247 10.771l.006-.004-.007.004c1.717 1.305 3.882 1.883 6.058 1.622l6.587.003a9.32 9.32 0 0 0 5.87-2.08 9.34 9.34 0 0 0 3.407-7.159 9.341 9.341 0 0 0-9.342-9.34 9.32 9.32 0 0 0-3.098.29z" fill="#4285F4"/>
+                                    <path d="M5.98 14.98l-.003-.003a5.098 5.098 0 0 1-.776-5.022c.058-.16.127-.32.2-.473a5.133 5.133 0 0 1 2.386-2.395l3.238-1.878-3.5 6.062-1.545 3.71z" fill="#EA4335"/>
+                                    <path d="M12.19 5.55a5.133 5.133 0 0 1 4.445 2.567l-3.238 1.878a5.098 5.098 0 0 0-1.207-.144c-2.818 0-5.1 2.282-5.1 5.1 0 .413.05.82.145 1.207l-3.238 1.877A9.332 9.332 0 0 1 2.85 12.05a9.341 9.341 0 0 1 9.34-6.5z" fill="#FBBC04"/>
+                                    <path d="M12.19 22.35a9.341 9.341 0 0 1-9.34-9.34c0-.718.082-1.43.244-2.12l3.238 1.877c-.095.387-.145.794-.145 1.207a5.1 5.1 0 0 0 5.1 5.1 5.098 5.098 0 0 0 1.207-.145l3.238 1.878a9.32 9.32 0 0 1-3.542.543z" fill="#34A853"/>
+                                    <path d="M21.53 12.05a9.341 9.341 0 0 1-9.34 9.34 9.32 9.32 0 0 1-3.098-.29l3.238-1.878a5.098 5.098 0 0 0 4.893-3.622 5.133 5.133 0 0 0 .2-.473 5.098 5.098 0 0 0-.776-5.022l3.238-1.878a9.32 9.32 0 0 1 1.645 3.823z" fill="#4285F4"/>
+                                </svg>
                             </div>
                             <h3 class="font-syne">Multi-Cloud</h3>
                             <span>Architecture</span>
@@ -1106,7 +1117,7 @@
         <section class="section">
             <div class="container">
                 <div class="services-grid ai-services-grid">
-                    <article class="service-card ai-card reveal-scale" data-delay="0">
+                    <a href="ai-labs/machine-learning.html" class="service-card ai-card reveal-scale" data-delay="0" style="text-decoration:none;color:inherit">
                         <div class="glowing-effect-wrapper">
                             <div class="glowing-effect"></div>
                         </div>
@@ -1116,10 +1127,11 @@
                             </div>
                             <h3 class="service-title">Machine Learning</h3>
                             <p class="service-desc">Custom ML models for prediction, classification, and pattern recognition. Supervised & unsupervised learning solutions.</p>
+                            <span class="service-link"><span>Learn more</span><i class="fas fa-arrow-right"></i></span>
                         </div>
-                    </article>
+                    </a>
                     
-                    <article class="service-card ai-card reveal-scale" data-delay="1">
+                    <a href="ai-labs/natural-language-processing.html" class="service-card ai-card reveal-scale" data-delay="1" style="text-decoration:none;color:inherit">
                         <div class="glowing-effect-wrapper">
                             <div class="glowing-effect"></div>
                         </div>
@@ -1129,10 +1141,11 @@
                             </div>
                             <h3 class="service-title">Natural Language Processing</h3>
                             <p class="service-desc">Advanced NLP solutions including sentiment analysis, chatbots, and document intelligence systems.</p>
+                            <span class="service-link"><span>Learn more</span><i class="fas fa-arrow-right"></i></span>
                         </div>
-                    </article>
+                    </a>
                     
-                    <article class="service-card ai-card reveal-scale" data-delay="2">
+                    <a href="ai-labs/computer-vision.html" class="service-card ai-card reveal-scale" data-delay="2" style="text-decoration:none;color:inherit">
                         <div class="glowing-effect-wrapper">
                             <div class="glowing-effect"></div>
                         </div>
@@ -1142,10 +1155,11 @@
                             </div>
                             <h3 class="service-title">Computer Vision</h3>
                             <p class="service-desc">Image and video analysis powered by state-of-the-art models. Object detection, facial recognition, and medical imaging.</p>
+                            <span class="service-link"><span>Learn more</span><i class="fas fa-arrow-right"></i></span>
                         </div>
-                    </article>
+                    </a>
                     
-                    <article class="service-card ai-card reveal-scale" data-delay="3">
+                    <a href="ai-labs/generative-ai.html" class="service-card ai-card reveal-scale" data-delay="3" style="text-decoration:none;color:inherit">
                         <div class="glowing-effect-wrapper">
                             <div class="glowing-effect"></div>
                         </div>
@@ -1155,10 +1169,11 @@
                             </div>
                             <h3 class="service-title">Generative AI</h3>
                             <p class="service-desc">Create content, code, and creative assets with AI. LLM fine-tuning and text-to-image generation.</p>
+                            <span class="service-link"><span>Learn more</span><i class="fas fa-arrow-right"></i></span>
                         </div>
-                    </article>
+                    </a>
                     
-                    <article class="service-card ai-card reveal-scale" data-delay="4">
+                    <a href="ai-labs/predictive-analytics.html" class="service-card ai-card reveal-scale" data-delay="4" style="text-decoration:none;color:inherit">
                         <div class="glowing-effect-wrapper">
                             <div class="glowing-effect"></div>
                         </div>
@@ -1168,10 +1183,11 @@
                             </div>
                             <h3 class="service-title">Predictive Analytics</h3>
                             <p class="service-desc">Forecast trends and make data-driven decisions. Demand forecasting, risk assessment, and churn prediction.</p>
+                            <span class="service-link"><span>Learn more</span><i class="fas fa-arrow-right"></i></span>
                         </div>
-                    </article>
+                    </a>
                     
-                    <article class="service-card ai-card reveal-scale" data-delay="5">
+                    <a href="ai-labs/mlops.html" class="service-card ai-card reveal-scale" data-delay="5" style="text-decoration:none;color:inherit">
                         <div class="glowing-effect-wrapper">
                             <div class="glowing-effect"></div>
                         </div>
@@ -1181,8 +1197,9 @@
                             </div>
                             <h3 class="service-title">MLOps</h3>
                             <p class="service-desc">Deploy and scale ML models in production. Model deployment, continuous training, and monitoring.</p>
+                            <span class="service-link"><span>Learn more</span><i class="fas fa-arrow-right"></i></span>
                         </div>
-                    </article>
+                    </a>
                 </div>
             </div>
         </section>
@@ -1346,7 +1363,7 @@
         <section class="section">
             <div class="container">
                 <div class="blog-grid">
-                    <article class="blog-card reveal-item" data-delay="0">
+                    <a href="blogs/kubernetes-guide.html" class="blog-card reveal-item" data-delay="0">
                         <div class="blog-image">
                             <i class="fas fa-dharmachakra"></i>
                         </div>
@@ -1355,9 +1372,9 @@
                             <h3 class="blog-title font-syne">The Complete Guide to Kubernetes in 2024</h3>
                             <p class="blog-meta">Dec 15, 2024 · 12 min read</p>
                         </div>
-                    </article>
+                    </a>
                     
-                    <article class="blog-card reveal-item" data-delay="1">
+                    <a href="blogs/aws-vs-azure-vs-gcp.html" class="blog-card reveal-item" data-delay="1">
                         <div class="blog-image">
                             <i class="fas fa-cloud"></i>
                         </div>
@@ -1366,9 +1383,9 @@
                             <h3 class="blog-title font-syne">AWS vs Azure vs GCP: 2024 Comparison</h3>
                             <p class="blog-meta">Dec 10, 2024 · 8 min read</p>
                         </div>
-                    </article>
+                    </a>
                     
-                    <article class="blog-card reveal-item" data-delay="2">
+                    <a href="blogs/implementing-rag.html" class="blog-card reveal-item" data-delay="2">
                         <div class="blog-image">
                             <i class="fas fa-brain"></i>
                         </div>
@@ -1377,9 +1394,9 @@
                             <h3 class="blog-title font-syne">Implementing RAG with OpenAI and Pinecone</h3>
                             <p class="blog-meta">Dec 5, 2024 · 15 min read</p>
                         </div>
-                    </article>
+                    </a>
                     
-                    <article class="blog-card reveal-item" data-delay="3">
+                    <a href="blogs/zero-trust-architecture.html" class="blog-card reveal-item" data-delay="3">
                         <div class="blog-image">
                             <i class="fas fa-shield-alt"></i>
                         </div>
@@ -1388,9 +1405,9 @@
                             <h3 class="blog-title font-syne">Zero Trust Architecture Explained</h3>
                             <p class="blog-meta">Nov 28, 2024 · 10 min read</p>
                         </div>
-                    </article>
+                    </a>
                     
-                    <article class="blog-card reveal-item" data-delay="4">
+                    <a href="blogs/gitops-best-practices.html" class="blog-card reveal-item" data-delay="4">
                         <div class="blog-image">
                             <i class="fas fa-code-branch"></i>
                         </div>
@@ -1399,9 +1416,9 @@
                             <h3 class="blog-title font-syne">GitOps Best Practices for Teams</h3>
                             <p class="blog-meta">Nov 20, 2024 · 9 min read</p>
                         </div>
-                    </article>
+                    </a>
                     
-                    <article class="blog-card reveal-item" data-delay="5">
+                    <a href="blogs/postgresql-performance-tuning.html" class="blog-card reveal-item" data-delay="5">
                         <div class="blog-image">
                             <i class="fas fa-database"></i>
                         </div>
@@ -1410,7 +1427,7 @@
                             <h3 class="blog-title font-syne">PostgreSQL Performance Tuning Guide</h3>
                             <p class="blog-meta">Nov 15, 2024 · 14 min read</p>
                         </div>
-                    </article>
+                    </a>
                 </div>
             </div>
         </section>
@@ -1421,8 +1438,16 @@
                 <div class="newsletter-content reveal-item">
                     <h2 class="font-syne">Subscribe to our newsletter</h2>
                     <p>Get weekly insights delivered straight to your inbox.</p>
-                    <form class="newsletter-form" id="newsletterForm">
-                        <input type="email" placeholder="Enter your email" required>
+                    <form class="newsletter-form" id="newsletterForm" action="https://api.web3forms.com/submit" method="POST">
+                        <!-- Web3Forms Access Key - Add your key here -->
+                        <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY_HERE">
+                        <!-- Optional: Customize the subject line -->
+                        <input type="hidden" name="subject" value="New Newsletter Subscription - VESTLABS">
+                        <input type="hidden" name="from_name" value="VESTLABS Newsletter">
+                        <!-- Honeypot Spam Protection -->
+                        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+                        
+                        <input type="email" name="email" placeholder="Enter your email" required>
                         <button type="submit" class="btn-primary">
                             <span class="btn-text">Subscribe</span>
                         </button>
@@ -1450,28 +1475,37 @@
         <section class="section">
             <div class="container">
                 <div class="contact-grid">
-                    <form class="contact-form reveal-item" id="contactForm">
+                    <form class="contact-form reveal-item" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                        <!-- Web3Forms Access Key - Add your key here -->
+                        <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY_HERE">
+                        <!-- Optional: Customize the subject line -->
+                        <input type="hidden" name="subject" value="New Contact Form Submission - VESTLABS">
+                        <!-- Optional: Redirect after submission (remove if using JS handling) -->
+                        <input type="hidden" name="from_name" value="VESTLABS Contact Form">
+                        <!-- Honeypot Spam Protection -->
+                        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+                        
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label" for="firstName">First Name</label>
-                                <input type="text" id="firstName" class="form-input" placeholder="John" required>
+                                <input type="text" id="firstName" name="first_name" class="form-input" placeholder="John" required>
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="lastName">Last Name</label>
-                                <input type="text" id="lastName" class="form-input" placeholder="Doe" required>
+                                <input type="text" id="lastName" name="last_name" class="form-input" placeholder="Doe" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="email">Email</label>
-                            <input type="email" id="email" class="form-input" placeholder="john@company.com" required>
+                            <input type="email" id="email" name="email" class="form-input" placeholder="john@company.com" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="company">Company</label>
-                            <input type="text" id="company" class="form-input" placeholder="Your Company">
+                            <input type="text" id="company" name="company" class="form-input" placeholder="Your Company">
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="message">Message</label>
-                            <textarea id="message" class="form-input" placeholder="Tell us about your project..." required></textarea>
+                            <textarea id="message" name="message" class="form-input" placeholder="Tell us about your project..." required></textarea>
                         </div>
                         <button type="submit" class="btn-primary">
                             <span class="btn-text">Send Message</span>
@@ -1556,9 +1590,9 @@
                     <div class="footer-col">
                         <h4>Legal</h4>
                         <ul>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms of Service</a></li>
-                            <li><a href="#">Cookie Policy</a></li>
+                            <li><a href="privacy.html">Privacy Policy</a></li>
+                            <li><a href="terms.html">Terms of Service</a></li>
+                            <li><a href="cookies.html">Cookie Policy</a></li>
                         </ul>
                     </div>
                 </div>

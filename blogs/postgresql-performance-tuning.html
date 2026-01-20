@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PostgreSQL Performance Tuning Guide - Optimize your PostgreSQL database for maximum performance">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>PostgreSQL Performance Tuning Guide | VESTLABS Blog</title>
+    <link rel="icon" type="image/png" href="/assets/images/favicon_v1.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    
+    <style>
+        .blog-post-hero{padding:calc(var(--space-4xl) + 4rem) 0 var(--space-2xl);position:relative;background:linear-gradient(135deg,var(--black) 0%,var(--black-light) 100%)}
+        .blog-post-hero::before{content:'';position:absolute;top:0;right:0;width:50%;height:100%;background:radial-gradient(circle at top right,rgba(201,255,0,0.08) 0%,transparent 60%);pointer-events:none}
+        .blog-post-meta{display:flex;align-items:center;gap:var(--space-md);margin-bottom:var(--space-md);flex-wrap:wrap}
+        .blog-post-category{background:var(--accent);color:var(--black);padding:4px 12px;border-radius:var(--radius-full);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em}
+        .blog-post-date{color:var(--gray);font-size:0.875rem}
+        .blog-post-title{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.5rem);font-weight:800;line-height:1.15;margin-bottom:var(--space-lg);max-width:900px}
+        .blog-post-excerpt{font-size:1.25rem;color:var(--gray-light);max-width:700px;line-height:1.7}
+        .blog-post-icon{width:80px;height:80px;background:rgba(201,255,0,0.1);border:1px solid var(--accent);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--accent);margin-bottom:var(--space-lg)}
+        .blog-post-content{padding:var(--space-3xl) 0}
+        .blog-post-content .container{max-width:800px}
+        .blog-post-body{font-size:1.0625rem;line-height:1.85;color:var(--gray-light)}
+        .blog-post-body h2{font-family:var(--font-display);font-size:1.75rem;font-weight:700;color:var(--white);margin:var(--space-2xl) 0 var(--space-md)}
+        .blog-post-body h3{font-family:var(--font-display);font-size:1.375rem;font-weight:600;color:var(--white);margin:var(--space-xl) 0 var(--space-sm)}
+        .blog-post-body p{margin-bottom:var(--space-md)}
+        .blog-post-body ul,.blog-post-body ol{margin:var(--space-md) 0;padding-left:var(--space-lg)}
+        .blog-post-body li{margin-bottom:var(--space-sm)}
+        .blog-post-body code{background:var(--black-lighter);padding:2px 8px;border-radius:4px;font-family:'Fira Code',monospace;font-size:0.9em;color:var(--accent)}
+        .blog-post-body pre{background:var(--black-lighter);border:1px solid var(--border-color);border-radius:var(--radius-md);padding:var(--space-lg);overflow-x:auto;margin:var(--space-lg) 0}
+        .blog-post-body pre code{background:none;padding:0;color:var(--gray-light)}
+        .blog-post-body blockquote{border-left:3px solid var(--accent);padding-left:var(--space-lg);margin:var(--space-lg) 0;font-style:italic;color:var(--gray)}
+        .blog-post-body a{color:var(--accent);text-decoration:none;transition:opacity 0.3s ease}
+        .blog-post-body a:hover{opacity:0.8}
+        .blog-post-body .highlight-box{background:rgba(201,255,0,0.05);border:1px solid rgba(201,255,0,0.2);border-radius:var(--radius-md);padding:var(--space-lg);margin:var(--space-lg) 0}
+        .blog-post-body .highlight-box h4{color:var(--accent);margin-bottom:var(--space-sm);font-family:var(--font-display)}
+        .blog-author{display:flex;align-items:center;gap:var(--space-md);padding:var(--space-xl) 0;border-top:1px solid var(--border-color);margin-top:var(--space-2xl)}
+        .blog-author-avatar{width:60px;height:60px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;color:var(--black);font-size:1.25rem}
+        .blog-author-info h4{font-family:var(--font-display);font-size:1rem;margin-bottom:4px}
+        .blog-author-info p{color:var(--gray);font-size:0.875rem;margin:0}
+        .blog-share{display:flex;align-items:center;gap:var(--space-md);padding:var(--space-lg) 0;border-top:1px solid var(--border-color)}
+        .blog-share span{color:var(--gray);font-size:0.875rem}
+        .blog-share a{width:40px;height:40px;border:1px solid var(--border-color);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);text-decoration:none;transition:all 0.3s ease}
+        .blog-share a:hover{background:var(--accent);border-color:var(--accent);color:var(--black)}
+        .blog-nav{display:flex;justify-content:space-between;padding:var(--space-xl) 0;border-top:1px solid var(--border-color);margin-top:var(--space-lg)}
+        .blog-nav a{color:var(--white);text-decoration:none;font-size:0.875rem;display:flex;align-items:center;gap:var(--space-sm);transition:color 0.3s ease}
+        .blog-nav a:hover{color:var(--accent)}
+        .back-to-blog{display:inline-flex;align-items:center;gap:var(--space-sm);color:var(--accent);text-decoration:none;font-size:0.875rem;margin-bottom:var(--space-lg);transition:gap 0.3s ease}
+        .back-to-blog:hover{gap:var(--space-md)}
+        .warning-box{background:rgba(255,153,0,0.1);border:1px solid rgba(255,153,0,0.3);border-radius:var(--radius-md);padding:var(--space-lg);margin:var(--space-lg) 0}
+        .warning-box h4{color:#ff9900;margin-bottom:var(--space-sm);font-family:var(--font-display)}
+    </style>
+</head>
+<body>
+    <div class="cursor" aria-hidden="true"></div>
+    <div class="cursor-dot" aria-hidden="true"></div>
+
+    <nav class="nav" role="navigation">
+        <a href="../index.html" class="nav-logo"><span class="logo-text">VESTLABS</span></a>
+        <div class="nav-links">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../index.html#services" class="nav-link">Services</a>
+            <a href="../index.html#about" class="nav-link">About</a>
+            <a href="../index.html#ai-labs" class="nav-link">AI Labs</a>
+            <a href="../index.html#careers" class="nav-link">Careers</a>
+            <a href="../index.html#blogs" class="nav-link active">Blog</a>
+            <a href="../index.html#contact" class="nav-link">Contact</a>
+        </div>
+        <button class="nav-menu-btn" aria-label="Toggle menu"><span class="menu-icon"><span></span><span></span><span></span></span></button>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <div class="mobile-menu-content">
+            <a href="../index.html" class="mobile-link">Home</a>
+            <a href="../index.html#services" class="mobile-link">Services</a>
+            <a href="../index.html#about" class="mobile-link">About</a>
+            <a href="../index.html#ai-labs" class="mobile-link">AI Labs</a>
+            <a href="../index.html#careers" class="mobile-link">Careers</a>
+            <a href="../index.html#blogs" class="mobile-link">Blog</a>
+            <a href="../index.html#contact" class="mobile-link">Contact</a>
+        </div>
+    </div>
+
+    <section class="blog-post-hero">
+        <div class="container">
+            <a href="../index.html#blogs" class="back-to-blog"><i class="fas fa-arrow-left"></i>Back to Blog</a>
+            <div class="blog-post-icon reveal-item"><i class="fas fa-database"></i></div>
+            <div class="blog-post-meta reveal-item">
+                <span class="blog-post-category">Database</span>
+                <span class="blog-post-date">Nov 15, 2024 · 14 min read</span>
+            </div>
+            <h1 class="blog-post-title reveal-item">PostgreSQL Performance Tuning Guide</h1>
+            <p class="blog-post-excerpt reveal-item">Master the art of PostgreSQL optimization with this comprehensive guide covering configuration tuning, query optimization, indexing strategies, and monitoring best practices.</p>
+        </div>
+    </section>
+
+    <article class="blog-post-content">
+        <div class="container">
+            <div class="blog-post-body">
+                <h2>Why PostgreSQL Performance Matters</h2>
+                <p>PostgreSQL is one of the most advanced open-source relational databases, powering mission-critical applications worldwide. However, out-of-the-box configurations are designed to run on minimal hardware. To unlock PostgreSQL's full potential, you need to tune it for your specific workload.</p>
+
+                <h2>Memory Configuration</h2>
+                <p>Memory settings have the most significant impact on PostgreSQL performance. Let's explore the key parameters:</p>
+
+                <h3>shared_buffers</h3>
+                <p>This is PostgreSQL's dedicated memory for caching data. The recommended setting is 25% of total system memory, but not more than 8GB on most systems.</p>
+                <pre><code># For a server with 32GB RAM
+shared_buffers = 8GB
+
+# Check current setting
+SHOW shared_buffers;</code></pre>
+
+                <h3>effective_cache_size</h3>
+                <p>This tells the query planner how much memory is available for disk caching. Set it to 50-75% of total system memory.</p>
+                <pre><code># For a server with 32GB RAM
+effective_cache_size = 24GB</code></pre>
+
+                <h3>work_mem</h3>
+                <p>Memory for internal sort operations and hash tables. Be careful—this is per-operation, not per-connection!</p>
+                <pre><code># Conservative starting point
+work_mem = 64MB
+
+# Calculate: (Total RAM - shared_buffers) / (max_connections * 3)
+# Adjust based on query complexity</code></pre>
+
+                <div class="warning-box">
+                    <h4>⚠️ work_mem Warning</h4>
+                    <p>Setting work_mem too high can cause out-of-memory conditions. A complex query might use work_mem multiple times. Monitor your system carefully when adjusting this parameter.</p>
+                </div>
+
+                <h3>maintenance_work_mem</h3>
+                <p>Memory for maintenance operations like VACUUM, CREATE INDEX. Can be set higher than work_mem.</p>
+                <pre><code># For most servers
+maintenance_work_mem = 2GB</code></pre>
+
+                <h2>Connection Tuning</h2>
+                
+                <h3>max_connections</h3>
+                <p>Each connection consumes memory and resources. Use connection pooling instead of increasing this blindly.</p>
+                <pre><code># Reasonable default
+max_connections = 200
+
+# With PgBouncer, you can keep this lower
+max_connections = 100</code></pre>
+
+                <h3>Connection Pooling with PgBouncer</h3>
+                <p>PgBouncer is essential for high-traffic applications:</p>
+                <pre><code># pgbouncer.ini
+[databases]
+mydb = host=127.0.0.1 port=5432 dbname=mydb
+
+[pgbouncer]
+listen_addr = *
+listen_port = 6432
+auth_type = md5
+auth_file = /etc/pgbouncer/userlist.txt
+pool_mode = transaction
+max_client_conn = 1000
+default_pool_size = 25</code></pre>
+
+                <div class="highlight-box">
+                    <h4>💡 Pool Mode Selection</h4>
+                    <p><strong>Session mode:</strong> Connection held for entire session (legacy apps). <strong>Transaction mode:</strong> Connection returned after transaction (recommended for most apps). <strong>Statement mode:</strong> Connection returned after each statement (limited use cases).</p>
+                </div>
+
+                <h2>Write-Ahead Log (WAL) Configuration</h2>
+                
+                <h3>wal_level</h3>
+                <p>Determines how much information is written to WAL:</p>
+                <pre><code># For replication and point-in-time recovery
+wal_level = replica
+
+# For logical replication
+wal_level = logical</code></pre>
+
+                <h3>checkpoint_timeout and max_wal_size</h3>
+                <p>Control checkpoint frequency and WAL storage:</p>
+                <pre><code># Increase for write-heavy workloads
+checkpoint_timeout = 15min
+max_wal_size = 4GB
+min_wal_size = 1GB</code></pre>
+
+                <h2>Query Optimization</h2>
+
+                <h3>EXPLAIN ANALYZE</h3>
+                <p>Always analyze slow queries:</p>
+                <pre><code>EXPLAIN (ANALYZE, BUFFERS, FORMAT TEXT)
+SELECT u.name, COUNT(o.id) as order_count
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+WHERE u.created_at > '2024-01-01'
+GROUP BY u.id, u.name
+HAVING COUNT(o.id) > 5;</code></pre>
+
+                <p>Key things to look for in EXPLAIN output:</p>
+                <ul>
+                    <li><strong>Seq Scan:</strong> Full table scan—may need an index</li>
+                    <li><strong>Nested Loop:</strong> Acceptable for small result sets</li>
+                    <li><strong>Hash Join:</strong> Efficient for larger joins</li>
+                    <li><strong>Merge Join:</strong> Good for sorted data</li>
+                    <li><strong>Buffers:</strong> High "read" values indicate disk I/O</li>
+                </ul>
+
+                <h3>Query Rewriting Tips</h3>
+                <pre><code>-- AVOID: Subquery in WHERE
+SELECT * FROM orders 
+WHERE user_id IN (SELECT id FROM users WHERE status = 'active');
+
+-- PREFER: JOIN
+SELECT o.* FROM orders o
+INNER JOIN users u ON o.user_id = u.id
+WHERE u.status = 'active';
+
+-- AVOID: Functions on indexed columns
+SELECT * FROM users WHERE LOWER(email) = 'test@example.com';
+
+-- PREFER: Functional index or store lowercase
+CREATE INDEX idx_users_email_lower ON users (LOWER(email));
+
+-- AVOID: SELECT *
+SELECT * FROM users;
+
+-- PREFER: Select only needed columns
+SELECT id, name, email FROM users;</code></pre>
+
+                <h2>Indexing Strategies</h2>
+
+                <h3>B-tree Indexes (Default)</h3>
+                <p>Best for equality and range queries:</p>
+                <pre><code>-- Single column index
+CREATE INDEX idx_users_email ON users(email);
+
+-- Composite index (order matters!)
+CREATE INDEX idx_orders_user_date ON orders(user_id, created_at);
+
+-- Partial index (only index relevant rows)
+CREATE INDEX idx_orders_active ON orders(status) 
+WHERE status = 'pending';</code></pre>
+
+                <h3>GIN Indexes</h3>
+                <p>For full-text search and array/JSONB columns:</p>
+                <pre><code>-- Full-text search
+CREATE INDEX idx_articles_search ON articles 
+USING GIN(to_tsvector('english', title || ' ' || content));
+
+-- JSONB containment
+CREATE INDEX idx_data_gin ON events USING GIN(metadata);</code></pre>
+
+                <h3>BRIN Indexes</h3>
+                <p>For large tables with naturally ordered data:</p>
+                <pre><code>-- Perfect for time-series data
+CREATE INDEX idx_logs_created ON logs USING BRIN(created_at);
+
+-- Much smaller than B-tree, good for append-only tables</code></pre>
+
+                <h3>Index Maintenance</h3>
+                <pre><code>-- Check index usage
+SELECT schemaname, tablename, indexname, idx_scan, idx_tup_read
+FROM pg_stat_user_indexes
+ORDER BY idx_scan ASC;
+
+-- Find unused indexes
+SELECT indexrelid::regclass as index,
+       relid::regclass as table,
+       pg_size_pretty(pg_relation_size(indexrelid)) as size
+FROM pg_stat_user_indexes
+WHERE idx_scan = 0 AND indexrelid::regclass::text NOT LIKE '%pkey';</code></pre>
+
+                <h2>VACUUM and Maintenance</h2>
+
+                <h3>Autovacuum Tuning</h3>
+                <p>Autovacuum is critical for PostgreSQL health:</p>
+                <pre><code># More aggressive autovacuum for busy tables
+autovacuum_vacuum_scale_factor = 0.1
+autovacuum_analyze_scale_factor = 0.05
+autovacuum_vacuum_cost_delay = 2ms
+autovacuum_vacuum_cost_limit = 1000
+
+# Per-table settings for very large tables
+ALTER TABLE huge_table SET (
+    autovacuum_vacuum_scale_factor = 0.01,
+    autovacuum_analyze_scale_factor = 0.005
+);</code></pre>
+
+                <h3>Bloat Detection</h3>
+                <pre><code>-- Check table bloat
+SELECT schemaname, tablename,
+       pg_size_pretty(pg_total_relation_size(schemaname || '.' || tablename)) as total_size,
+       pg_size_pretty(pg_relation_size(schemaname || '.' || tablename)) as table_size,
+       pg_size_pretty(pg_total_relation_size(schemaname || '.' || tablename) - 
+                      pg_relation_size(schemaname || '.' || tablename)) as index_size,
+       n_dead_tup,
+       n_live_tup,
+       round(100 * n_dead_tup / NULLIF(n_live_tup + n_dead_tup, 0), 2) as dead_pct
+FROM pg_stat_user_tables
+ORDER BY n_dead_tup DESC;</code></pre>
+
+                <h2>Monitoring and Observability</h2>
+
+                <h3>Essential Queries</h3>
+                <pre><code>-- Active queries
+SELECT pid, now() - pg_stat_activity.query_start AS duration, query, state
+FROM pg_stat_activity
+WHERE (now() - pg_stat_activity.query_start) > interval '5 seconds'
+AND state != 'idle';
+
+-- Table sizes
+SELECT relname, pg_size_pretty(pg_total_relation_size(relid))
+FROM pg_catalog.pg_statio_user_tables
+ORDER BY pg_total_relation_size(relid) DESC;
+
+-- Cache hit ratio (should be > 99%)
+SELECT sum(heap_blks_hit) / (sum(heap_blks_hit) + sum(heap_blks_read)) as ratio
+FROM pg_statio_user_tables;</code></pre>
+
+                <h3>pg_stat_statements</h3>
+                <p>Essential extension for query performance analysis:</p>
+                <pre><code>-- Enable the extension
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+
+-- Top queries by total time
+SELECT query, calls, total_exec_time, mean_exec_time, rows
+FROM pg_stat_statements
+ORDER BY total_exec_time DESC
+LIMIT 20;</code></pre>
+
+                <div class="highlight-box">
+                    <h4>📊 Recommended Monitoring Tools</h4>
+                    <p><strong>pgMonitor:</strong> Prometheus/Grafana stack for PostgreSQL. <strong>pg_stat_monitor:</strong> Enhanced pg_stat_statements. <strong>pgBadger:</strong> Log analyzer for detailed reports. <strong>PgHero:</strong> Performance dashboard with query analysis.</p>
+                </div>
+
+                <h2>Production Checklist</h2>
+                <ul>
+                    <li>✅ Memory settings tuned for your workload</li>
+                    <li>✅ Connection pooling implemented (PgBouncer)</li>
+                    <li>✅ Autovacuum properly configured</li>
+                    <li>✅ pg_stat_statements enabled</li>
+                    <li>✅ Appropriate indexes created</li>
+                    <li>✅ Unused indexes removed</li>
+                    <li>✅ Regular ANALYZE on frequently changed tables</li>
+                    <li>✅ Monitoring and alerting in place</li>
+                    <li>✅ Backup and recovery tested</li>
+                    <li>✅ Replication configured for HA</li>
+                </ul>
+
+                <h2>Conclusion</h2>
+                <p>PostgreSQL performance tuning is an iterative process. Start with memory configuration, implement connection pooling, ensure proper indexing, and continuously monitor your database. Remember that every workload is different—always test changes in a staging environment before applying to production.</p>
+                <p>At VESTLABS, our database engineers help organizations optimize their PostgreSQL deployments for maximum performance and reliability. Whether you're dealing with slow queries, scaling challenges, or migration projects, we're here to help.</p>
+
+                <div class="blog-author">
+                    <div class="blog-author-avatar">DL</div>
+                    <div class="blog-author-info">
+                        <h4>David Lee</h4>
+                        <p>Senior Database Engineer at VESTLABS</p>
+                    </div>
+                </div>
+
+                <div class="blog-share">
+                    <span>Share this article:</span>
+                    <a href="#" aria-label="Share on Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Share on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="Share on Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Copy link"><i class="fas fa-link"></i></a>
+                </div>
+
+                <div class="blog-nav">
+                    <a href="gitops-best-practices.html"><i class="fas fa-arrow-left"></i>GitOps Best Practices</a>
+                    <a href="kubernetes-guide.html">Kubernetes Guide<i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo font-syne">VESTLABS</div>
+                    <p class="footer-desc">Transforming businesses through innovative DevOps, Cloud, and AI solutions.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col"><h4>Services</h4><ul><li><a href="../index.html">DevOps</a></li><li><a href="../index.html">Cloud Solutions</a></li><li><a href="../index.html">AI Labs</a></li></ul></div>
+                    <div class="footer-col"><h4>Company</h4><ul><li><a href="../index.html">About</a></li><li><a href="../index.html#blogs">Blog</a></li><li><a href="../index.html">Contact</a></li></ul></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 VESTLABS. All rights reserved.</p>
+                <div class="footer-status"><span class="status-dot"></span><span>All systems operational</span></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/cursor.js"></script>
+    <script src="../js/animations.js"></script>
+    <script>
+        const menuBtn = document.querySelector('.nav-menu-btn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                menuBtn.classList.toggle('open');
+                mobileMenu.classList.toggle('open');
+                document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+            });
+        }
+    </script>
+</body>
+</html>

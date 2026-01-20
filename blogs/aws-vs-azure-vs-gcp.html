@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AWS vs Azure vs GCP: 2024 Comparison - In-depth analysis of major cloud providers to help you choose the right platform">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>AWS vs Azure vs GCP: 2024 Comparison | VESTLABS Blog</title>
+    <link rel="icon" type="image/png" href="/assets/images/favicon_v1.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    
+    <style>
+        /* Blog Post Specific Styles */
+        .blog-post-hero {
+            padding: calc(var(--space-4xl) + 4rem) 0 var(--space-2xl);
+            position: relative;
+            background: linear-gradient(135deg, var(--black) 0%, var(--black-light) 100%);
+        }
+        
+        .blog-post-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(201, 255, 0, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        
+        .blog-post-meta {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-md);
+            flex-wrap: wrap;
+        }
+        
+        .blog-post-category {
+            background: var(--accent);
+            color: var(--black);
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .blog-post-date {
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+        
+        .blog-post-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: var(--space-lg);
+            max-width: 900px;
+        }
+        
+        .blog-post-excerpt {
+            font-size: 1.25rem;
+            color: var(--gray-light);
+            max-width: 700px;
+            line-height: 1.7;
+        }
+        
+        .blog-post-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(201, 255, 0, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .blog-post-content {
+            padding: var(--space-3xl) 0;
+        }
+        
+        .blog-post-content .container {
+            max-width: 800px;
+        }
+        
+        .blog-post-body {
+            font-size: 1.0625rem;
+            line-height: 1.85;
+            color: var(--gray-light);
+        }
+        
+        .blog-post-body h2 {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--white);
+            margin: var(--space-2xl) 0 var(--space-md);
+        }
+        
+        .blog-post-body h3 {
+            font-family: var(--font-display);
+            font-size: 1.375rem;
+            font-weight: 600;
+            color: var(--white);
+            margin: var(--space-xl) 0 var(--space-sm);
+        }
+        
+        .blog-post-body p {
+            margin-bottom: var(--space-md);
+        }
+        
+        .blog-post-body ul, .blog-post-body ol {
+            margin: var(--space-md) 0;
+            padding-left: var(--space-lg);
+        }
+        
+        .blog-post-body li {
+            margin-bottom: var(--space-sm);
+        }
+        
+        .blog-post-body code {
+            background: var(--black-lighter);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            color: var(--accent);
+        }
+        
+        .blog-post-body pre {
+            background: var(--black-lighter);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            overflow-x: auto;
+            margin: var(--space-lg) 0;
+        }
+        
+        .blog-post-body pre code {
+            background: none;
+            padding: 0;
+            color: var(--gray-light);
+        }
+        
+        .blog-post-body blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: var(--space-lg);
+            margin: var(--space-lg) 0;
+            font-style: italic;
+            color: var(--gray);
+        }
+        
+        .blog-post-body a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .blog-post-body a:hover {
+            opacity: 0.8;
+        }
+        
+        .blog-post-body .highlight-box {
+            background: rgba(201, 255, 0, 0.05);
+            border: 1px solid rgba(201, 255, 0, 0.2);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            margin: var(--space-lg) 0;
+        }
+        
+        .blog-post-body .highlight-box h4 {
+            color: var(--accent);
+            margin-bottom: var(--space-sm);
+            font-family: var(--font-display);
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--space-lg) 0;
+            font-size: 0.9375rem;
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: var(--space-sm) var(--space-md);
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .comparison-table th {
+            background: var(--black-lighter);
+            color: var(--white);
+            font-weight: 600;
+        }
+        
+        .comparison-table td {
+            color: var(--gray-light);
+        }
+        
+        .comparison-table tr:hover td {
+            background: rgba(201, 255, 0, 0.03);
+        }
+        
+        .cloud-icon {
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        .cloud-icon.aws { color: #FF9900; }
+        .cloud-icon.azure { color: #00A4EF; }
+        .cloud-icon.gcp { color: #4285F4; }
+        
+        .blog-author {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-xl) 0;
+            border-top: 1px solid var(--border-color);
+            margin-top: var(--space-2xl);
+        }
+        
+        .blog-author-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--black);
+            font-size: 1.25rem;
+        }
+        
+        .blog-author-info h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        
+        .blog-author-info p {
+            color: var(--gray);
+            font-size: 0.875rem;
+            margin: 0;
+        }
+        
+        .blog-share {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-lg) 0;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .blog-share span {
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+        
+        .blog-share a {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .blog-share a:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--black);
+        }
+        
+        .blog-nav {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--space-xl) 0;
+            border-top: 1px solid var(--border-color);
+            margin-top: var(--space-lg);
+        }
+        
+        .blog-nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            transition: color 0.3s ease;
+        }
+        
+        .blog-nav a:hover {
+            color: var(--accent);
+        }
+        
+        .back-to-blog {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: var(--space-lg);
+            transition: gap 0.3s ease;
+        }
+        
+        .back-to-blog:hover {
+            gap: var(--space-md);
+        }
+        
+        @media (max-width: 768px) {
+            .comparison-table {
+                font-size: 0.8125rem;
+            }
+            
+            .comparison-table th, .comparison-table td {
+                padding: var(--space-xs) var(--space-sm);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor" aria-hidden="true"></div>
+    <div class="cursor-dot" aria-hidden="true"></div>
+
+    <!-- Navigation -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <a href="../index.html" class="nav-logo" aria-label="VESTLABS Home">
+            <span class="logo-text">VESTLABS</span>
+        </a>
+        <div class="nav-links">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../index.html#services" class="nav-link">Services</a>
+            <a href="../index.html#about" class="nav-link">About</a>
+            <a href="../index.html#ai-labs" class="nav-link">AI Labs</a>
+            <a href="../index.html#careers" class="nav-link">Careers</a>
+            <a href="../index.html#blogs" class="nav-link active">Blog</a>
+            <a href="../index.html#contact" class="nav-link">Contact</a>
+        </div>
+        
+        <button class="nav-menu-btn" aria-label="Toggle menu" aria-expanded="false">
+            <span class="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <div class="mobile-menu-content">
+            <a href="../index.html" class="mobile-link">Home</a>
+            <a href="../index.html#services" class="mobile-link">Services</a>
+            <a href="../index.html#about" class="mobile-link">About</a>
+            <a href="../index.html#ai-labs" class="mobile-link">AI Labs</a>
+            <a href="../index.html#careers" class="mobile-link">Careers</a>
+            <a href="../index.html#blogs" class="mobile-link">Blog</a>
+            <a href="../index.html#contact" class="mobile-link">Contact</a>
+        </div>
+    </div>
+
+    <!-- Blog Post Hero -->
+    <section class="blog-post-hero">
+        <div class="container">
+            <a href="../index.html#blogs" class="back-to-blog">
+                <i class="fas fa-arrow-left"></i>
+                Back to Blog
+            </a>
+            
+            <div class="blog-post-icon reveal-item">
+                <i class="fas fa-cloud"></i>
+            </div>
+            
+            <div class="blog-post-meta reveal-item">
+                <span class="blog-post-category">Cloud</span>
+                <span class="blog-post-date">Dec 10, 2024 · 8 min read</span>
+            </div>
+            
+            <h1 class="blog-post-title reveal-item">AWS vs Azure vs GCP: 2024 Comparison</h1>
+            
+            <p class="blog-post-excerpt reveal-item">
+                An in-depth analysis of the three major cloud platforms to help you make the right choice for your organization's infrastructure needs.
+            </p>
+        </div>
+    </section>
+
+    <!-- Blog Post Content -->
+    <article class="blog-post-content">
+        <div class="container">
+            <div class="blog-post-body">
+                <h2>The Cloud Landscape in 2024</h2>
+                <p>
+                    Choosing the right cloud provider is one of the most critical decisions for any organization's digital infrastructure. Amazon Web Services (AWS), Microsoft Azure, and Google Cloud Platform (GCP) dominate the market, each bringing unique strengths to the table. This comprehensive comparison will help you understand the nuances of each platform.
+                </p>
+
+                <h2>Market Share & Position</h2>
+                <p>
+                    As of 2024, the cloud market share breakdown looks like this:
+                </p>
+                <ul>
+                    <li><span class="cloud-icon aws"><i class="fab fa-aws"></i></span><strong>AWS:</strong> ~32% market share - The pioneer and market leader</li>
+                    <li><span class="cloud-icon azure"><i class="fab fa-microsoft"></i></span><strong>Azure:</strong> ~23% market share - Fastest growing among the big three</li>
+                    <li><span class="cloud-icon gcp"><i class="fab fa-google"></i></span><strong>GCP:</strong> ~10% market share - Strong in data analytics and ML</li>
+                </ul>
+
+                <h2>Compute Services Comparison</h2>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>AWS</th>
+                            <th>Azure</th>
+                            <th>GCP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Virtual Machines</td>
+                            <td>EC2</td>
+                            <td>Virtual Machines</td>
+                            <td>Compute Engine</td>
+                        </tr>
+                        <tr>
+                            <td>Kubernetes</td>
+                            <td>EKS</td>
+                            <td>AKS</td>
+                            <td>GKE</td>
+                        </tr>
+                        <tr>
+                            <td>Serverless</td>
+                            <td>Lambda</td>
+                            <td>Functions</td>
+                            <td>Cloud Functions</td>
+                        </tr>
+                        <tr>
+                            <td>Containers</td>
+                            <td>ECS/Fargate</td>
+                            <td>Container Instances</td>
+                            <td>Cloud Run</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3><i class="fab fa-aws cloud-icon aws"></i> AWS Compute Strengths</h3>
+                <p>
+                    AWS offers the most diverse compute portfolio with EC2 providing over 600 instance types. Their Graviton processors offer excellent price-performance for ARM workloads, and Lambda's mature ecosystem supports complex serverless architectures.
+                </p>
+
+                <h3><i class="fab fa-microsoft cloud-icon azure"></i> Azure Compute Strengths</h3>
+                <p>
+                    Azure excels in hybrid scenarios with Azure Arc and Azure Stack HCI. Their seamless integration with Windows Server, Active Directory, and Microsoft 365 makes it ideal for enterprises already invested in Microsoft technologies.
+                </p>
+
+                <h3><i class="fab fa-google cloud-icon gcp"></i> GCP Compute Strengths</h3>
+                <p>
+                    GKE is widely considered the best managed Kubernetes offering, benefiting from Google's extensive Kubernetes expertise. Their live migration technology ensures VMs stay running during maintenance, and custom machine types offer flexible resource allocation.
+                </p>
+
+                <h2>Storage & Database Services</h2>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Service Type</th>
+                            <th>AWS</th>
+                            <th>Azure</th>
+                            <th>GCP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Object Storage</td>
+                            <td>S3</td>
+                            <td>Blob Storage</td>
+                            <td>Cloud Storage</td>
+                        </tr>
+                        <tr>
+                            <td>Block Storage</td>
+                            <td>EBS</td>
+                            <td>Managed Disks</td>
+                            <td>Persistent Disk</td>
+                        </tr>
+                        <tr>
+                            <td>Relational DB</td>
+                            <td>RDS/Aurora</td>
+                            <td>SQL Database</td>
+                            <td>Cloud SQL</td>
+                        </tr>
+                        <tr>
+                            <td>NoSQL</td>
+                            <td>DynamoDB</td>
+                            <td>Cosmos DB</td>
+                            <td>Firestore/Bigtable</td>
+                        </tr>
+                        <tr>
+                            <td>Data Warehouse</td>
+                            <td>Redshift</td>
+                            <td>Synapse</td>
+                            <td>BigQuery</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight-box">
+                    <h4>💡 Key Insight</h4>
+                    <p>BigQuery stands out for its serverless architecture and separation of storage from compute, allowing you to pay only for queries run. For data-intensive workloads, this can lead to significant cost savings compared to traditional data warehouses.</p>
+                </div>
+
+                <h2>AI & Machine Learning</h2>
+                <p>
+                    All three providers have heavily invested in AI/ML capabilities, but their approaches differ:
+                </p>
+
+                <h3><i class="fab fa-aws cloud-icon aws"></i> AWS AI/ML</h3>
+                <ul>
+                    <li><strong>SageMaker:</strong> Comprehensive ML platform for building, training, and deploying models</li>
+                    <li><strong>Bedrock:</strong> Foundation models access (Claude, Llama, Titan)</li>
+                    <li><strong>Rekognition, Comprehend, Transcribe:</strong> Pre-built AI services</li>
+                </ul>
+
+                <h3><i class="fab fa-microsoft cloud-icon azure"></i> Azure AI/ML</h3>
+                <ul>
+                    <li><strong>Azure OpenAI Service:</strong> Direct access to GPT-4 and DALL-E</li>
+                    <li><strong>Azure Machine Learning:</strong> Enterprise ML platform</li>
+                    <li><strong>Cognitive Services:</strong> Ready-to-use AI APIs</li>
+                </ul>
+
+                <h3><i class="fab fa-google cloud-icon gcp"></i> GCP AI/ML</h3>
+                <ul>
+                    <li><strong>Vertex AI:</strong> Unified ML platform with AutoML capabilities</li>
+                    <li><strong>TPU Access:</strong> Custom AI accelerators for training large models</li>
+                    <li><strong>Pre-trained Models:</strong> Vision, NLP, and translation APIs</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <h4>🤖 AI Recommendation</h4>
+                    <p>For organizations wanting to leverage cutting-edge LLMs, Azure's exclusive partnership with OpenAI provides enterprise-grade access to GPT-4. For custom model training at scale, GCP's TPU infrastructure offers unmatched performance per dollar.</p>
+                </div>
+
+                <h2>Pricing Models</h2>
+                <p>
+                    Understanding pricing is crucial for cost optimization:
+                </p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Pricing Feature</th>
+                            <th>AWS</th>
+                            <th>Azure</th>
+                            <th>GCP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Commitment Discounts</td>
+                            <td>Reserved Instances (1-3 yr)</td>
+                            <td>Reserved VMs (1-3 yr)</td>
+                            <td>Committed Use (1-3 yr)</td>
+                        </tr>
+                        <tr>
+                            <td>Spot/Preemptible</td>
+                            <td>Up to 90% discount</td>
+                            <td>Up to 90% discount</td>
+                            <td>Up to 91% discount</td>
+                        </tr>
+                        <tr>
+                            <td>Sustained Use</td>
+                            <td>Savings Plans</td>
+                            <td>No automatic discount</td>
+                            <td>Auto 30% discount</td>
+                        </tr>
+                        <tr>
+                            <td>Free Tier</td>
+                            <td>12 months + always free</td>
+                            <td>12 months + always free</td>
+                            <td>$300 credit + always free</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Global Infrastructure</h2>
+                <ul>
+                    <li><strong>AWS:</strong> 33 regions, 105 availability zones globally</li>
+                    <li><strong>Azure:</strong> 60+ regions, the most comprehensive global coverage</li>
+                    <li><strong>GCP:</strong> 37 regions, 112 zones, excellent network backbone</li>
+                </ul>
+
+                <h2>When to Choose Each Provider</h2>
+
+                <h3>Choose AWS When:</h3>
+                <ul>
+                    <li>You need the broadest service catalog</li>
+                    <li>You want the largest ecosystem and community support</li>
+                    <li>Your team has existing AWS expertise</li>
+                    <li>You require specific services like Aurora or DynamoDB</li>
+                </ul>
+
+                <h3>Choose Azure When:</h3>
+                <ul>
+                    <li>You're already using Microsoft products (365, Windows Server, AD)</li>
+                    <li>Hybrid cloud is a key requirement</li>
+                    <li>You want access to Azure OpenAI Service</li>
+                    <li>You need strong enterprise compliance capabilities</li>
+                </ul>
+
+                <h3>Choose GCP When:</h3>
+                <ul>
+                    <li>Data analytics and ML are core to your business</li>
+                    <li>You prioritize Kubernetes and containerization</li>
+                    <li>You need BigQuery for data warehousing</li>
+                    <li>Network performance is critical (Google's backbone)</li>
+                </ul>
+
+                <h2>Multi-Cloud Strategy</h2>
+                <p>
+                    Many organizations are adopting multi-cloud strategies to avoid vendor lock-in and leverage the best services from each provider. Key considerations include:
+                </p>
+                <ul>
+                    <li><strong>Data Egress Costs:</strong> Moving data between clouds can be expensive</li>
+                    <li><strong>Operational Complexity:</strong> Managing multiple platforms requires diverse skills</li>
+                    <li><strong>Security Posture:</strong> Each cloud has different security models and tools</li>
+                    <li><strong>Tooling:</strong> Use cloud-agnostic tools like Terraform and Kubernetes</li>
+                </ul>
+
+                <h2>Conclusion</h2>
+                <p>
+                    There's no one-size-fits-all answer. The best cloud provider depends on your specific requirements, existing technology stack, team expertise, and business goals. Many successful organizations use multiple clouds strategically.
+                </p>
+                <p>
+                    At VESTLABS, we help organizations navigate the complex cloud landscape. Whether you're starting your cloud journey or optimizing existing deployments across multiple providers, our certified architects can help you make the right decisions.
+                </p>
+
+                <div class="blog-author">
+                    <div class="blog-author-avatar">MR</div>
+                    <div class="blog-author-info">
+                        <h4>Marcus Rodriguez</h4>
+                        <p>VP of Engineering at VESTLABS</p>
+                    </div>
+                </div>
+
+                <div class="blog-share">
+                    <span>Share this article:</span>
+                    <a href="#" aria-label="Share on Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Share on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="Share on Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Copy link"><i class="fas fa-link"></i></a>
+                </div>
+
+                <div class="blog-nav">
+                    <a href="kubernetes-guide.html">
+                        <i class="fas fa-arrow-left"></i>
+                        Kubernetes Guide
+                    </a>
+                    <a href="implementing-rag.html">
+                        Implementing RAG
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo font-syne">VESTLABS</div>
+                    <p class="footer-desc">Transforming businesses through innovative DevOps, Cloud, and AI solutions. Your partner in digital excellence.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Services</h4>
+                        <ul>
+                            <li><a href="../index.html">DevOps</a></li>
+                            <li><a href="../index.html">Cloud Solutions</a></li>
+                            <li><a href="../index.html">Migration</a></li>
+                            <li><a href="../index.html">AI Labs</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="../index.html">About</a></li>
+                            <li><a href="../index.html">Careers</a></li>
+                            <li><a href="../index.html#blogs">Blog</a></li>
+                            <li><a href="../index.html">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Legal</h4>
+                        <ul>
+                            <li><a href="../privacy.html">Privacy Policy</a></li>
+                            <li><a href="../terms.html">Terms of Service</a></li>
+                            <li><a href="../cookies.html">Cookie Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 VESTLABS. All rights reserved.</p>
+                <div class="footer-status">
+                    <span class="status-dot"></span>
+                    <span>All systems operational</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../js/cursor.js"></script>
+    <script src="../js/animations.js"></script>
+    <script>
+        // Mobile menu functionality
+        const menuBtn = document.querySelector('.nav-menu-btn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                menuBtn.classList.toggle('open');
+                mobileMenu.classList.toggle('open');
+                document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+            });
+        }
+    </script>
+</body>
+</html>

@@ -21,6 +21,7 @@ class VestlabsApp {
         this.setupContactMap();
         this.setupBentoGradients();
         this.setupGlowingEffects();
+        this.setupAILabsNavigation();
         this.setupPageSearch();
     }
     
@@ -62,7 +63,7 @@ class VestlabsApp {
         this.setupInputEffects();
     }
     
-    handleContactSubmit() {
+    async handleContactSubmit() {
         const form = this.contactForm;
         const btn = form.querySelector('button[type="submit"]');
         const originalText = btn.innerHTML;
@@ -85,22 +86,46 @@ class VestlabsApp {
         btn.innerHTML = '<span class="spinner"></span>';
         btn.disabled = true;
         
-        // Simulate submission (replace with actual API call)
-        setTimeout(() => {
-            btn.innerHTML = '<span class="btn-text">Message Sent!</span> <i class="fas fa-check"></i>';
-            btn.style.background = 'var(--accent)';
+        // Submit to Web3Forms API
+        try {
+            const formData = new FormData(form);
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            });
             
-            // Reset form
+            const result = await response.json();
+            
+            if (result.success) {
+                // Success
+                btn.innerHTML = '<span class="btn-text">Message Sent!</span> <i class="fas fa-check"></i>';
+                btn.style.background = 'var(--accent)';
+                
+                // Reset form
+                setTimeout(() => {
+                    form.reset();
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                }, 3000);
+            } else {
+                // Error from API
+                throw new Error(result.message || 'Something went wrong');
+            }
+        } catch (error) {
+            console.error('Form submission error:', error);
+            btn.innerHTML = '<span class="btn-text">Error! Try Again</span> <i class="fas fa-exclamation-circle"></i>';
+            btn.style.background = '#ff4444';
+            
             setTimeout(() => {
-                form.reset();
                 btn.innerHTML = originalText;
                 btn.style.background = '';
                 btn.disabled = false;
             }, 3000);
-        }, 1500);
+        }
     }
     
-    handleNewsletterSubmit() {
+    async handleNewsletterSubmit() {
         const form = this.newsletterForm;
         const input = form.querySelector('input[type="email"]');
         const btn = form.querySelector('button[type="submit"]');
@@ -116,19 +141,43 @@ class VestlabsApp {
         btn.innerHTML = '<span class="spinner"></span>';
         btn.disabled = true;
         
-        // Simulate subscription (replace with actual API call)
-        setTimeout(() => {
-            btn.innerHTML = '<span class="btn-text">Subscribed!</span>';
-            btn.style.background = 'var(--accent)';
+        // Submit to Web3Forms API
+        try {
+            const formData = new FormData(form);
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            });
             
-            // Reset
+            const result = await response.json();
+            
+            if (result.success) {
+                // Success
+                btn.innerHTML = '<span class="btn-text">Subscribed!</span>';
+                btn.style.background = 'var(--accent)';
+                
+                // Reset
+                setTimeout(() => {
+                    form.reset();
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                }, 3000);
+            } else {
+                // Error from API
+                throw new Error(result.message || 'Something went wrong');
+            }
+        } catch (error) {
+            console.error('Newsletter subscription error:', error);
+            btn.innerHTML = '<span class="btn-text">Error!</span>';
+            btn.style.background = '#ff4444';
+            
             setTimeout(() => {
-                form.reset();
                 btn.innerHTML = originalText;
                 btn.style.background = '';
                 btn.disabled = false;
             }, 3000);
-        }, 1000);
+        }
     }
     
     setupInputEffects() {
@@ -419,6 +468,23 @@ class VestlabsApp {
                         this.contactMap.resize();
                     }
                 }, 100);
+            });
+        });
+    }
+    
+    // ==================== AI LABS CARD NAVIGATION ====================
+    
+    setupAILabsNavigation() {
+        // Ensure AI Labs service cards navigate to their detail pages
+        const aiLabsCards = document.querySelectorAll('.ai-services-grid a.service-card');
+        
+        aiLabsCards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                const href = card.getAttribute('href');
+                if (href && !href.startsWith('#')) {
+                    e.preventDefault();
+                    window.location.href = href;
+                }
             });
         });
     }

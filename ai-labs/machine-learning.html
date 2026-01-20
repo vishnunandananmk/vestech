@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VESTLABS Machine Learning Solutions - Custom ML models for prediction, classification, and pattern recognition">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>Machine Learning | VESTLABS AI Labs</title>
+    <link rel="icon" type="image/png" href="/assets/images/favicon_v1.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    
+    <style>
+        .ai-page-hero{padding:calc(var(--space-4xl) + 4rem) 0 var(--space-2xl);position:relative;background:linear-gradient(135deg,var(--black) 0%,var(--black-light) 100%);overflow:hidden}
+        .ai-page-hero::before{content:'';position:absolute;top:0;right:0;width:60%;height:100%;background:radial-gradient(circle at top right,rgba(201,255,0,0.12) 0%,transparent 60%);pointer-events:none}
+        .ai-page-hero::after{content:'';position:absolute;bottom:-50%;left:-20%;width:60%;height:100%;background:radial-gradient(circle,rgba(59,130,246,0.08) 0%,transparent 60%);pointer-events:none}
+        .ai-page-icon{width:100px;height:100px;background:rgba(201,255,0,0.1);border:2px solid var(--accent);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:var(--accent);margin-bottom:var(--space-lg);position:relative}
+        .ai-page-icon::before{content:'';position:absolute;inset:-10px;border:1px solid rgba(201,255,0,0.2);border-radius:calc(var(--radius-lg) + 6px);animation:iconPulse 3s ease-in-out infinite}
+        @keyframes iconPulse{0%,100%{opacity:0.5;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
+        .ai-page-badge{display:inline-flex;align-items:center;gap:var(--space-xs);background:rgba(201,255,0,0.15);color:var(--accent);padding:6px 16px;border-radius:var(--radius-full);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:var(--space-md)}
+        .ai-page-title{font-family:var(--font-display);font-size:clamp(2.5rem,6vw,4rem);font-weight:800;line-height:1.1;margin-bottom:var(--space-lg);max-width:800px}
+        .ai-page-title .accent{color:var(--accent)}
+        .ai-page-excerpt{font-size:1.25rem;color:var(--gray-light);max-width:650px;line-height:1.7;margin-bottom:var(--space-lg)}
+        .ai-stats-row{display:flex;flex-wrap:wrap;gap:var(--space-xl);margin-top:var(--space-xl)}
+        .ai-stat{text-align:left}
+        .ai-stat-value{font-family:var(--font-display);font-size:2rem;font-weight:800;color:var(--accent)}
+        .ai-stat-label{font-size:0.875rem;color:var(--gray);margin-top:4px}
+        .ai-content{padding:var(--space-3xl) 0}
+        .ai-content .container{max-width:1000px}
+        .ai-section{margin-bottom:var(--space-3xl)}
+        .ai-section-title{font-family:var(--font-display);font-size:1.75rem;font-weight:700;color:var(--white);margin-bottom:var(--space-lg);display:flex;align-items:center;gap:var(--space-sm)}
+        .ai-section-title i{color:var(--accent);font-size:1.25rem}
+        .ai-section-text{font-size:1.0625rem;line-height:1.85;color:var(--gray-light);margin-bottom:var(--space-md)}
+        .ai-features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--space-lg);margin:var(--space-xl) 0}
+        .ai-feature-card{background:var(--black-light);border:1px solid var(--border-color);border-radius:var(--radius-lg);padding:var(--space-lg);transition:all 0.4s var(--ease-out-expo)}
+        .ai-feature-card:hover{border-color:var(--accent);transform:translateY(-5px)}
+        .ai-feature-icon{width:50px;height:50px;background:rgba(201,255,0,0.1);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:1.25rem;color:var(--accent);margin-bottom:var(--space-md)}
+        .ai-feature-title{font-family:var(--font-display);font-size:1.125rem;font-weight:600;margin-bottom:var(--space-xs)}
+        .ai-feature-desc{font-size:0.9375rem;color:var(--gray);line-height:1.7}
+        .ai-use-cases{background:var(--black-light);border-radius:var(--radius-lg);padding:var(--space-xl);margin:var(--space-xl) 0}
+        .ai-use-case-item{display:flex;align-items:flex-start;gap:var(--space-md);padding:var(--space-md) 0;border-bottom:1px solid var(--border-color)}
+        .ai-use-case-item:last-child{border-bottom:none}
+        .ai-use-case-num{width:32px;height:32px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:0.875rem;color:var(--black);flex-shrink:0}
+        .ai-use-case-content h4{font-family:var(--font-display);font-size:1rem;margin-bottom:4px}
+        .ai-use-case-content p{font-size:0.9375rem;color:var(--gray);line-height:1.6;margin:0}
+        .ai-tech-stack{display:flex;flex-wrap:wrap;gap:var(--space-sm);margin:var(--space-lg) 0}
+        .ai-tech-tag{background:var(--black-lighter);border:1px solid var(--border-color);padding:8px 16px;border-radius:var(--radius-full);font-size:0.875rem;color:var(--gray-light);transition:all 0.3s ease}
+        .ai-tech-tag:hover{border-color:var(--accent);color:var(--accent)}
+        .ai-cta-section{background:linear-gradient(135deg,rgba(201,255,0,0.05) 0%,rgba(59,130,246,0.05) 100%);border:1px solid var(--border-color);border-radius:var(--radius-lg);padding:var(--space-2xl);text-align:center;margin-top:var(--space-3xl)}
+        .ai-cta-title{font-family:var(--font-display);font-size:1.75rem;margin-bottom:var(--space-sm)}
+        .ai-cta-text{color:var(--gray);margin-bottom:var(--space-lg);max-width:500px;margin-left:auto;margin-right:auto}
+        .back-to-labs{display:inline-flex;align-items:center;gap:var(--space-sm);color:var(--accent);text-decoration:none;font-size:0.875rem;margin-bottom:var(--space-lg);transition:gap 0.3s ease}
+        .back-to-labs:hover{gap:var(--space-md)}
+        .ai-nav{display:flex;justify-content:space-between;padding:var(--space-xl) 0;border-top:1px solid var(--border-color);margin-top:var(--space-2xl)}
+        .ai-nav a{color:var(--white);text-decoration:none;font-size:0.875rem;display:flex;align-items:center;gap:var(--space-sm);transition:color 0.3s ease}
+        .ai-nav a:hover{color:var(--accent)}
+        @media(max-width:768px){.ai-page-title{font-size:2rem}.ai-stats-row{gap:var(--space-lg)}.ai-stat-value{font-size:1.5rem}.ai-features-grid{grid-template-columns:1fr}.ai-nav{flex-direction:column;gap:var(--space-md)}}
+    </style>
+</head>
+<body>
+    <div class="cursor" aria-hidden="true"></div>
+    <div class="cursor-dot" aria-hidden="true"></div>
+
+    <nav class="nav" role="navigation">
+        <a href="../index.html" class="nav-logo"><span class="logo-text">VESTLABS</span></a>
+        <div class="nav-links">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../index.html" class="nav-link" data-page="services">Services</a>
+            <a href="../index.html" class="nav-link" data-page="about">About</a>
+            <a href="../index.html" class="nav-link active" data-page="ai-labs">AI Labs</a>
+            <a href="../index.html" class="nav-link" data-page="careers">Careers</a>
+            <a href="../index.html" class="nav-link" data-page="blogs">Blog</a>
+            <a href="../index.html" class="nav-link" data-page="contact">Contact</a>
+        </div>
+        <button class="nav-menu-btn" aria-label="Toggle menu"><span class="menu-icon"><span></span><span></span><span></span></span></button>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <div class="mobile-menu-content">
+            <a href="../index.html" class="mobile-link">Home</a>
+            <a href="../index.html" class="mobile-link">Services</a>
+            <a href="../index.html" class="mobile-link">About</a>
+            <a href="../index.html" class="mobile-link">AI Labs</a>
+            <a href="../index.html" class="mobile-link">Careers</a>
+            <a href="../index.html" class="mobile-link">Blog</a>
+            <a href="../index.html" class="mobile-link">Contact</a>
+        </div>
+    </div>
+
+    <section class="ai-page-hero">
+        <div class="container">
+            <a href="../index.html" class="back-to-labs" data-page="ai-labs"><i class="fas fa-arrow-left"></i>Back to AI Labs</a>
+            <div class="ai-page-icon reveal-item"><i class="fas fa-brain"></i></div>
+            <span class="ai-page-badge reveal-item"><i class="fas fa-flask"></i>Research Division</span>
+            <h1 class="ai-page-title reveal-item">Machine <span class="accent">Learning</span></h1>
+            <p class="ai-page-excerpt reveal-item">Custom ML models for prediction, classification, and pattern recognition. We build intelligent systems that learn from your data and continuously improve to deliver actionable insights.</p>
+            
+            <div class="ai-stats-row reveal-item">
+                <div class="ai-stat">
+                    <div class="ai-stat-value">150+</div>
+                    <div class="ai-stat-label">Models Deployed</div>
+                </div>
+                <div class="ai-stat">
+                    <div class="ai-stat-value">98.5%</div>
+                    <div class="ai-stat-label">Average Accuracy</div>
+                </div>
+                <div class="ai-stat">
+                    <div class="ai-stat-value">40%</div>
+                    <div class="ai-stat-label">Efficiency Gains</div>
+                </div>
+                <div class="ai-stat">
+                    <div class="ai-stat-value">24/7</div>
+                    <div class="ai-stat-label">Model Monitoring</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <article class="ai-content">
+        <div class="container">
+            
+            <!-- Overview Section -->
+            <section class="ai-section reveal-item">
+                <h2 class="ai-section-title"><i class="fas fa-info-circle"></i>Overview</h2>
+                <p class="ai-section-text">Machine Learning lies at the heart of modern AI systems. At VESTLABS AI Labs, we specialize in developing custom ML solutions that transform raw data into predictive power. Our team of researchers and engineers combines cutting-edge algorithms with deep domain expertise to solve your most challenging business problems.</p>
+                <p class="ai-section-text">Whether you need supervised learning for classification tasks, unsupervised learning for discovering hidden patterns, or reinforcement learning for optimization problems, our comprehensive ML capabilities have you covered. We don't just build models—we create complete machine learning pipelines that integrate seamlessly with your existing infrastructure.</p>
+            </section>
+
+            <!-- Capabilities Section -->
+            <section class="ai-section reveal-item">
+                <h2 class="ai-section-title"><i class="fas fa-cogs"></i>Our Capabilities</h2>
+                
+                <div class="ai-features-grid">
+                    <div class="ai-feature-card">
+                        <div class="ai-feature-icon"><i class="fas fa-chart-line"></i></div>
+                        <h3 class="ai-feature-title">Predictive Modeling</h3>
+                        <p class="ai-feature-desc">Build models that forecast future outcomes based on historical data patterns. From sales forecasting to equipment failure prediction.</p>
+                    </div>
+                    
+                    <div class="ai-feature-card">
+                        <div class="ai-feature-icon"><i class="fas fa-tags"></i></div>
+                        <h3 class="ai-feature-title">Classification Systems</h3>
+                        <p class="ai-feature-desc">Automatically categorize data into predefined classes. Ideal for spam detection, sentiment analysis, and medical diagnosis.</p>
+                    </div>
+                    
+                    <div class="ai-feature-card">
+                        <div class="ai-feature-icon"><i class="fas fa-project-diagram"></i></div>
+                        <h3 class="ai-feature-title">Clustering & Segmentation</h3>
+                        <p class="ai-feature-desc">Discover natural groupings in your data without predefined labels. Perfect for customer segmentation and anomaly detection.</p>
+                    </div>
+                    
+                    <div class="ai-feature-card">
+                        <div class="ai-feature-icon"><i class="fas fa-network-wired"></i></div>
+                        <h3 class="ai-feature-title">Deep Learning</h3>
+                        <p class="ai-feature-desc">Neural networks for complex pattern recognition. Handle unstructured data like images, text, and time series with state-of-the-art architectures.</p>
+                    </div>
+                    
+                    <div class="ai-feature-card">
+                        <div class="ai-feature-icon"><i class="fas fa-random"></i></div>
+                        <h3 class="ai-feature-title">Ensemble Methods</h3>
+                        <p class="ai-feature-desc">Combine multiple models to achieve superior accuracy. Techniques like Random Forests, Gradient Boosting, and model stacking.</p>
+                    </div>
+                    
+                    <div class="ai-feature-card">
+                        <div class="ai-feature-icon"><i class="fas fa-sync-alt"></i></div>
+                        <h3 class="ai-feature-title">AutoML & HPO</h3>
+                        <p class="ai-feature-desc">Automated machine learning and hyperparameter optimization to find the best model configurations efficiently.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Use Cases Section -->
+            <section class="ai-section reveal-item">
+                <h2 class="ai-section-title"><i class="fas fa-lightbulb"></i>Industry Applications</h2>
+                
+                <div class="ai-use-cases">
+                    <div class="ai-use-case-item">
+                        <div class="ai-use-case-num">1</div>
+                        <div class="ai-use-case-content">
+                            <h4>Financial Services</h4>
+                            <p>Credit scoring, fraud detection, algorithmic trading, and risk assessment models that process millions of transactions in real-time.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-use-case-item">
+                        <div class="ai-use-case-num">2</div>
+                        <div class="ai-use-case-content">
+                            <h4>Healthcare & Life Sciences</h4>
+                            <p>Disease prediction, drug discovery acceleration, patient outcome forecasting, and medical image analysis for early diagnosis.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-use-case-item">
+                        <div class="ai-use-case-num">3</div>
+                        <div class="ai-use-case-content">
+                            <h4>E-commerce & Retail</h4>
+                            <p>Product recommendation engines, demand forecasting, dynamic pricing optimization, and customer churn prediction.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-use-case-item">
+                        <div class="ai-use-case-num">4</div>
+                        <div class="ai-use-case-content">
+                            <h4>Manufacturing & IoT</h4>
+                            <p>Predictive maintenance, quality control automation, supply chain optimization, and sensor data analysis for smart factories.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-use-case-item">
+                        <div class="ai-use-case-num">5</div>
+                        <div class="ai-use-case-content">
+                            <h4>Energy & Utilities</h4>
+                            <p>Load forecasting, grid optimization, renewable energy prediction, and smart meter analytics for energy efficiency.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Technology Stack -->
+            <section class="ai-section reveal-item">
+                <h2 class="ai-section-title"><i class="fas fa-layer-group"></i>Technology Stack</h2>
+                <p class="ai-section-text">We leverage the most advanced frameworks and tools in the ML ecosystem to deliver production-ready solutions:</p>
+                
+                <div class="ai-tech-stack">
+                    <span class="ai-tech-tag">TensorFlow</span>
+                    <span class="ai-tech-tag">PyTorch</span>
+                    <span class="ai-tech-tag">Scikit-learn</span>
+                    <span class="ai-tech-tag">XGBoost</span>
+                    <span class="ai-tech-tag">LightGBM</span>
+                    <span class="ai-tech-tag">Keras</span>
+                    <span class="ai-tech-tag">JAX</span>
+                    <span class="ai-tech-tag">MLflow</span>
+                    <span class="ai-tech-tag">Kubeflow</span>
+                    <span class="ai-tech-tag">Apache Spark</span>
+                    <span class="ai-tech-tag">Ray</span>
+                    <span class="ai-tech-tag">Optuna</span>
+                    <span class="ai-tech-tag">ONNX</span>
+                    <span class="ai-tech-tag">TensorRT</span>
+                </div>
+            </section>
+
+            <!-- Our Approach -->
+            <section class="ai-section reveal-item">
+                <h2 class="ai-section-title"><i class="fas fa-route"></i>Our Approach</h2>
+                <p class="ai-section-text"><strong>1. Discovery & Data Assessment:</strong> We begin by understanding your business objectives and evaluating data quality. Our team conducts thorough exploratory data analysis to identify the most predictive features and potential challenges.</p>
+                <p class="ai-section-text"><strong>2. Experimentation & Model Development:</strong> Using rigorous scientific methodology, we experiment with multiple algorithms and architectures. Every experiment is tracked, versioned, and reproducible.</p>
+                <p class="ai-section-text"><strong>3. Validation & Testing:</strong> Models undergo comprehensive testing including cross-validation, A/B testing, and performance benchmarking against baseline metrics. We ensure robustness across different data distributions.</p>
+                <p class="ai-section-text"><strong>4. Deployment & Integration:</strong> Production deployment with proper API design, scaling infrastructure, and integration with your existing systems. We support both batch and real-time inference.</p>
+                <p class="ai-section-text"><strong>5. Monitoring & Continuous Learning:</strong> Post-deployment monitoring for model drift, performance degradation, and automated retraining pipelines to keep your models accurate over time.</p>
+            </section>
+
+            <!-- CTA Section -->
+            <div class="ai-cta-section reveal-item">
+                <h3 class="ai-cta-title">Ready to Harness Machine Learning?</h3>
+                <p class="ai-cta-text">Let's discuss how custom ML solutions can transform your business operations and unlock new opportunities.</p>
+                <a href="../index.html" class="btn-primary magnetic" data-page="contact">
+                    <span class="btn-text">Start a Conversation</span>
+                    <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
+                </a>
+            </div>
+
+            <!-- Navigation -->
+            <div class="ai-nav">
+                <a href="mlops.html"><i class="fas fa-arrow-left"></i>MLOps</a>
+                <a href="natural-language-processing.html">Natural Language Processing<i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </article>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo font-syne">VESTLABS</div>
+                    <p class="footer-desc">Transforming businesses through innovative DevOps, Cloud, and AI solutions.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col"><h4>Services</h4><ul><li><a href="../index.html">DevOps</a></li><li><a href="../index.html">Cloud Solutions</a></li><li><a href="../index.html">AI Labs</a></li></ul></div>
+                    <div class="footer-col"><h4>Company</h4><ul><li><a href="../index.html">About</a></li><li><a href="../index.html">Blog</a></li><li><a href="../index.html">Contact</a></li></ul></div>
+                    <div class="footer-col"><h4>Legal</h4><ul><li><a href="../privacy.html">Privacy Policy</a></li><li><a href="../terms.html">Terms of Service</a></li><li><a href="../cookies.html">Cookie Policy</a></li></ul></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 VESTLABS. All rights reserved.</p>
+                <div class="footer-status"><span class="status-dot"></span><span>All systems operational</span></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/cursor.js"></script>
+    <script src="../js/animations.js"></script>
+    <script>
+        const menuBtn = document.querySelector('.nav-menu-btn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                menuBtn.classList.toggle('open');
+                mobileMenu.classList.toggle('open');
+                document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+            });
+        }
+    </script>
+</body>
+</html>

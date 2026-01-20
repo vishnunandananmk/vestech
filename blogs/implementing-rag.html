@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Implementing RAG with OpenAI and Pinecone - Build intelligent AI applications with retrieval-augmented generation">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>Implementing RAG with OpenAI and Pinecone | VESTLABS Blog</title>
+    <link rel="icon" type="image/png" href="/assets/images/favicon_v1.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    
+    <style>
+        .blog-post-hero{padding:calc(var(--space-4xl) + 4rem) 0 var(--space-2xl);position:relative;background:linear-gradient(135deg,var(--black) 0%,var(--black-light) 100%)}
+        .blog-post-hero::before{content:'';position:absolute;top:0;right:0;width:50%;height:100%;background:radial-gradient(circle at top right,rgba(201,255,0,0.08) 0%,transparent 60%);pointer-events:none}
+        .blog-post-meta{display:flex;align-items:center;gap:var(--space-md);margin-bottom:var(--space-md);flex-wrap:wrap}
+        .blog-post-category{background:var(--accent);color:var(--black);padding:4px 12px;border-radius:var(--radius-full);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em}
+        .blog-post-date{color:var(--gray);font-size:0.875rem}
+        .blog-post-title{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.5rem);font-weight:800;line-height:1.15;margin-bottom:var(--space-lg);max-width:900px}
+        .blog-post-excerpt{font-size:1.25rem;color:var(--gray-light);max-width:700px;line-height:1.7}
+        .blog-post-icon{width:80px;height:80px;background:rgba(201,255,0,0.1);border:1px solid var(--accent);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--accent);margin-bottom:var(--space-lg)}
+        .blog-post-content{padding:var(--space-3xl) 0}
+        .blog-post-content .container{max-width:800px}
+        .blog-post-body{font-size:1.0625rem;line-height:1.85;color:var(--gray-light)}
+        .blog-post-body h2{font-family:var(--font-display);font-size:1.75rem;font-weight:700;color:var(--white);margin:var(--space-2xl) 0 var(--space-md)}
+        .blog-post-body h3{font-family:var(--font-display);font-size:1.375rem;font-weight:600;color:var(--white);margin:var(--space-xl) 0 var(--space-sm)}
+        .blog-post-body p{margin-bottom:var(--space-md)}
+        .blog-post-body ul,.blog-post-body ol{margin:var(--space-md) 0;padding-left:var(--space-lg)}
+        .blog-post-body li{margin-bottom:var(--space-sm)}
+        .blog-post-body code{background:var(--black-lighter);padding:2px 8px;border-radius:4px;font-family:'Fira Code',monospace;font-size:0.9em;color:var(--accent)}
+        .blog-post-body pre{background:var(--black-lighter);border:1px solid var(--border-color);border-radius:var(--radius-md);padding:var(--space-lg);overflow-x:auto;margin:var(--space-lg) 0}
+        .blog-post-body pre code{background:none;padding:0;color:var(--gray-light)}
+        .blog-post-body blockquote{border-left:3px solid var(--accent);padding-left:var(--space-lg);margin:var(--space-lg) 0;font-style:italic;color:var(--gray)}
+        .blog-post-body a{color:var(--accent);text-decoration:none;transition:opacity 0.3s ease}
+        .blog-post-body a:hover{opacity:0.8}
+        .blog-post-body .highlight-box{background:rgba(201,255,0,0.05);border:1px solid rgba(201,255,0,0.2);border-radius:var(--radius-md);padding:var(--space-lg);margin:var(--space-lg) 0}
+        .blog-post-body .highlight-box h4{color:var(--accent);margin-bottom:var(--space-sm);font-family:var(--font-display)}
+        .blog-author{display:flex;align-items:center;gap:var(--space-md);padding:var(--space-xl) 0;border-top:1px solid var(--border-color);margin-top:var(--space-2xl)}
+        .blog-author-avatar{width:60px;height:60px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;color:var(--black);font-size:1.25rem}
+        .blog-author-info h4{font-family:var(--font-display);font-size:1rem;margin-bottom:4px}
+        .blog-author-info p{color:var(--gray);font-size:0.875rem;margin:0}
+        .blog-share{display:flex;align-items:center;gap:var(--space-md);padding:var(--space-lg) 0;border-top:1px solid var(--border-color)}
+        .blog-share span{color:var(--gray);font-size:0.875rem}
+        .blog-share a{width:40px;height:40px;border:1px solid var(--border-color);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);text-decoration:none;transition:all 0.3s ease}
+        .blog-share a:hover{background:var(--accent);border-color:var(--accent);color:var(--black)}
+        .blog-nav{display:flex;justify-content:space-between;padding:var(--space-xl) 0;border-top:1px solid var(--border-color);margin-top:var(--space-lg)}
+        .blog-nav a{color:var(--white);text-decoration:none;font-size:0.875rem;display:flex;align-items:center;gap:var(--space-sm);transition:color 0.3s ease}
+        .blog-nav a:hover{color:var(--accent)}
+        .back-to-blog{display:inline-flex;align-items:center;gap:var(--space-sm);color:var(--accent);text-decoration:none;font-size:0.875rem;margin-bottom:var(--space-lg);transition:gap 0.3s ease}
+        .back-to-blog:hover{gap:var(--space-md)}
+    </style>
+</head>
+<body>
+    <div class="cursor" aria-hidden="true"></div>
+    <div class="cursor-dot" aria-hidden="true"></div>
+
+    <nav class="nav" role="navigation">
+        <a href="../index.html" class="nav-logo"><span class="logo-text">VESTLABS</span></a>
+        <div class="nav-links">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../index.html#services" class="nav-link">Services</a>
+            <a href="../index.html#about" class="nav-link">About</a>
+            <a href="../index.html#ai-labs" class="nav-link">AI Labs</a>
+            <a href="../index.html#careers" class="nav-link">Careers</a>
+            <a href="../index.html#blogs" class="nav-link active">Blog</a>
+            <a href="../index.html#contact" class="nav-link">Contact</a>
+        </div>
+        <button class="nav-menu-btn" aria-label="Toggle menu"><span class="menu-icon"><span></span><span></span><span></span></span></button>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <div class="mobile-menu-content">
+            <a href="../index.html" class="mobile-link">Home</a>
+            <a href="../index.html#services" class="mobile-link">Services</a>
+            <a href="../index.html#about" class="mobile-link">About</a>
+            <a href="../index.html#ai-labs" class="mobile-link">AI Labs</a>
+            <a href="../index.html#careers" class="mobile-link">Careers</a>
+            <a href="../index.html#blogs" class="mobile-link">Blog</a>
+            <a href="../index.html#contact" class="mobile-link">Contact</a>
+        </div>
+    </div>
+
+    <section class="blog-post-hero">
+        <div class="container">
+            <a href="../index.html#blogs" class="back-to-blog"><i class="fas fa-arrow-left"></i>Back to Blog</a>
+            <div class="blog-post-icon reveal-item"><i class="fas fa-brain"></i></div>
+            <div class="blog-post-meta reveal-item">
+                <span class="blog-post-category">AI</span>
+                <span class="blog-post-date">Dec 5, 2024 · 15 min read</span>
+            </div>
+            <h1 class="blog-post-title reveal-item">Implementing RAG with OpenAI and Pinecone</h1>
+            <p class="blog-post-excerpt reveal-item">Learn how to build powerful AI applications using Retrieval-Augmented Generation (RAG) to provide accurate, context-aware responses grounded in your own data.</p>
+        </div>
+    </section>
+
+    <article class="blog-post-content">
+        <div class="container">
+            <div class="blog-post-body">
+                <h2>What is Retrieval-Augmented Generation?</h2>
+                <p>Retrieval-Augmented Generation (RAG) is a technique that enhances Large Language Models (LLMs) by providing them with relevant context from external knowledge bases. Instead of relying solely on the model's training data, RAG allows you to ground responses in your specific documents, databases, or knowledge repositories.</p>
+                <p>This approach solves several key limitations of traditional LLMs:</p>
+                <ul>
+                    <li><strong>Knowledge cutoff:</strong> LLMs only know what they were trained on</li>
+                    <li><strong>Hallucinations:</strong> RAG provides factual grounding</li>
+                    <li><strong>Domain specificity:</strong> Access your proprietary data</li>
+                    <li><strong>Traceability:</strong> Know exactly where answers come from</li>
+                </ul>
+
+                <h2>Architecture Overview</h2>
+                <p>A typical RAG system consists of these components:</p>
+                <ol>
+                    <li><strong>Document Processing:</strong> Split documents into chunks</li>
+                    <li><strong>Embedding Generation:</strong> Convert text to vectors using OpenAI</li>
+                    <li><strong>Vector Storage:</strong> Store embeddings in Pinecone</li>
+                    <li><strong>Retrieval:</strong> Find relevant chunks for a query</li>
+                    <li><strong>Generation:</strong> Use retrieved context with GPT-4</li>
+                </ol>
+
+                <h2>Setting Up the Environment</h2>
+                <p>First, install the required dependencies:</p>
+                <pre><code>pip install openai pinecone-client langchain tiktoken</code></pre>
+                
+                <p>Set up your environment variables:</p>
+                <pre><code>import os
+os.environ["OPENAI_API_KEY"] = "your-openai-key"
+os.environ["PINECONE_API_KEY"] = "your-pinecone-key"</code></pre>
+
+                <h2>Document Processing & Chunking</h2>
+                <p>Effective chunking is crucial for RAG performance. Here's a robust approach:</p>
+                <pre><code>from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+def chunk_documents(documents, chunk_size=1000, overlap=200):
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=chunk_size,
+        chunk_overlap=overlap,
+        length_function=len,
+        separators=["\n\n", "\n", " ", ""]
+    )
+    chunks = text_splitter.split_documents(documents)
+    return chunks</code></pre>
+
+                <div class="highlight-box">
+                    <h4>💡 Chunking Best Practices</h4>
+                    <p>Optimal chunk size depends on your use case. For Q&A, 500-1000 tokens work well. For summarization, larger chunks (2000+) may be better. Always include overlap to maintain context across chunk boundaries.</p>
+                </div>
+
+                <h2>Generating Embeddings with OpenAI</h2>
+                <p>Use OpenAI's text-embedding-3-small model for efficient embeddings:</p>
+                <pre><code>from openai import OpenAI
+
+client = OpenAI()
+
+def get_embedding(text, model="text-embedding-3-small"):
+    response = client.embeddings.create(
+        input=text,
+        model=model
+    )
+    return response.data[0].embedding
+
+# Batch processing for efficiency
+def get_embeddings_batch(texts, model="text-embedding-3-small"):
+    response = client.embeddings.create(
+        input=texts,
+        model=model
+    )
+    return [item.embedding for item in response.data]</code></pre>
+
+                <h2>Storing Vectors in Pinecone</h2>
+                <p>Initialize Pinecone and create an index:</p>
+                <pre><code>from pinecone import Pinecone, ServerlessSpec
+
+pc = Pinecone(api_key=os.environ["PINECONE_API_KEY"])
+
+# Create index if it doesn't exist
+index_name = "rag-knowledge-base"
+if index_name not in pc.list_indexes().names():
+    pc.create_index(
+        name=index_name,
+        dimension=1536,  # OpenAI embedding dimension
+        metric="cosine",
+        spec=ServerlessSpec(cloud="aws", region="us-east-1")
+    )
+
+index = pc.Index(index_name)</code></pre>
+
+                <p>Upsert your embeddings:</p>
+                <pre><code>def upsert_documents(chunks, batch_size=100):
+    for i in range(0, len(chunks), batch_size):
+        batch = chunks[i:i + batch_size]
+        texts = [chunk.page_content for chunk in batch]
+        embeddings = get_embeddings_batch(texts)
+        
+        vectors = [
+            {
+                "id": f"doc_{i+j}",
+                "values": embedding,
+                "metadata": {
+                    "text": text,
+                    "source": batch[j].metadata.get("source", "")
+                }
+            }
+            for j, (text, embedding) in enumerate(zip(texts, embeddings))
+        ]
+        
+        index.upsert(vectors=vectors)</code></pre>
+
+                <h2>Implementing the RAG Pipeline</h2>
+                <p>Now let's build the complete retrieval and generation pipeline:</p>
+                <pre><code>def retrieve_context(query, top_k=5):
+    # Generate query embedding
+    query_embedding = get_embedding(query)
+    
+    # Search Pinecone
+    results = index.query(
+        vector=query_embedding,
+        top_k=top_k,
+        include_metadata=True
+    )
+    
+    # Extract relevant texts
+    contexts = [match.metadata["text"] for match in results.matches]
+    return contexts
+
+def generate_response(query, contexts):
+    # Build the prompt with retrieved context
+    context_text = "\n\n".join(contexts)
+    
+    prompt = f"""Use the following context to answer the question. 
+If the answer is not in the context, say "I don't have enough information."
+
+Context:
+{context_text}
+
+Question: {query}
+
+Answer:"""
+    
+    response = client.chat.completions.create(
+        model="gpt-4-turbo-preview",
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant that answers questions based on the provided context."},
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.1
+    )
+    
+    return response.choices[0].message.content
+
+def rag_query(query):
+    contexts = retrieve_context(query)
+    response = generate_response(query, contexts)
+    return response</code></pre>
+
+                <h2>Advanced Techniques</h2>
+                
+                <h3>Hybrid Search</h3>
+                <p>Combine semantic search with keyword matching for better results:</p>
+                <pre><code># Use Pinecone's hybrid search with sparse-dense vectors
+# or implement BM25 alongside semantic search</code></pre>
+
+                <h3>Re-ranking</h3>
+                <p>Use a cross-encoder to re-rank retrieved results:</p>
+                <pre><code>from sentence_transformers import CrossEncoder
+
+reranker = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
+
+def rerank_results(query, documents, top_k=3):
+    pairs = [[query, doc] for doc in documents]
+    scores = reranker.predict(pairs)
+    ranked = sorted(zip(documents, scores), key=lambda x: x[1], reverse=True)
+    return [doc for doc, score in ranked[:top_k]]</code></pre>
+
+                <h3>Query Transformation</h3>
+                <p>Improve retrieval by reformulating queries:</p>
+                <pre><code>def expand_query(query):
+    response = client.chat.completions.create(
+        model="gpt-4-turbo-preview",
+        messages=[
+            {"role": "system", "content": "Generate 3 alternative phrasings of this query for better search:"},
+            {"role": "user", "content": query}
+        ]
+    )
+    return response.choices[0].message.content</code></pre>
+
+                <div class="highlight-box">
+                    <h4>🚀 Production Tips</h4>
+                    <p>For production deployments: implement caching for embeddings, use async operations for better throughput, monitor token usage, and set up proper error handling with retries.</p>
+                </div>
+
+                <h2>Evaluation Metrics</h2>
+                <p>Measure your RAG system's performance with:</p>
+                <ul>
+                    <li><strong>Retrieval metrics:</strong> Precision@K, Recall@K, MRR</li>
+                    <li><strong>Generation metrics:</strong> BLEU, ROUGE, BERTScore</li>
+                    <li><strong>End-to-end:</strong> Answer relevance, faithfulness, context relevance</li>
+                </ul>
+
+                <h2>Conclusion</h2>
+                <p>RAG represents a powerful paradigm for building AI applications that can leverage your organization's knowledge. By combining the reasoning capabilities of LLMs with precise retrieval from your data, you can create systems that are both intelligent and grounded in facts.</p>
+                <p>At VESTLABS AI Labs, we help organizations implement production-ready RAG systems tailored to their specific needs. Whether you're building a customer support bot, internal knowledge assistant, or document analysis tool, our team can help you get there.</p>
+
+                <div class="blog-author">
+                    <div class="blog-author-avatar">EC</div>
+                    <div class="blog-author-info">
+                        <h4>Emily Chen</h4>
+                        <p>Head of AI Labs at VESTLABS</p>
+                    </div>
+                </div>
+
+                <div class="blog-share">
+                    <span>Share this article:</span>
+                    <a href="#" aria-label="Share on Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Share on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="Share on Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Copy link"><i class="fas fa-link"></i></a>
+                </div>
+
+                <div class="blog-nav">
+                    <a href="aws-vs-azure-vs-gcp.html"><i class="fas fa-arrow-left"></i>AWS vs Azure vs GCP</a>
+                    <a href="zero-trust-architecture.html">Zero Trust Architecture<i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo font-syne">VESTLABS</div>
+                    <p class="footer-desc">Transforming businesses through innovative DevOps, Cloud, and AI solutions.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col"><h4>Services</h4><ul><li><a href="../index.html">DevOps</a></li><li><a href="../index.html">Cloud Solutions</a></li><li><a href="../index.html">AI Labs</a></li></ul></div>
+                    <div class="footer-col"><h4>Company</h4><ul><li><a href="../index.html">About</a></li><li><a href="../index.html#blogs">Blog</a></li><li><a href="../index.html">Contact</a></li></ul></div>
+                    <div class="footer-col"><h4>Legal</h4><ul><li><a href="../privacy.html">Privacy Policy</a></li><li><a href="../terms.html">Terms of Service</a></li><li><a href="../cookies.html">Cookie Policy</a></li></ul></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 VESTLABS. All rights reserved.</p>
+                <div class="footer-status"><span class="status-dot"></span><span>All systems operational</span></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/cursor.js"></script>
+    <script src="../js/animations.js"></script>
+    <script>
+        const menuBtn = document.querySelector('.nav-menu-btn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                menuBtn.classList.toggle('open');
+                mobileMenu.classList.toggle('open');
+                document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+            });
+        }
+    </script>
+</body>
+</html>
