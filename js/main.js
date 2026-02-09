@@ -551,6 +551,7 @@ class VestlabzApp {
     
     setupPageSearch() {
         const searchInput = document.getElementById('pageSearchInput');
+        const mobileSearchInput = document.getElementById('mobilePageSearchInput');
         const searchNav = document.getElementById('searchNav');
         const prevBtn = document.getElementById('prevMatch');
         const nextBtn = document.getElementById('nextMatch');
@@ -558,35 +559,86 @@ class VestlabzApp {
         const currentMatchEl = document.getElementById('currentMatch');
         const totalMatchesEl = document.getElementById('totalMatches');
         
-        if (!searchInput) return;
+        // Use desktop search if available, otherwise mobile
+        const primarySearchInput = searchInput || mobileSearchInput;
+        if (!primarySearchInput) return;
         
         this.searchMatches = [];
         this.currentMatchIndex = -1;
         
         let debounceTimer;
         
-        // Search on input
-        searchInput.addEventListener('input', (e) => {
+        // Helper function to sync inputs and perform search
+        const handleSearch = (value, sourceInput) => {
+            // Sync the other input if it exists
+            if (searchInput && sourceInput !== searchInput) {
+                searchInput.value = value;
+            }
+            if (mobileSearchInput && sourceInput !== mobileSearchInput) {
+                mobileSearchInput.value = value;
+            }
+            
             clearTimeout(debounceTimer);
             debounceTimer = setTimeout(() => {
-                this.performSearch(e.target.value);
+                this.performSearch(value);
             }, 300);
-        });
+        };
         
-        // Keyboard shortcuts
-        searchInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                if (e.shiftKey) {
-                    this.navigateMatch(-1);
-                } else {
-                    this.navigateMatch(1);
+        // Search on input - desktop
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                handleSearch(e.target.value, searchInput);
+            });
+            
+            // Keyboard shortcuts - desktop
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (e.shiftKey) {
+                        this.navigateMatch(-1);
+                    } else {
+                        this.navigateMatch(1);
+                    }
+                } else if (e.key === 'Escape') {
+                    this.clearSearch();
+                    searchInput.value = '';
+                    if (mobileSearchInput) mobileSearchInput.value = '';
+                    searchInput.blur();
                 }
-            } else if (e.key === 'Escape') {
-                this.clearSearch();
-                searchInput.blur();
-            }
-        });
+            });
+        }
+        
+        // Search on input - mobile
+        if (mobileSearchInput) {
+            mobileSearchInput.addEventListener('input', (e) => {
+                handleSearch(e.target.value, mobileSearchInput);
+            });
+            
+            // Keyboard shortcuts - mobile
+            mobileSearchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (e.shiftKey) {
+                        this.navigateMatch(-1);
+                    } else {
+                        this.navigateMatch(1);
+                    }
+                    // Close mobile menu after navigating to search result
+                    if (window.navigationController && window.navigationController.isMenuOpen) {
+                        window.navigationController.toggleMenu();
+                    }
+                } else if (e.key === 'Escape') {
+                    this.clearSearch();
+                    mobileSearchInput.value = '';
+                    if (searchInput) searchInput.value = '';
+                    mobileSearchInput.blur();
+                    // Close mobile menu on escape
+                    if (window.navigationController && window.navigationController.isMenuOpen) {
+                        window.navigationController.toggleMenu();
+                    }
+                }
+            });
+        }
         
         // Navigation buttons
         if (prevBtn) {
@@ -600,17 +652,26 @@ class VestlabzApp {
         if (closeBtn) {
             closeBtn.addEventListener('click', () => {
                 this.clearSearch();
-                searchInput.value = '';
-                searchInput.blur();
+                if (searchInput) {
+                    searchInput.value = '';
+                    searchInput.blur();
+                }
+                if (mobileSearchInput) {
+                    mobileSearchInput.value = '';
+                    mobileSearchInput.blur();
+                }
             });
         }
         
-        // Global Ctrl+F override
+        // Global Ctrl+F override - focus desktop search if available, otherwise mobile
         document.addEventListener('keydown', (e) => {
             if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
                 e.preventDefault();
-                searchInput.focus();
-                searchInput.select();
+                const targetInput = searchInput || mobileSearchInput;
+                if (targetInput) {
+                    targetInput.focus();
+                    targetInput.select();
+                }
             }
         });
     }
