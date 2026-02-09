@@ -899,6 +899,7 @@ h1, h2, h3, h4, h5, h6 {
     transform: translateY(50px);
     line-height: 1.2;
     padding-bottom: 0.1em;
+    width: fit-content;
     transition: opacity 0.5s var(--ease-out-expo), 
                 transform 0.5s var(--ease-out-expo),
                 color 0.3s ease;
@@ -970,12 +971,14 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-title {
     margin-bottom: var(--space-md);
+    width: fit-content;
 }
 
 .hero-title .line-wrapper {
     display: block;
     overflow: hidden;
     padding-bottom: 0.1em;
+    width: fit-content;
 }
 
 .hero-title .line {
@@ -1188,6 +1191,7 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center;
     width: 100%;
     height: 400px;
+    overflow: visible;
 }
 
 .hero-visual-inner {
@@ -1422,12 +1426,14 @@ h1, h2, h3, h4, h5, h6 {
 
 .stat-float-1 {
     top: 5%;
-    right: 5%;
+    right: 0;
+    transform: translateX(35px);
 }
 
 .stat-float-2 {
     bottom: 10%;
-    left: 5%;
+    left: 0;
+    transform: translateX(-60px);
 }
 
 .stat-float-number {
@@ -1650,6 +1656,11 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.2;
     max-width: 600px;
     padding-bottom: 0.05em;
+}
+
+.process-section .section-title {
+    width: fit-content;
+    max-width: fit-content;
 }
 
 .section-description {
@@ -3717,6 +3728,19 @@ html, body {
 
 /* ==================== TABLET STYLES (768px - 1024px) ==================== */
 @media (max-width: 1024px) {
+    /* Use hamburger menu instead of nav links + search to prevent search bar cropping */
+    .nav-links {
+        display: none;
+    }
+    
+    .nav-search-wrapper {
+        display: none;
+    }
+    
+    .nav-menu-btn {
+        display: block;
+    }
+    
     .bento-grid {
         grid-template-columns: repeat(2, 1fr);
     }

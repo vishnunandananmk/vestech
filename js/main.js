@@ -257,6 +257,61 @@ class VestlabzApp {
     
     setupGlowingEffects() {
         const glowingCards = document.querySelectorAll('.service-card');
+        const mobileBreakpoint = 768;
+        let mobileGlowRaf = null;
+        
+        const isMobile = () => window.innerWidth <= mobileBreakpoint;
+        
+        // Mobile: activate glow when card center reaches viewport center
+        const updateMobileGlow = () => {
+            if (!isMobile()) return;
+            
+            const viewportCenterY = window.innerHeight / 2;
+            const centerThreshold = 80; // px - card considered "centered" when within this of viewport center
+            
+            glowingCards.forEach(card => {
+                const glowEffect = card.querySelector('.glowing-effect');
+                if (!glowEffect) return;
+                
+                const rect = card.getBoundingClientRect();
+                const cardCenterY = rect.top + rect.height / 2;
+                const distanceFromCenter = Math.abs(cardCenterY - viewportCenterY);
+                const isCentered = distanceFromCenter <= centerThreshold;
+                
+                if (isCentered) {
+                    glowEffect.style.setProperty('--glow-active', '1');
+                    // Subtle angle shift based on scroll for variety
+                    const scrollProgress = 1 - distanceFromCenter / centerThreshold;
+                    glowEffect.style.setProperty('--glow-start', (scrollProgress * 90).toString());
+                } else {
+                    glowEffect.style.setProperty('--glow-active', '0');
+                }
+            });
+        };
+        
+        const throttledMobileGlow = () => {
+            if (mobileGlowRaf) return;
+            mobileGlowRaf = requestAnimationFrame(() => {
+                updateMobileGlow();
+                mobileGlowRaf = null;
+            });
+        };
+        
+        // Mobile scroll listener for glow
+        window.addEventListener('scroll', throttledMobileGlow, { passive: true });
+        window.addEventListener('resize', () => {
+            if (!isMobile()) {
+                glowingCards.forEach(card => {
+                    const glowEffect = card.querySelector('.glowing-effect');
+                    if (glowEffect) glowEffect.style.setProperty('--glow-active', '0');
+                });
+            } else {
+                updateMobileGlow();
+            }
+        });
+        
+        // Initial check for mobile
+        if (isMobile()) updateMobileGlow();
         
         glowingCards.forEach(card => {
             const glowEffect = card.querySelector('.glowing-effect');
@@ -267,6 +322,9 @@ class VestlabzApp {
             let targetAngle = 0;
             
             const updateGlow = (e) => {
+                // On mobile, glow is handled by scroll - skip mouse logic
+                if (isMobile()) return;
+                
                 if (animationFrame) {
                     cancelAnimationFrame(animationFrame);
                 }
@@ -312,13 +370,13 @@ class VestlabzApp {
             // Track mouse movement on the document
             document.addEventListener('pointermove', updateGlow, { passive: true });
             
-            // Also update on scroll
+            // Also update on scroll (desktop only - re-trigger with mouse position)
             window.addEventListener('scroll', () => {
+                if (isMobile()) return;
                 if (animationFrame) {
                     cancelAnimationFrame(animationFrame);
                 }
                 animationFrame = requestAnimationFrame(() => {
-                    // Re-trigger with last known position
                     updateGlow({ clientX: this.lastMouseX || 0, clientY: this.lastMouseY || 0 });
                 });
             }, { passive: true });
